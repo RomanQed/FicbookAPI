@@ -1,4 +1,4 @@
-package com.github.romanqed.Utils;
+package com.github.romanqed.internal;
 
 public class Checks {
     public static <T> T requireNonNullElse(T obj, T def) {

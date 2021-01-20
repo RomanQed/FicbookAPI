@@ -1,4 +1,4 @@
-package com.github.romanqed.IOUtil;
+package com.github.romanqed.io;
 
 
 import java.io.*;
