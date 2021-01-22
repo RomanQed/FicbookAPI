@@ -1,8 +1,9 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.Fandom;
-import com.github.romanqed.api.Pairing;
-import com.github.romanqed.api.Tag;
+import com.github.romanqed.api.html.Fandom;
+import com.github.romanqed.api.html.Pairing;
+import com.github.romanqed.api.json.Comment;
+import com.github.romanqed.api.html.Tag;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -121,11 +122,13 @@ public class Backup {
         System.out.println("Описание: " + description.text());
     }
 
+    // Сделано
     public static void parseReviews(Document document) {
         Elements reviews = document.select("article.comment-container");
         reviews.forEach(Backup::parseReview);
     }
 
+    // Сделано
     public static void parseReview(Element rawReview) {
         Element rawLikes = rawReview.selectFirst("comment-like");
         if (rawLikes == null) {
@@ -133,17 +136,14 @@ public class Backup {
         }
         // TODO Не забывать потом чекнуть этот json'чик, много полезной инфы содержит
         JsonObject review = JsonParser.parseString(rawLikes.attr(":comment")).getAsJsonObject();
-        System.out.println("Автор отзыва: " + review.get("user_id").getAsString() + " " + review.get("user_nickname").getAsString());
-        System.out.println("Дата отзыва: " + review.get("date_create").getAsString());
-        System.out.println("Текст отзыва: " + review.get("comment").getAsString());
-        System.out.println("Кол-во реакций: " + review.get("like_cnt").getAsInt());
-        // Награды
-        JsonElement rawRewards = review.get("rewards");
-        if (rawRewards != null && rawRewards.isJsonArray()) {
-            rawRewards.getAsJsonArray().forEach(reward -> parseReward(reward.getAsJsonObject()));
+        try {
+            System.out.println(new Comment(review));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+    // Сделано
     public static void parseReward(JsonObject reward) {
         System.out.println("Награда: ");
         String userComment = reward.get("user_text").getAsString();

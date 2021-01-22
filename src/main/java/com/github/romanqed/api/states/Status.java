@@ -1,4 +1,4 @@
-package com.github.romanqed.api.FanficStates;
+package com.github.romanqed.api.states;
 
 public enum Status {
     COMPLETED,

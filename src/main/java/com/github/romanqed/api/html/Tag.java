@@ -1,11 +1,11 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.urls.Urls;
+import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Tag extends AbstractDefHtmlBased {
+public class Tag extends AbstractHtmlBased {
     private String title = "";
     private String description = "";
 
@@ -26,14 +26,8 @@ public class Tag extends AbstractDefHtmlBased {
     }
 
     @Override
-    public boolean validateHtml(Element element) {
-        return super.validateHtml(element) && validateLocalUrl(element.attr("href"));
-    }
-
-    @Override
-    public void fromHtml(Element element) throws Exception {
-        super.fromHtml(element);
-        link = Urls.parseUrl(element.attr("href"));
+    public void fromHtml(Element element) {
+        link = Urls.parseAndValidateUrl(element.attr("href"), this::validateUrl);
         title = element.text();
         description = element.attr("title").replaceAll("<.{1,2}>", "");
     }

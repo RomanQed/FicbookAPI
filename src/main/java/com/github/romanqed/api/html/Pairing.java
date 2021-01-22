@@ -1,6 +1,6 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.urls.Urls;
+import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Pairing extends AbstractDefHtmlBased {
+public class Pairing extends AbstractHtmlBased {
     private final List<String> characters = new ArrayList<>();
 
     protected Pairing(URL checkedLink) {
@@ -38,14 +38,8 @@ public class Pairing extends AbstractDefHtmlBased {
     }
 
     @Override
-    public boolean validateHtml(Element element) {
-        return super.validateHtml(element) && validateLocalUrl(element.attr("href"));
-    }
-
-    @Override
-    public void fromHtml(Element element) throws Exception {
-        super.fromHtml(element);
-        link = Urls.parseUrl(element.attr("href"));
+    public void fromHtml(Element element) {
+        link = Urls.parseAndValidateUrl(element.attr("href"), this::validateUrl);
         characters.clear();
         Collections.addAll(characters, element.text().split("/"));
     }

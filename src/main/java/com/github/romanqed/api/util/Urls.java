@@ -1,8 +1,9 @@
-package com.github.romanqed.api.urls;
+package com.github.romanqed.api.util;
 
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Predicate;
 
 public class Urls {
     public static final URL MAIN_PAGE = parseUrl("https://ficbook.net");
@@ -62,5 +63,13 @@ public class Urls {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public static URL parseAndValidateUrl(String rawUrl, Predicate<URL> predicate) {
+        URL ret = parseUrl(rawUrl);
+        if (ret == null || !predicate.test(ret)) {
+            throw new IllegalArgumentException("Bad url!");
+        }
+        return ret;
     }
 }

@@ -1,6 +1,6 @@
 package com.github.romanqed.api.interfaces;
 
-import com.github.romanqed.api.urls.Urls;
+import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.WebTaskFabric;
 
@@ -12,6 +12,10 @@ public interface Linkable {
     Task<? extends Linkable> load(WebTaskFabric taskFabric);
 
     Task<? extends Linkable> load();
+
+    default void loadNow() {
+        load(null).silent();
+    }
 
     boolean fullLoaded();
 

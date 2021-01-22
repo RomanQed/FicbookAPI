@@ -1,18 +1,18 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.urls.Urls;
+import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Fandom extends AbstractDefHtmlBased {
+public class Fandom extends AbstractHtmlBased {
     private String title = "";
 
     protected Fandom(URL checkedLink) {
         link = checkedLink;
     }
 
-    public Fandom(Element htmlElement) throws Exception {
+    public Fandom(Element htmlElement) {
         fromHtml(htmlElement);
     }
 
@@ -31,15 +31,9 @@ public class Fandom extends AbstractDefHtmlBased {
     }
 
     @Override
-    public void fromHtml(Element element) throws Exception {
-        super.fromHtml(element);
-        link = Urls.parseUrl(element.attr("href"));
+    public void fromHtml(Element element) {
+        link = Urls.parseAndValidateUrl(element.attr("href"), this::validateUrl);
         title = element.text().trim();
-    }
-
-    @Override
-    public boolean validateHtml(Element element) {
-        return super.validateHtml(element) && validateLocalUrl(element.attr("href"));
     }
 
     @Override

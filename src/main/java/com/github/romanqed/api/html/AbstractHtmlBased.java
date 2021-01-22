@@ -1,5 +1,6 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.html;
 
+import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlBased;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.WebTaskFabric;
