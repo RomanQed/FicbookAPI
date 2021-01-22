@@ -21,7 +21,7 @@ public class BaseTaskFabric<T> implements TaskFabric<T> {
     public Task<T> createTask(Callable<T> action) {
         return new AbstractTask<T>() {
             @Override
-            public T now() throws Exception {
+            public T call() throws Exception {
                 return action.call();
             }
 

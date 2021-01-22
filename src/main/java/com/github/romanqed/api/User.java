@@ -1,11 +1,10 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api;
 
 import org.jsoup.nodes.Document;
 
 import java.net.URL;
 
 public class User extends AbstractHtmlBased {
-
     @Override
     public boolean fullLoaded() {
         return false;

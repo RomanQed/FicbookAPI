@@ -1,4 +1,4 @@
-package com.github.romanqed.api.json;
+package com.github.romanqed.api;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Patterns;

@@ -1,9 +1,9 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.html.Fandom;
-import com.github.romanqed.api.html.Pairing;
-import com.github.romanqed.api.json.Comment;
-import com.github.romanqed.api.html.Tag;
+import com.github.romanqed.api.Comment;
+import com.github.romanqed.api.Fandom;
+import com.github.romanqed.api.Pairing;
+import com.github.romanqed.api.Tag;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
 import com.google.gson.JsonElement;

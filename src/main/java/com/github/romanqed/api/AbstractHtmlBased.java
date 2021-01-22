@@ -1,6 +1,5 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api;
 
-import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.concurrent.AbstractTask;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
@@ -29,12 +28,7 @@ public abstract class AbstractHtmlBased extends AbstractLinkable {
         if (taskFabric != null) {
             return taskFabric.createTask(taskBody);
         } else {
-            return new AbstractTask<Void>() {
-                @Override
-                public Void now() throws Exception {
-                    return taskBody.call();
-                }
-            };
+            return (AbstractTask<Void>) taskBody;
         }
     }
 

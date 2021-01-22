@@ -1,4 +1,4 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api;
 
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;

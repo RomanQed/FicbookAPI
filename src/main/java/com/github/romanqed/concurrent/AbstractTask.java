@@ -15,7 +15,7 @@ public abstract class AbstractTask<T> implements Task<T> {
         }
         result = executor.submit(() -> {
             try {
-                T ret = now();
+                T ret = call();
                 if (success != null) {
                     success.accept(ret);
                 }
