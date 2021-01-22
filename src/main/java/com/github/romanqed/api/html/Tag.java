@@ -19,7 +19,9 @@ public class Tag extends AbstractHtmlBased {
     }
 
     public Tag(Element htmlElement) {
-        fromHtml(htmlElement);
+        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), this::validateUrl);
+        title = htmlElement.text();
+        description = htmlElement.attr("title").replaceAll("<.{1,2}>", "");
     }
 
     public String getTitle() {
@@ -28,13 +30,6 @@ public class Tag extends AbstractHtmlBased {
 
     public String getDescription() {
         return description;
-    }
-
-    @Override
-    public void fromHtml(Element element) {
-        link = Urls.parseAndValidateUrl(element.attr("href"), this::validateUrl);
-        title = element.text();
-        description = element.attr("title").replaceAll("<.{1,2}>", "");
     }
 
     @Override

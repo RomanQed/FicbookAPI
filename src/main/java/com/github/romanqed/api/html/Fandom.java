@@ -18,7 +18,8 @@ public class Fandom extends AbstractHtmlBased {
     }
 
     public Fandom(Element htmlElement) {
-        fromHtml(htmlElement);
+        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), this::validateUrl);
+        title = htmlElement.text().trim();
     }
 
     public String getTitle() {
@@ -33,12 +34,6 @@ public class Fandom extends AbstractHtmlBased {
     @Override
     public boolean validateUrl(URL url) {
         return Urls.validateChildUrl(Urls.FANDOMS, url);
-    }
-
-    @Override
-    public void fromHtml(Element element) {
-        link = Urls.parseAndValidateUrl(element.attr("href"), this::validateUrl);
-        title = element.text().trim();
     }
 
     @Override

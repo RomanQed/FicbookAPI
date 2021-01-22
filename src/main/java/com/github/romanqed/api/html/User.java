@@ -1,17 +1,10 @@
 package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBased;
-import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Document;
 
 import java.net.URL;
 
-public abstract class User extends AbstractLinkable implements HtmlBased {
-
-    @Override
-    public void fromHtml(Element element) {
-
-    }
+public class User extends AbstractHtmlBased {
 
     @Override
     public boolean fullLoaded() {
@@ -21,5 +14,10 @@ public abstract class User extends AbstractLinkable implements HtmlBased {
     @Override
     public boolean validateUrl(URL url) {
         return false;
+    }
+
+    @Override
+    protected void fromPage(Document document) {
+        // TODO
     }
 }

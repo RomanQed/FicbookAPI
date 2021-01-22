@@ -1,7 +1,6 @@
 package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBased;
 import com.github.romanqed.concurrent.AbstractTask;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
@@ -12,7 +11,7 @@ import org.jsoup.nodes.Document;
 
 import java.util.concurrent.Callable;
 
-public abstract class AbstractHtmlBased extends AbstractLinkable implements HtmlBased {
+public abstract class AbstractHtmlBased extends AbstractLinkable {
     protected OkHttpClient client;
 
     @Override

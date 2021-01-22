@@ -1,7 +1,5 @@
 package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBased;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,7 +21,9 @@ public class Pairing extends AbstractHtmlBased {
     }
 
     public Pairing(Element htmlElement) {
-        fromHtml(htmlElement);
+        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), this::validateUrl);
+        characters.clear();
+        Collections.addAll(characters, htmlElement.text().split("/"));
     }
 
     public List<String> getCharacters() {
@@ -42,13 +42,6 @@ public class Pairing extends AbstractHtmlBased {
     @Override
     public boolean validateUrl(URL url) {
         return Urls.validateChildUrl(Urls.PAIRINGS, url);
-    }
-
-    @Override
-    public void fromHtml(Element element) {
-        link = Urls.parseAndValidateUrl(element.attr("href"), this::validateUrl);
-        characters.clear();
-        Collections.addAll(characters, element.text().split("/"));
     }
 
     @Override

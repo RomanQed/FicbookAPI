@@ -1,6 +1,5 @@
 package com.github.romanqed.api.json;
 
-import com.github.romanqed.api.interfaces.JsonBased;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Patterns;
 import com.google.gson.JsonObject;
@@ -9,18 +8,13 @@ import java.util.Date;
 
 
 // TODO Add User class
-public class Reward implements JsonBased {
-    private int userId;
-    private String userName;
-    private Date createDate;
-    private String rewardText;
+public class Reward {
+    private final int userId;
+    private final String userName;
+    private final Date createDate;
+    private final String rewardText;
 
     public Reward(JsonObject jsonObject) throws Exception {
-        fromJson(jsonObject);
-    }
-
-    @Override
-    public void fromJson(JsonObject jsonObject) throws Exception {
         userId = Checks.requireNonExcept(() -> jsonObject.get("giver_id").getAsInt(), -1);
         userName = Checks.requireNonExcept(() -> jsonObject.get("nickname").getAsString(), "");
         createDate = Patterns.dateFormat.parse(jsonObject.get("added").getAsString());
