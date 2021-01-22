@@ -1,10 +1,21 @@
 package com.github.romanqed.concurrent;
 
+import com.github.romanqed.api.util.Checks;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public abstract class AbstractTaskFabric<T> implements TaskFabric<T> {
+public class BaseTaskFabric<T> implements TaskFabric<T> {
     protected ExecutorService executor;
+
+    public BaseTaskFabric(ExecutorService executor) {
+        this.executor = Checks.requireNonNullElse(executor, Executors.newCachedThreadPool());
+    }
+
+    public BaseTaskFabric() {
+        this(null);
+    }
 
     @Override
     public Task<T> createTask(Callable<T> action) {

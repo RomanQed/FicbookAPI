@@ -4,6 +4,8 @@ import com.github.romanqed.api.html.Fandom;
 import com.github.romanqed.api.html.Pairing;
 import com.github.romanqed.api.json.Comment;
 import com.github.romanqed.api.html.Tag;
+import com.github.romanqed.concurrent.Task;
+import com.github.romanqed.concurrent.TaskFabric;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -183,7 +185,12 @@ public class Backup {
         Elements fandoms = fanficMainInfo.select("div.mb-10 a");
         fandoms.forEach(fandom -> {
             try {
-                System.out.println(new Fandom(fandom));
+                System.out.println(new Fandom(fandom) {
+                    @Override
+                    public Task<Void> load(TaskFabric<Void> taskFabric) {
+                        return null;
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -222,7 +229,12 @@ public class Backup {
         }
         pairings.forEach(pairing -> {
             try {
-                System.out.println(new Pairing(pairing));
+                System.out.println(new Pairing(pairing) {
+                    @Override
+                    public Task<Void> load(TaskFabric<Void> taskFabric) {
+                        return null;
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -238,7 +250,12 @@ public class Backup {
         System.out.println("Метки: ");
         tags.forEach(tag -> {
             try {
-                System.out.println(new Tag(tag));
+                System.out.println(new Tag(tag) {
+                    @Override
+                    public Task<Void> load(TaskFabric<Void> taskFabric) {
+                        return null;
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }

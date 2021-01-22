@@ -1,6 +1,7 @@
 package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.util.Urls;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
@@ -10,6 +11,10 @@ public class Fandom extends AbstractHtmlBased {
 
     protected Fandom(URL checkedLink) {
         link = checkedLink;
+    }
+
+    public Fandom(String name) {
+        // TODO
     }
 
     public Fandom(Element htmlElement) {
@@ -39,5 +44,10 @@ public class Fandom extends AbstractHtmlBased {
     @Override
     public String toString() {
         return "[Fandom] " + title + " " + super.toString();
+    }
+
+    @Override
+    protected void fromPage(Document document) {
+        // TODO
     }
 }

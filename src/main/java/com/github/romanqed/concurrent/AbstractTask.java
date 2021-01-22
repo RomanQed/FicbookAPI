@@ -30,6 +30,11 @@ public abstract class AbstractTask<T> implements Task<T> {
     }
 
     @Override
+    public ExecutorService getExecutor() {
+        return null;
+    }
+
+    @Override
     public Future<?> future() {
         if (result == null) {
             throw new IllegalStateException("The task was not added to the queue");

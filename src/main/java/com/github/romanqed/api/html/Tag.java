@@ -1,6 +1,7 @@
 package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.util.Urls;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
@@ -11,6 +12,10 @@ public class Tag extends AbstractHtmlBased {
 
     protected Tag(URL checkedLink) {
         link = checkedLink;
+    }
+
+    public Tag(int id) {
+        // TODO
     }
 
     public Tag(Element htmlElement) {
@@ -45,5 +50,10 @@ public class Tag extends AbstractHtmlBased {
     @Override
     public String toString() {
         return "[Tag] " + title + " " + super.toString();
+    }
+
+    @Override
+    protected void fromPage(Document document) {
+        // TODO
     }
 }

@@ -1,6 +1,9 @@
 package com.github.romanqed.api.html;
 
+import com.github.romanqed.api.AbstractLinkable;
+import com.github.romanqed.api.interfaces.HtmlBased;
 import com.github.romanqed.api.util.Urls;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
@@ -15,7 +18,11 @@ public class Pairing extends AbstractHtmlBased {
         link = checkedLink;
     }
 
-    public Pairing(Element htmlElement) throws Exception {
+    public Pairing(List<String> characters) {
+        // TODO
+    }
+
+    public Pairing(Element htmlElement) {
         fromHtml(htmlElement);
     }
 
@@ -50,5 +57,10 @@ public class Pairing extends AbstractHtmlBased {
         ret.append("[Pairing] ");
         characters.forEach(item -> ret.append("[").append(item).append("]"));
         return ret.toString() + " " + super.toString();
+    }
+
+    @Override
+    protected void fromPage(Document document) {
+        // TODO
     }
 }
