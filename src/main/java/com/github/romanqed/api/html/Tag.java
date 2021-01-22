@@ -13,7 +13,7 @@ public class Tag extends AbstractHtmlBased {
         link = checkedLink;
     }
 
-    public Tag(Element htmlElement) throws Exception {
+    public Tag(Element htmlElement) {
         fromHtml(htmlElement);
     }
 
