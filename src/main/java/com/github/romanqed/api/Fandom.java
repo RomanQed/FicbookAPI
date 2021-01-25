@@ -1,20 +1,30 @@
 package com.github.romanqed.api;
 
 import com.github.romanqed.api.util.Urls;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
 public class Fandom extends AbstractHtmlBased {
     private String title = "";
+    private int pages = -1;
 
-    protected Fandom(URL checkedLink) {
-        link = checkedLink;
+    public Fandom(URL link) {
+        if (!validateUrl(link)) {
+            throw new IllegalArgumentException("Bad fandom url");
+        }
+        this.link = link;
     }
 
-    public Fandom(String name) {
-        // TODO
+    public Fandom(String ref) {
+        if (ref.isEmpty()) {
+            throw new IllegalArgumentException("Bad fandom reference");
+        }
+        link = Urls.attachUrl(Urls.FANDOMS, ref);
+    }
+    
+    public Fandom(String... splitRef) {
+        this(String.join("/", splitRef));
     }
 
     public Fandom(Element htmlElement) {
@@ -32,7 +42,7 @@ public class Fandom extends AbstractHtmlBased {
 
     @Override
     public boolean fullLoaded() {
-        return !title.isEmpty();
+        return !title.isEmpty() && pages != -1;
     }
 
     @Override
@@ -41,7 +51,7 @@ public class Fandom extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(Document document) {
+    protected void fromPage(String rawDocument) {
         // TODO
     }
 }

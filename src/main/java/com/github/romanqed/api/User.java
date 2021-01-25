@@ -1,6 +1,5 @@
 package com.github.romanqed.api;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
@@ -20,7 +19,7 @@ public class User extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(Document document) {
+    protected void fromPage(String rawDocument) {
         // TODO
     }
 }

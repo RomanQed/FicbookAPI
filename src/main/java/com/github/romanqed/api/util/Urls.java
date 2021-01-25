@@ -57,12 +57,20 @@ public class Urls {
         }
     }
 
-    public static String encodePairing(String rawPairing) {
+    public static String encodeUrl(String rawUrl) {
         try {
-            return URLEncoder.encode(rawPairing, StandardCharsets.UTF_8.name()).replace("%2F", "/");
+            return URLEncoder.encode(rawUrl, StandardCharsets.UTF_8.name());
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public static String encodeFicbookUrl(String rawUrl) {
+        return encodeUrl(rawUrl).replace("+", "%20");
+    }
+
+    public static String encodePairing(String rawPairing) {
+        return encodeUrl(rawPairing).replace("%2F", "/");
     }
 
     public static URL parseAndValidateUrl(String rawUrl, Predicate<URL> predicate) {

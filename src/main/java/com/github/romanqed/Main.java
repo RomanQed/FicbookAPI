@@ -1,10 +1,18 @@
 package com.github.romanqed;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import com.github.romanqed.api.Fandom;
+import com.github.romanqed.api.Pairing;
+import com.github.romanqed.api.Tag;
+import com.github.romanqed.api.util.Urls;
+import com.github.romanqed.concurrent.BaseTaskFabric;
+import com.github.romanqed.concurrent.Task;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 import java.io.IOException;
+import java.net.URL;
 import java.text.ParseException;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
@@ -27,7 +35,7 @@ public class Main {
 //                .build();
 //        Response response = client.newCall(request).execute();
 //        Backup.parseReviews(Jsoup.parse(response.body().string()));
-        Document document = Jsoup.connect("https://ficbook.net/readfic/9395584/comments").get();
-        Backup.parseReviews(document);
+//        Document document = Jsoup.connect("https://ficbook.net/readfic/9395584/comments").get();
+//        Backup.parseReviews(document);
     }
 }

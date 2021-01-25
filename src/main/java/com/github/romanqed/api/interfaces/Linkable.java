@@ -2,15 +2,16 @@ package com.github.romanqed.api.interfaces;
 
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
+import okhttp3.Response;
 
 import java.net.URL;
 
 public interface Linkable {
     URL getLink();
 
-    Task<Void> load(TaskFabric<Void> taskFabric);
+    Task<Response> load(TaskFabric<Response> taskFabric);
 
-    default Task<Void> load() {
+    default Task<Response> load() {
         return load(null);
     }
 

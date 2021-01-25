@@ -1,23 +1,35 @@
 package com.github.romanqed.api;
 
 import com.github.romanqed.api.util.Urls;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Pairing extends AbstractHtmlBased {
     private final List<String> characters = new ArrayList<>();
 
-    protected Pairing(URL checkedLink) {
-        link = checkedLink;
+    public Pairing(URL link) {
+        if (!validateUrl(link)) {
+            throw new IllegalArgumentException("Bad pairing url");
+        }
+        this.link = link;
     }
 
     public Pairing(List<String> characters) {
-        // TODO
+        this.characters.addAll(characters);
+        StringBuilder rawLink = new StringBuilder();
+        characters.forEach(character -> rawLink.append('/').append(Urls.encodeFicbookUrl(character)));
+        link = Urls.attachUrl(Urls.PAIRINGS, rawLink.toString());
+    }
+
+    public Pairing(String... characters) {
+        this(Arrays.asList(characters));
     }
 
     public Pairing(Element htmlElement) {
@@ -44,15 +56,19 @@ public class Pairing extends AbstractHtmlBased {
     }
 
     @Override
+    protected void fromPage(String rawPage) {
+        Document page = Jsoup.parse(rawPage);
+        characters.clear();
+        String rawChars = page.selectFirst("h1").text();
+        rawChars = rawChars.substring(rawChars.indexOf('"') + 1, rawChars.lastIndexOf('"'));
+        Collections.addAll(characters, rawChars.split("/"));
+    }
+
+    @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
         ret.append("[Pairing] ");
         characters.forEach(item -> ret.append("[").append(item).append("]"));
         return ret.toString() + " " + super.toString();
-    }
-
-    @Override
-    protected void fromPage(Document document) {
-        // TODO
     }
 }

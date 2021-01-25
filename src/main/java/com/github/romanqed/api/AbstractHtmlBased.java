@@ -6,32 +6,37 @@ import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import okhttp3.Response;
 
 import java.util.concurrent.Callable;
 
 public abstract class AbstractHtmlBased extends AbstractLinkable {
-    protected OkHttpClient client;
+    // FIXME
+    public OkHttpClient client;
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    public Task<Void> load(TaskFabric<Void> taskFabric) {
-        Callable<Void> taskBody = () -> {
+    public Task<Response> load(TaskFabric<Response> taskFabric) {
+        Callable<Response> taskBody = () -> {
             Request request = new Request.Builder()
                     .url(getLink())
                     .method("GET", null)
                     .build();
-            Document body = Jsoup.parse(Checks.requireNonExcept(() -> client.newCall(request).execute().body().string(), ""));
-            fromPage(body);
-            return null;
+            Response response = client.newCall(request).execute();
+            fromPage(Checks.requireNonExcept(() -> response.body().string(), ""));
+            return response;
         };
         if (taskFabric != null) {
             return taskFabric.createTask(taskBody);
         } else {
-            return (AbstractTask<Void>) taskBody;
+            return new AbstractTask<Response>() {
+                @Override
+                public Response call() throws Exception {
+                    return taskBody.call();
+                }
+            };
         }
     }
 
-    protected abstract void fromPage(Document document);
+    protected abstract void fromPage(String rawPage);
 }

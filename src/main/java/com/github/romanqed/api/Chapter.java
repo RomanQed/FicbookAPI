@@ -1,16 +1,18 @@
 package com.github.romanqed.api;
 
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
 public class Chapter extends AbstractHtmlBased {
+    // TODO
+    private final int id = 0;
+
     public Chapter(Element htmlElement) {
         // TODO
     }
 
-    public Chapter(int parent, int currentId) {
+    public Chapter(int parent, int id) {
 
     }
 
@@ -19,7 +21,7 @@ public class Chapter extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(Document document) {
+    protected void fromPage(String rawDocument) {
 
     }
 
