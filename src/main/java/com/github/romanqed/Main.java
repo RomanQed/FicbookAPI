@@ -1,6 +1,5 @@
 package com.github.romanqed;
 
-import okhttp3.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

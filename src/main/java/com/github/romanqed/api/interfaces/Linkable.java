@@ -1,6 +1,5 @@
 package com.github.romanqed.api.interfaces;
 
-import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
 
@@ -20,18 +19,4 @@ public interface Linkable {
     }
 
     boolean fullLoaded();
-
-    boolean validateUrl(URL url);
-
-    default boolean validateUrl(String rawUrl) {
-        try {
-            return validateUrl(new URL(rawUrl));
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    default boolean validateLocalUrl(String localUrl) {
-        return validateUrl(Urls.parseUrl(localUrl));
-    }
 }

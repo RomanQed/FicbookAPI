@@ -21,9 +21,13 @@ public class Pairing extends AbstractHtmlBased {
     }
 
     public Pairing(Element htmlElement) {
-        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), this::validateUrl);
+        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), Pairing::validateUrl);
         characters.clear();
         Collections.addAll(characters, htmlElement.text().split("/"));
+    }
+
+    public static boolean validateUrl(URL url) {
+        return Urls.validateChildUrl(Urls.PAIRINGS, url);
     }
 
     public List<String> getCharacters() {
@@ -37,11 +41,6 @@ public class Pairing extends AbstractHtmlBased {
     @Override
     public boolean fullLoaded() {
         return characters.stream().anyMatch(item -> !item.isEmpty());
-    }
-
-    @Override
-    public boolean validateUrl(URL url) {
-        return Urls.validateChildUrl(Urls.PAIRINGS, url);
     }
 
     @Override

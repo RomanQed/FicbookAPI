@@ -19,9 +19,13 @@ public class Tag extends AbstractHtmlBased {
     }
 
     public Tag(Element htmlElement) {
-        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), this::validateUrl);
+        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), Tag::validateUrl);
         title = htmlElement.text();
         description = htmlElement.attr("title").replaceAll("<.{1,2}>", "");
+    }
+
+    public static boolean validateUrl(URL url) {
+        return Urls.validateChildUrl(Urls.TAGS, url);
     }
 
     public String getTitle() {
@@ -37,10 +41,6 @@ public class Tag extends AbstractHtmlBased {
         return !(title.isEmpty() || description.isEmpty());
     }
 
-    @Override
-    public boolean validateUrl(URL url) {
-        return Urls.validateChildUrl(Urls.TAGS, url);
-    }
 
     @Override
     public String toString() {

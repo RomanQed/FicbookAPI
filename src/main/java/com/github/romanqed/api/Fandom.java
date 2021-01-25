@@ -18,8 +18,12 @@ public class Fandom extends AbstractHtmlBased {
     }
 
     public Fandom(Element htmlElement) {
-        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), this::validateUrl);
+        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), Fandom::validateUrl);
         title = htmlElement.text().trim();
+    }
+
+    public static boolean validateUrl(URL url) {
+        return Urls.validateChildUrl(Urls.FANDOMS, url);
     }
 
     public String getTitle() {
@@ -29,11 +33,6 @@ public class Fandom extends AbstractHtmlBased {
     @Override
     public boolean fullLoaded() {
         return !title.isEmpty();
-    }
-
-    @Override
-    public boolean validateUrl(URL url) {
-        return Urls.validateChildUrl(Urls.FANDOMS, url);
     }
 
     @Override

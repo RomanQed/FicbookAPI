@@ -28,7 +28,7 @@ public class Comment {
         likes = Checks.requireNonExcept(() -> jsonObject.get("like_cnt").getAsInt(), 0);
         JsonArray rawRewards = Checks.requireNonExcept(() -> jsonObject.get("rewards").getAsJsonArray(), null);
         if (rawRewards != null) {
-            for (JsonElement rawReward: rawRewards) {
+            for (JsonElement rawReward : rawRewards) {
                 rewards.add(new Reward(rawReward.getAsJsonObject()));
             }
         }

@@ -1,5 +1,6 @@
 package com.github.romanqed.api;
 
+import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.concurrent.AbstractTask;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
@@ -14,14 +15,14 @@ public abstract class AbstractHtmlBased extends AbstractLinkable {
     protected OkHttpClient client;
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     public Task<Void> load(TaskFabric<Void> taskFabric) {
         Callable<Void> taskBody = () -> {
             Request request = new Request.Builder()
-                .url(getLink())
-                .method("GET", null)
-                .build();
-            // TODO Добавить nullptr Checks.requireNonNull
-            Document body = Jsoup.parse(client.newCall(request).execute().body().string());
+                    .url(getLink())
+                    .method("GET", null)
+                    .build();
+            Document body = Jsoup.parse(Checks.requireNonExcept(() -> client.newCall(request).execute().body().string(), ""));
             fromPage(body);
             return null;
         };
