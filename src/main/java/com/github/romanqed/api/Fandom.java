@@ -1,6 +1,9 @@
 package com.github.romanqed.api;
 
+import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
@@ -47,11 +50,15 @@ public class Fandom extends AbstractHtmlBased {
 
     @Override
     public String toString() {
-        return "[Fandom] " + title + " " + super.toString();
+        return "[Fandom] " + title + " [Pages] " + pages + " " + super.toString();
     }
 
     @Override
-    protected void fromPage(String rawDocument) {
-        // TODO
+    protected void fromPage(String rawPage) {
+        Document page = Jsoup.parse(rawPage);
+        String rawTitle = page.selectFirst("h1").text();
+        title = rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»'));
+        Element pages = page.select("div.paging-description b").last();
+        this.pages = Checks.requireNonExcept(() -> Integer.parseInt(pages.text()), 1);
     }
 }

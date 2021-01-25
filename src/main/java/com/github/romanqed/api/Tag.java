@@ -1,6 +1,8 @@
 package com.github.romanqed.api;
 
 import com.github.romanqed.api.util.Urls;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
@@ -53,7 +55,10 @@ public class Tag extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(String rawDocument) {
-        // TODO
+    protected void fromPage(String rawPage) {
+        Document page = Jsoup.parse(rawPage);
+        String rawTitle = page.selectFirst("h1").text();
+        title = rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»'));
+        description = page.selectFirst("div.well").text();
     }
 }

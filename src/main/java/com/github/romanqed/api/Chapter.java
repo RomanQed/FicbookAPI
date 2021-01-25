@@ -21,7 +21,7 @@ public class Chapter extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(String rawDocument) {
+    protected void fromPage(String rawPage) {
 
     }
 

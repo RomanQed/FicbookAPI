@@ -8,6 +8,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.concurrent.Callable;
 
 public abstract class AbstractHtmlBased extends AbstractLinkable {
@@ -18,11 +20,10 @@ public abstract class AbstractHtmlBased extends AbstractLinkable {
     @SuppressWarnings("ConstantConditions")
     public Task<Response> load(TaskFabric<Response> taskFabric) {
         Callable<Response> taskBody = () -> {
-            Request request = new Request.Builder()
-                    .url(getLink())
-                    .method("GET", null)
-                    .build();
-            Response response = client.newCall(request).execute();
+            Response response = client.newCall(makeRequest()).execute();
+            if (response.code() / 100 != 2) {
+                throw new IOException("Server returned HTTP response code: " + response.code());
+            }
             fromPage(Checks.requireNonExcept(() -> response.body().string(), ""));
             return response;
         };
@@ -36,6 +37,13 @@ public abstract class AbstractHtmlBased extends AbstractLinkable {
                 }
             };
         }
+    }
+
+    protected Request makeRequest() {
+        return new Request.Builder()
+                .url(getLink())
+                .method("GET", null)
+                .build();
     }
 
     protected abstract void fromPage(String rawPage);
