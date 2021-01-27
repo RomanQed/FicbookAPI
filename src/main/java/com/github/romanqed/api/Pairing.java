@@ -1,5 +1,6 @@
 package com.github.romanqed.api;
 
+import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,10 +16,7 @@ public class Pairing extends AbstractHtmlBased {
     private final List<String> characters = new ArrayList<>();
 
     public Pairing(URL link) {
-        if (!validateUrl(link)) {
-            throw new IllegalArgumentException("Bad pairing url");
-        }
-        this.link = link;
+        this.link = Checks.requireCorrectValue(link, Pairing::validateUrl);
     }
 
     public Pairing(List<String> characters) {

@@ -6,19 +6,28 @@ import java.nio.charset.StandardCharsets;
 import java.util.function.Predicate;
 
 public class Urls {
-    public static final URL MAIN_PAGE = parseUrl("https://ficbook.net");
-    public static final URL FANDOMS = parseUrl("fanfiction");
-    public static final URL AUTHORS = parseUrl("authors");
-    public static final URL POPULAR = parseUrl("popular");
-    public static final URL REQUESTS = parseUrl("requests");
-    public static final URL BETAS = parseUrl("betas");
-    public static final URL FANFIC = parseUrl("readfic");
-    public static final URL TAGS = parseUrl("tags");
-    public static final URL COLLECTIONS = parseUrl("collections");
-    public static final URL FIND = parseUrl("find");
-    public static final URL PAIRINGS = parseUrl("pairings");
+    public static final URL MAIN_PAGE = parseFicbookUrl("https://ficbook.net");
+    public static final URL FANDOMS = parseFicbookUrl("fanfiction");
+    public static final URL AUTHORS = parseFicbookUrl("authors");
+    public static final URL POPULAR = parseFicbookUrl("popular");
+    public static final URL REQUESTS = parseFicbookUrl("requests");
+    public static final URL BETAS = parseFicbookUrl("betas");
+    public static final URL FANFIC = parseFicbookUrl("readfic");
+    public static final URL TAGS = parseFicbookUrl("tags");
+    public static final URL COLLECTIONS = parseFicbookUrl("collections");
+    public static final URL FIND = parseFicbookUrl("find");
+    public static final URL PAIRINGS = parseFicbookUrl("pairings");
+    public static final URL DEFAULT_AVATAR = parseUrl("https://static.ficbook.net/ficbook/design/default_avatar.png");
 
-    public static URL parseUrl(URL context, String rawUrl) {
+    public static URL parseUrl(String rawUrl) {
+        try {
+            return new URL(rawUrl);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static URL parseFicbookUrl(URL context, String rawUrl) {
         try {
             return new URL(context, rawUrl);
         } catch (Exception e) {
@@ -26,8 +35,8 @@ public class Urls {
         }
     }
 
-    public static URL parseUrl(String rawUrl) {
-        return parseUrl(MAIN_PAGE, rawUrl);
+    public static URL parseFicbookUrl(String rawUrl) {
+        return parseFicbookUrl(MAIN_PAGE, rawUrl);
     }
 
     public static URL attachUrl(URL context, String rawUrl) {
@@ -74,7 +83,7 @@ public class Urls {
     }
 
     public static URL parseAndValidateUrl(String rawUrl, Predicate<URL> predicate) {
-        URL ret = parseUrl(rawUrl);
+        URL ret = parseFicbookUrl(rawUrl);
         if (ret == null || !predicate.test(ret)) {
             throw new IllegalArgumentException("Bad url!");
         }

@@ -1,5 +1,6 @@
 package com.github.romanqed.api;
 
+import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,17 +13,11 @@ public class Tag extends AbstractHtmlBased {
     private String description = "";
 
     public Tag(URL link) {
-        if (!validateUrl(link)) {
-            throw new IllegalArgumentException("Bad tag url");
-        }
-        this.link = link;
+        this.link = Checks.requireCorrectValue(link, Tag::validateUrl);
     }
 
     public Tag(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("Bad tag id");
-        }
-        link = Urls.attachUrl(Urls.TAGS, Integer.toString(id));
+        link = Urls.attachUrl(Urls.TAGS, Integer.toString(Checks.requireCorrectValue(id, rawId -> rawId > 0)));
     }
 
     public Tag(Element htmlElement) {

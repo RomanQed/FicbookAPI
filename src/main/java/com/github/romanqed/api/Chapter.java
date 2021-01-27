@@ -22,7 +22,7 @@ public class Chapter extends AbstractHtmlBased {
 
     @Override
     protected void fromPage(String rawPage) {
-
+        // TODO
     }
 
     @Override

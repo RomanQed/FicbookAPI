@@ -15,8 +15,8 @@ public interface Linkable {
         return load(null);
     }
 
-    default void loadNow() {
-        load(null).silent();
+    default Response loadNow() {
+        return load(null).silent();
     }
 
     boolean fullLoaded();

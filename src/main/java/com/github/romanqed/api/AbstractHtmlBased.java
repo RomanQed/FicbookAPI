@@ -4,23 +4,18 @@ import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.concurrent.AbstractTask;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
-import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.concurrent.Callable;
 
 public abstract class AbstractHtmlBased extends AbstractLinkable {
-    // FIXME
-    public OkHttpClient client;
-
     @Override
     @SuppressWarnings("ConstantConditions")
     public Task<Response> load(TaskFabric<Response> taskFabric) {
         Callable<Response> taskBody = () -> {
-            Response response = client.newCall(makeRequest()).execute();
+            Response response = client.newCall(requestBuilder().build()).execute();
             if (response.code() / 100 != 2) {
                 throw new IOException("Server returned HTTP response code: " + response.code());
             }
@@ -39,11 +34,10 @@ public abstract class AbstractHtmlBased extends AbstractLinkable {
         }
     }
 
-    protected Request makeRequest() {
+    protected Request.Builder requestBuilder() {
         return new Request.Builder()
                 .url(getLink())
-                .method("GET", null)
-                .build();
+                .method("GET", null);
     }
 
     protected abstract void fromPage(String rawPage);

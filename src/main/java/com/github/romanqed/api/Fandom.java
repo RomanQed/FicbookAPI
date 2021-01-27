@@ -13,17 +13,11 @@ public class Fandom extends AbstractHtmlBased {
     private int pages = -1;
 
     public Fandom(URL link) {
-        if (!validateUrl(link)) {
-            throw new IllegalArgumentException("Bad fandom url");
-        }
-        this.link = link;
+        this.link = Checks.requireCorrectValue(link, Fandom::validateUrl);
     }
 
     public Fandom(String ref) {
-        if (ref.isEmpty()) {
-            throw new IllegalArgumentException("Bad fandom reference");
-        }
-        link = Urls.attachUrl(Urls.FANDOMS, ref);
+        link = Urls.attachUrl(Urls.FANDOMS, Checks.requireCorrectValue(ref, String::isEmpty));
     }
     
     public Fandom(String... splitRef) {

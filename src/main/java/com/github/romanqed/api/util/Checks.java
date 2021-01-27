@@ -1,6 +1,7 @@
 package com.github.romanqed.api.util;
 
 import java.util.concurrent.Callable;
+import java.util.function.Predicate;
 
 public class Checks {
     public static <T> T requireNonNullElse(T obj, T def) {
@@ -16,5 +17,12 @@ public class Checks {
         } catch (Exception e) {
             return def;
         }
+    }
+
+    public static <T> T requireCorrectValue(T value, Predicate<T> predicate) {
+        if (!predicate.test(value)) {
+            throw new IllegalArgumentException("Incorrect " + value.getClass().getCanonicalName() + " value " + value);
+        }
+        return value;
     }
 }

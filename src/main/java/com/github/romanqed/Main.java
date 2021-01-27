@@ -1,18 +1,10 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.Fandom;
-import com.github.romanqed.api.Pairing;
-import com.github.romanqed.api.Tag;
-import com.github.romanqed.api.util.Urls;
-import com.github.romanqed.concurrent.BaseTaskFabric;
-import com.github.romanqed.concurrent.Task;
+import com.github.romanqed.api.User;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 
 import java.io.IOException;
-import java.net.URL;
 import java.text.ParseException;
-import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
@@ -37,5 +29,18 @@ public class Main {
 //        Backup.parseReviews(Jsoup.parse(response.body().string()));
 //        Document document = Jsoup.connect("https://ficbook.net/readfic/9395584/comments").get();
 //        Backup.parseReviews(document);
+//        Tag tag = new Tag(15);
+//        tag.client = new OkHttpClient(); // На эту строчку можно не смотреть
+//        System.out.println(tag.load().checked(System.out::println));
+//        System.out.println(tag);
+//        System.out.println(tag.getDescription());
+//        Pairing pairing = new Pairing("ОМП", "ОЖП");
+//        pairing.client = new OkHttpClient();
+//        System.out.println(pairing.load().checked(System.out::println));
+//        System.out.println(pairing);
+        User user = new User(1162882);
+        user.client = new OkHttpClient();
+        user.loadNow();
+        System.out.println();
     }
 }
