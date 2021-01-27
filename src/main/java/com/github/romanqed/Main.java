@@ -1,7 +1,6 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.User;
-import okhttp3.OkHttpClient;
+import com.github.romanqed.api.states.Direction;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -38,9 +37,10 @@ public class Main {
 //        pairing.client = new OkHttpClient();
 //        System.out.println(pairing.load().checked(System.out::println));
 //        System.out.println(pairing);
-        User user = new User(1162882);
-        user.client = new OkHttpClient();
-        user.loadNow();
-        System.out.println();
+//        User user = new User(1162882);
+//        user.client = new OkHttpClient();
+//        user.loadNow();
+//        System.out.println();
+        System.out.println(Direction.fromName("джен"));
     }
 }
