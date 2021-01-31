@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Fandom extends AbstractHtmlBased {
+public class Fandom extends LinkableHtmlBased {
     private String title = "";
     private int pages = -1;
 

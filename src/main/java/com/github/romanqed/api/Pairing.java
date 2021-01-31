@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Pairing extends AbstractHtmlBased {
+public class Pairing extends LinkableHtmlBased {
     private final List<String> characters = new ArrayList<>();
 
     public Pairing(URL link) {

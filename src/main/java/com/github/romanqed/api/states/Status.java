@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public enum Status {
     COMPLETED("закончен"),
-    IN_PROGRESS("в процессе"),
+    IN_PROGRESS("впроцессе"),
     FROZEN("заморожен");
 
     static final Map<String, Status> children = toMap();

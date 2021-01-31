@@ -1,7 +1,7 @@
 package com.github.romanqed.api;
 
 import com.github.romanqed.api.util.Checks;
-import com.github.romanqed.api.util.Patterns;
+import com.github.romanqed.api.util.ParseUtil;
 import com.google.gson.JsonObject;
 
 import java.util.Date;
@@ -17,7 +17,7 @@ public class Reward {
     public Reward(JsonObject jsonObject) throws Exception {
         userId = Checks.requireNonExcept(() -> jsonObject.get("giver_id").getAsInt(), -1);
         userName = Checks.requireNonExcept(() -> jsonObject.get("nickname").getAsString(), "");
-        createDate = Patterns.dateFormat.parse(jsonObject.get("added").getAsString());
+        createDate = ParseUtil.dateFormat.parse(jsonObject.get("added").getAsString());
         rewardText = jsonObject.get("user_text").getAsString();
     }
 

@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Tag extends AbstractHtmlBased {
+public class Tag extends LinkableHtmlBased {
     private String title = "";
     private String description = "";
 

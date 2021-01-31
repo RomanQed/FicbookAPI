@@ -10,7 +10,7 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-public abstract class AbstractHtmlBased extends AbstractLinkable {
+public abstract class LinkableHtmlBased extends AbstractLinkable {
     @Override
     @SuppressWarnings("ConstantConditions")
     public Task<Response> load(TaskFabric<Response> taskFabric) {

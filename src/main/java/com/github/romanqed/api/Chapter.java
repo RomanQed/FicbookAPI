@@ -4,7 +4,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Chapter extends AbstractHtmlBased {
+public class Chapter extends LinkableHtmlBased {
     // TODO
     private final int id = 0;
 

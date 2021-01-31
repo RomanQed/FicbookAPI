@@ -1,6 +1,5 @@
 package com.github.romanqed.api.states;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,7 +27,6 @@ public enum Rating {
     }
 
     public static Rating fromName(String name) {
-        name = name.toLowerCase(Locale.ROOT);
         return Objects.requireNonNull(children.get(name));
     }
 
