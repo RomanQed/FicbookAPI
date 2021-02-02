@@ -6,8 +6,11 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 
 public class Chapter extends AbstractHtmlBased {
-    // TODO
     private final int id = 0;
+    private String title;
+    private String date;
+    private String body;
+    private String notes;
 
     public Chapter(Element htmlElement) {
         // TODO

@@ -1,5 +1,9 @@
 package com.github.romanqed;
 
+import com.github.romanqed.api.html.Tag;
+import com.github.romanqed.api.html.TagLoader;
+import com.github.romanqed.concurrent.Task;
+
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -27,18 +31,5 @@ public class Main {
 //        Backup.parseReviews(Jsoup.parse(response.body().string()));
 //        Document document = Jsoup.connect("https://ficbook.net/readfic/9395584/comments").get();
 //        Backup.parseReviews(document);
-//        Tag tag = new Tag(15);
-//        tag.client = new OkHttpClient(); // На эту строчку можно не смотреть
-//        System.out.println(tag.load().checked(System.out::println));
-//        System.out.println(tag);
-//        System.out.println(tag.getDescription());
-//        Pairing pairing = new Pairing("ОМП", "ОЖП");
-//        pairing.client = new OkHttpClient();
-//        System.out.println(pairing.load().checked(System.out::println));
-//        System.out.println(pairing);
-//        User user = new User(3793313);
-//        user.client = new OkHttpClient();
-//        user.loadNow();
-//        System.out.println();
     }
 }

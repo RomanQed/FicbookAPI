@@ -21,7 +21,7 @@ public abstract class AbstractHtmlLoader<T extends AbstractHtmlBased> implements
     public Task<T> load(String id) {
         Callable<T> taskBody = () -> {
             URL url = makeUrl(id);
-            Response response = client.newCall(requestBuilder(makeUrl(id)).build()).execute();
+            Response response = client.newCall(requestBuilder(url).build()).execute();
             if (response.code() / 100 != 2) {
                 throw new IOException("Server returned HTTP response code: " + response.code());
             }
