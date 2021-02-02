@@ -1,4 +1,4 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.json;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// TODO Add User class
 public class Comment {
     private final int userId;
     private final String userName;

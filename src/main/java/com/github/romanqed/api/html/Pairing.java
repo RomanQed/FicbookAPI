@@ -1,4 +1,4 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
@@ -8,26 +8,14 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Pairing extends LinkableHtmlBased {
+public class Pairing extends AbstractHtmlBased {
     private final List<String> characters = new ArrayList<>();
 
     public Pairing(URL link) {
         this.link = Checks.requireCorrectValue(link, Pairing::validateUrl);
-    }
-
-    public Pairing(List<String> characters) {
-        this.characters.addAll(characters);
-        StringBuilder rawLink = new StringBuilder();
-        characters.forEach(character -> rawLink.append('/').append(Urls.encodeFicbookUrl(character)));
-        link = Urls.attachUrl(Urls.PAIRINGS, rawLink.toString());
-    }
-
-    public Pairing(String... characters) {
-        this(Arrays.asList(characters));
     }
 
     public Pairing(Element htmlElement) {
@@ -46,11 +34,6 @@ public class Pairing extends LinkableHtmlBased {
 
     public boolean isSingle() {
         return characters.size() == 1;
-    }
-
-    @Override
-    public boolean fullLoaded() {
-        return characters.stream().anyMatch(item -> !item.isEmpty());
     }
 
     @Override

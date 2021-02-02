@@ -1,4 +1,4 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.json;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
@@ -6,8 +6,6 @@ import com.google.gson.JsonObject;
 
 import java.util.Date;
 
-
-// TODO Add User class
 public class Reward {
     private final int userId;
     private final String userName;

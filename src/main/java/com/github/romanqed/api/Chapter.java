@@ -1,10 +1,11 @@
 package com.github.romanqed.api;
 
+import com.github.romanqed.api.html.AbstractHtmlBased;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Chapter extends LinkableHtmlBased {
+public class Chapter extends AbstractHtmlBased {
     // TODO
     private final int id = 0;
 
@@ -12,21 +13,12 @@ public class Chapter extends LinkableHtmlBased {
         // TODO
     }
 
-    public Chapter(int parent, int id) {
+    protected Chapter(URL link) {
 
-    }
-
-    protected Chapter(URL checkedLink) {
-        link = checkedLink;
     }
 
     @Override
     protected void fromPage(String rawPage) {
         // TODO
-    }
-
-    @Override
-    public boolean fullLoaded() {
-        return false;
     }
 }

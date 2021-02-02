@@ -1,4 +1,4 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.states.Direction;
 import com.github.romanqed.api.util.Checks;

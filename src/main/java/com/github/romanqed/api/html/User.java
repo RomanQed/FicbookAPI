@@ -1,4 +1,4 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
@@ -8,7 +8,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class User extends LinkableHtmlBased {
+public class User extends AbstractHtmlBased {
     private String name;
     private URL avatar;
     private String about = "";
@@ -19,12 +19,9 @@ public class User extends LinkableHtmlBased {
         this.link = Checks.requireCorrectValue(link, User::validateUrl);
     }
 
-    public User(int id) {
-        link = Urls.attachUrl(Urls.AUTHORS, Integer.toString(Checks.requireCorrectValue(id, rawId -> rawId > 0)));
-    }
-
     public User(Element htmlElement) {
-        // TODO
+        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), User::validateUrl);
+        name = htmlElement.text();
     }
 
     public static boolean validateUrl(URL url) {
@@ -53,11 +50,6 @@ public class User extends LinkableHtmlBased {
 
     public boolean canBeBeta() {
         return betaForm != null;
-    }
-
-    @Override
-    public boolean fullLoaded() {
-        return !name.isEmpty() && avatar != null;
     }
 
     @Override
