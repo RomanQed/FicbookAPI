@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient;
 
 import java.net.URL;
 
-public class TagLoader extends AbstractLinkableLoader<Tag> {
+public class TagLoader extends AbstractHtmlLoader<Tag> {
     public TagLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
@@ -26,10 +26,8 @@ public class TagLoader extends AbstractLinkableLoader<Tag> {
     }
 
     @Override
-    protected Tag fromResponse(URL url, String response) {
-        Tag ret = new Tag(url);
-        ret.fromPage(response);
-        return ret;
+    protected Class<Tag> getElementClass() {
+        return Tag.class;
     }
 
     @Override

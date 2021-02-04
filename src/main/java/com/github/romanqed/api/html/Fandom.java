@@ -12,8 +12,8 @@ public class Fandom extends AbstractHtmlBased {
     private String title = "";
     private int pages = -1;
 
-    public Fandom(URL link) {
-        this.url = Checks.requireCorrectValue(link, Fandom::validateUrl);
+    public Fandom(URL url) {
+        this.url = Checks.requireCorrectValue(url, Fandom::validateUrl);
     }
 
     public Fandom(Element htmlElement) {

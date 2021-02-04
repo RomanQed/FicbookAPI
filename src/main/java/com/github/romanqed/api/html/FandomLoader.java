@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient;
 
 import java.net.URL;
 
-public class FandomLoader extends AbstractLinkableLoader<Fandom> {
+public class FandomLoader extends AbstractHtmlLoader<Fandom> {
     public FandomLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
@@ -26,10 +26,8 @@ public class FandomLoader extends AbstractLinkableLoader<Fandom> {
     }
 
     @Override
-    protected Fandom fromResponse(URL url, String response) {
-        Fandom ret = new Fandom(url);
-        ret.fromPage(response);
-        return ret;
+    protected Class<Fandom> getElementClass() {
+        return Fandom.class;
     }
 
     @Override

@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient;
 
 import java.net.URL;
 
-public class UserLoader extends AbstractLinkableLoader<User> {
+public class UserLoader extends AbstractHtmlLoader<User> {
     public UserLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
@@ -26,10 +26,8 @@ public class UserLoader extends AbstractLinkableLoader<User> {
     }
 
     @Override
-    protected User fromResponse(URL url, String body) {
-        User ret = new User(url);
-        ret.fromPage(body);
-        return ret;
+    protected Class<User> getElementClass() {
+        return User.class;
     }
 
     @Override

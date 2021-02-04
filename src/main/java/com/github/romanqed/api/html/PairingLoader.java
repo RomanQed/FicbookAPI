@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class PairingLoader extends AbstractLinkableLoader<Pairing> {
+public class PairingLoader extends AbstractHtmlLoader<Pairing> {
     public PairingLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
@@ -33,10 +33,8 @@ public class PairingLoader extends AbstractLinkableLoader<Pairing> {
     }
 
     @Override
-    protected Pairing fromResponse(URL url, String body) {
-        Pairing ret = new Pairing(url);
-        ret.fromPage(body);
-        return ret;
+    protected Class<Pairing> getElementClass() {
+        return Pairing.class;
     }
 
     @Override

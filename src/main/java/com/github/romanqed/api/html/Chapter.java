@@ -29,8 +29,8 @@ public class Chapter extends AbstractHtmlBased {
         ));
     }
 
-    protected Chapter(URL link) {
-        this.url = Checks.requireCorrectValue(link, Chapter::validateUrl);
+    protected Chapter(URL url) {
+        this.url = Checks.requireCorrectValue(url, Chapter::validateUrl);
     }
 
     public static boolean validateUrl(URL url) {

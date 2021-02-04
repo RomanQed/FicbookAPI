@@ -7,7 +7,7 @@ import okhttp3.OkHttpClient;
 
 import java.net.URL;
 
-public class ChapterLoader extends AbstractLinkableLoader<Chapter> {
+public class ChapterLoader extends AbstractHtmlLoader<Chapter> {
     public ChapterLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
@@ -25,14 +25,12 @@ public class ChapterLoader extends AbstractLinkableLoader<Chapter> {
     }
 
     @Override
-    protected Chapter fromResponse(URL url, String body) {
-        Chapter ret = new Chapter(url);
-        ret.fromPage(body);
-        return ret;
+    protected URL makeUrl(String id) {
+        return Urls.attachUrl(Urls.FANFIC, id);
     }
 
     @Override
-    protected URL makeUrl(String id) {
-        return Urls.attachUrl(Urls.FANFIC, id);
+    protected Class<Chapter> getElementClass() {
+        return Chapter.class;
     }
 }

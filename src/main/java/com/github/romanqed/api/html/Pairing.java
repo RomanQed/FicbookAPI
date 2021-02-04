@@ -14,8 +14,8 @@ import java.util.List;
 public class Pairing extends AbstractHtmlBased {
     private final List<String> characters = new ArrayList<>();
 
-    public Pairing(URL link) {
-        this.url = Checks.requireCorrectValue(link, Pairing::validateUrl);
+    public Pairing(URL url) {
+        this.url = Checks.requireCorrectValue(url, Pairing::validateUrl);
     }
 
     public Pairing(Element htmlElement) {

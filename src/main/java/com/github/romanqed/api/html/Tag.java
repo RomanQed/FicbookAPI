@@ -12,8 +12,8 @@ public class Tag extends AbstractHtmlBased {
     private String title = "";
     private String description = "";
 
-    public Tag(URL link) {
-        this.url = Checks.requireCorrectValue(link, Tag::validateUrl);
+    public Tag(URL url) {
+        this.url = Checks.requireCorrectValue(url, Tag::validateUrl);
     }
 
     public Tag(Element htmlElement) {

@@ -15,8 +15,8 @@ public class User extends AbstractHtmlBased {
     private int favourites = 0;
     private BetaForm betaForm;
 
-    public User(URL link) {
-        this.url = Checks.requireCorrectValue(link, User::validateUrl);
+    public User(URL url) {
+        this.url = Checks.requireCorrectValue(url, User::validateUrl);
     }
 
     public User(Element htmlElement) {
