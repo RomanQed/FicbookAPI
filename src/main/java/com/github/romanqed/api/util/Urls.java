@@ -4,6 +4,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class Urls {
     public static final URL MAIN_PAGE = parseFicbookUrl("https://ficbook.net");
@@ -18,6 +19,8 @@ public class Urls {
     public static final URL FIND = parseFicbookUrl("find");
     public static final URL PAIRINGS = parseFicbookUrl("pairings");
     public static final URL DEFAULT_AVATAR = parseUrl("https://static.ficbook.net/ficbook/design/default_avatar.png");
+
+    public static final String CHAPTER_REGEXP = Pattern.quote(FANFIC.toString()) + "/\\d*/\\d*";
 
     public static URL parseUrl(String rawUrl) {
         try {
@@ -88,5 +91,13 @@ public class Urls {
             throw new IllegalArgumentException("Bad url!");
         }
         return ret;
+    }
+
+    public static URL parseAndValidateUrl(String rawUrl, String regexp) {
+        return parseAndValidateUrl(rawUrl, url -> url.toString().matches(regexp));
+    }
+
+    public static boolean validateUrl(URL url, String regexp) {
+        return url.toString().matches(regexp);
     }
 }

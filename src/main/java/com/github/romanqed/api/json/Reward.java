@@ -12,10 +12,10 @@ public class Reward {
     private final Date createDate;
     private final String rewardText;
 
-    public Reward(JsonObject jsonObject) throws Exception {
+    public Reward(JsonObject jsonObject) {
         userId = Checks.requireNonExcept(() -> jsonObject.get("giver_id").getAsInt(), -1);
         userName = Checks.requireNonExcept(() -> jsonObject.get("nickname").getAsString(), "");
-        createDate = ParseUtil.dateFormat.parse(jsonObject.get("added").getAsString());
+        createDate = ParseUtil.parseJsonDate(jsonObject.get("added").getAsString());
         rewardText = jsonObject.get("user_text").getAsString();
     }
 

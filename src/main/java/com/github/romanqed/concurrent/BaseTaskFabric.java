@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class BaseTaskFabric<T> implements TaskFabric<T> {
+public class BaseTaskFabric implements TaskFabric {
     protected ExecutorService executor;
 
     public BaseTaskFabric(ExecutorService executor) {
@@ -18,7 +18,7 @@ public class BaseTaskFabric<T> implements TaskFabric<T> {
     }
 
     @Override
-    public Task<T> createTask(Callable<T> action) {
+    public <T> Task<T> createTask(Callable<T> action) {
         return new AbstractTask<T>() {
             @Override
             public T call() throws Exception {

@@ -1,7 +1,8 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.concurrent.AbstractTask;
+import com.github.romanqed.concurrent.BaseTaskFabric;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
 import okhttp3.OkHttpClient;
@@ -12,9 +13,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.Callable;
 
-public abstract class AbstractHtmlLoader<T extends AbstractHtmlBased> implements HtmlBasedLoader<T> {
-    protected TaskFabric<T> taskFabric;
+public abstract class AbstractDataLoader<T> implements DataLoader<T> {
+    protected TaskFabric taskFabric;
     protected OkHttpClient client;
+
+    public AbstractDataLoader(OkHttpClient client, TaskFabric taskFabric) {
+        this.client = Checks.requireNonNullElse(client, new OkHttpClient());
+        this.taskFabric = Checks.requireNonNullElse(taskFabric, new BaseTaskFabric());
+    }
 
     @Override
     @SuppressWarnings("ConstantConditions")
@@ -40,7 +46,7 @@ public abstract class AbstractHtmlLoader<T extends AbstractHtmlBased> implements
     }
 
     @Override
-    public TaskFabric<T> getTaskFabric() {
+    public TaskFabric getTaskFabric() {
         return taskFabric;
     }
 

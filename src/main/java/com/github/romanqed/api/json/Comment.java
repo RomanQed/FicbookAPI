@@ -18,11 +18,11 @@ public class Comment {
     private final int likes;
     private final List<Reward> rewards;
 
-    public Comment(JsonObject jsonObject) throws Exception {
+    public Comment(JsonObject jsonObject) {
         rewards = new ArrayList<>();
         userId = Checks.requireNonExcept(() -> jsonObject.get("user_id").getAsInt(), -1);
         userName = Checks.requireNonExcept(() -> jsonObject.get("user_nickname").getAsString(), "");
-        createDate = ParseUtil.dateFormat.parse(jsonObject.get("date_create").getAsString());
+        createDate = ParseUtil.parseJsonDate(jsonObject.get("date_create").getAsString());
         comment = jsonObject.get("comment").getAsString();
         likes = Checks.requireNonExcept(() -> jsonObject.get("like_cnt").getAsInt(), 0);
         JsonArray rawRewards = Checks.requireNonExcept(() -> jsonObject.get("rewards").getAsJsonArray(), null);

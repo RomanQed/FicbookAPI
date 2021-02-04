@@ -1,18 +1,17 @@
 package com.github.romanqed.api.html;
 
+import com.github.romanqed.api.AbstractDataLoader;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
-import com.github.romanqed.concurrent.BaseTaskFabric;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
 import okhttp3.OkHttpClient;
 
 import java.net.URL;
 
-public class UserLoader extends AbstractHtmlLoader<User> {
-    public UserLoader(OkHttpClient client, TaskFabric<User> taskFabric) {
-        this.client = Checks.requireNonNullElse(client, new OkHttpClient());
-        this.taskFabric = Checks.requireNonNullElse(taskFabric, new BaseTaskFabric<>());
+public class UserLoader extends AbstractDataLoader<User> {
+    public UserLoader(OkHttpClient client, TaskFabric taskFabric) {
+        super(client, taskFabric);
     }
 
     public UserLoader(OkHttpClient client) {
@@ -20,7 +19,7 @@ public class UserLoader extends AbstractHtmlLoader<User> {
     }
 
     public UserLoader() {
-        this(null);
+        this(null, null);
     }
 
     public Task<User> load(int id) {
