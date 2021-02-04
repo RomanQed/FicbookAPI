@@ -1,6 +1,5 @@
 package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.AbstractDataLoader;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
@@ -9,7 +8,7 @@ import okhttp3.OkHttpClient;
 
 import java.net.URL;
 
-public class UserLoader extends AbstractDataLoader<User> {
+public class UserLoader extends AbstractLinkableLoader<User> {
     public UserLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

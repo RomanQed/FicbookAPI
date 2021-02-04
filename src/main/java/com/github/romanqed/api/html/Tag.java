@@ -13,11 +13,11 @@ public class Tag extends AbstractHtmlBased {
     private String description = "";
 
     public Tag(URL link) {
-        this.link = Checks.requireCorrectValue(link, Tag::validateUrl);
+        this.url = Checks.requireCorrectValue(link, Tag::validateUrl);
     }
 
     public Tag(Element htmlElement) {
-        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), Tag::validateUrl);
+        url = Urls.parseAndValidateUrl(htmlElement.attr("href"), Tag::validateUrl);
         title = htmlElement.text();
         description = htmlElement.attr("title").replaceAll("<.{1,2}>", "");
     }

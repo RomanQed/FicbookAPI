@@ -18,7 +18,7 @@ public class Chapter extends AbstractHtmlBased {
 
     public Chapter(Element htmlElement) {
         Element a = htmlElement.selectFirst("a");
-        link = Urls.parseAndValidateUrl(
+        url = Urls.parseAndValidateUrl(
                 a.attr("href").replaceAll("#.*", ""),
                 Urls.CHAPTER_REGEXP
         );
@@ -30,7 +30,7 @@ public class Chapter extends AbstractHtmlBased {
     }
 
     protected Chapter(URL link) {
-        this.link = Checks.requireCorrectValue(link, Chapter::validateUrl);
+        this.url = Checks.requireCorrectValue(link, Chapter::validateUrl);
     }
 
     public static boolean validateUrl(URL url) {

@@ -1,6 +1,5 @@
 package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.AbstractDataLoader;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
@@ -10,7 +9,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class PairingLoader extends AbstractDataLoader<Pairing> {
+public class PairingLoader extends AbstractLinkableLoader<Pairing> {
     public PairingLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

@@ -1,6 +1,5 @@
 package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.AbstractDataLoader;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
@@ -8,7 +7,7 @@ import okhttp3.OkHttpClient;
 
 import java.net.URL;
 
-public class ChapterLoader extends AbstractDataLoader<Chapter> {
+public class ChapterLoader extends AbstractLinkableLoader<Chapter> {
     public ChapterLoader(OkHttpClient client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

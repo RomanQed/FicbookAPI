@@ -15,11 +15,11 @@ public class Pairing extends AbstractHtmlBased {
     private final List<String> characters = new ArrayList<>();
 
     public Pairing(URL link) {
-        this.link = Checks.requireCorrectValue(link, Pairing::validateUrl);
+        this.url = Checks.requireCorrectValue(link, Pairing::validateUrl);
     }
 
     public Pairing(Element htmlElement) {
-        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), Pairing::validateUrl);
+        url = Urls.parseAndValidateUrl(htmlElement.attr("href"), Pairing::validateUrl);
         characters.clear();
         Collections.addAll(characters, htmlElement.text().split("/"));
     }

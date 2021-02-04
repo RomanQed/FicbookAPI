@@ -13,11 +13,11 @@ public class Fandom extends AbstractHtmlBased {
     private int pages = -1;
 
     public Fandom(URL link) {
-        this.link = Checks.requireCorrectValue(link, Fandom::validateUrl);
+        this.url = Checks.requireCorrectValue(link, Fandom::validateUrl);
     }
 
     public Fandom(Element htmlElement) {
-        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), Fandom::validateUrl);
+        url = Urls.parseAndValidateUrl(htmlElement.attr("href"), Fandom::validateUrl);
         title = htmlElement.text().trim();
     }
 

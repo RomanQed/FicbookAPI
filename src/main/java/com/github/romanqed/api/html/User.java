@@ -16,11 +16,11 @@ public class User extends AbstractHtmlBased {
     private BetaForm betaForm;
 
     public User(URL link) {
-        this.link = Checks.requireCorrectValue(link, User::validateUrl);
+        this.url = Checks.requireCorrectValue(link, User::validateUrl);
     }
 
     public User(Element htmlElement) {
-        link = Urls.parseAndValidateUrl(htmlElement.attr("href"), User::validateUrl);
+        url = Urls.parseAndValidateUrl(htmlElement.attr("href"), User::validateUrl);
         name = htmlElement.text();
     }
 

@@ -24,9 +24,8 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    public Task<T> load(String id) {
+    public Task<T> load(URL url) {
         Callable<T> taskBody = () -> {
-            URL url = makeUrl(id);
             Response response = client.newCall(requestBuilder(url).build()).execute();
             if (response.code() / 100 != 2) {
                 throw new IOException("Server returned HTTP response code: " + response.code());
@@ -43,6 +42,11 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
                 }
             };
         }
+    }
+
+    @Override
+    public Task<T> load(String id) {
+        return load(makeUrl(id));
     }
 
     @Override
