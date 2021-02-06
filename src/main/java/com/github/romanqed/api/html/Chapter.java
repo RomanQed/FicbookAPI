@@ -20,7 +20,7 @@ public class Chapter extends AbstractHtmlBased {
         Element a = htmlElement.selectFirst("a");
         url = Urls.parseAndValidateUrl(
                 a.attr("href").replaceAll("#.*", ""),
-                Urls.CHAPTER_REGEXP
+                Chapter::validateUrl
         );
         title = a.text();
         date = ParseUtil.parseNativeDate(Checks.requireNonExcept(
@@ -34,7 +34,7 @@ public class Chapter extends AbstractHtmlBased {
     }
 
     public static boolean validateUrl(URL url) {
-        return Urls.validateUrl(url, Urls.CHAPTER_REGEXP);
+        return Urls.validateChildUrl(Urls.FANFIC, url);
     }
 
     public String getTitle() {
@@ -58,7 +58,7 @@ public class Chapter extends AbstractHtmlBased {
         Document page = Jsoup.parse(rawPage);
         Element body = page.selectFirst("article.article");
         Element title = body.selectFirst("div.title-area");
-        this.title = title.selectFirst("h2").text();
+        this.title = Checks.requireNonExcept(() -> title.selectFirst("h2").text(), "");
         this.date = ParseUtil.parseNativeDate(title.selectFirst("div.part-date span").attr("title"));
         this.body = Checks.requireNonExcept(() -> body.selectFirst("div[id=content]").wholeText(), "");
         this.notes = Checks.requireNonExcept(() -> body.selectFirst("div.part-comment-bottom div").wholeText(), "");

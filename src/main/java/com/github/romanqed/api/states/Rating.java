@@ -21,16 +21,12 @@ public enum Rating {
     public static Map<String, Rating> toMap() {
         Map<String, Rating> ret = new ConcurrentHashMap<>();
         for (Rating rating : values()) {
-            ret.put(rating.getTitle(), rating);
+            ret.put(rating.title, rating);
         }
         return ret;
     }
 
     public static Rating fromName(String name) {
         return Objects.requireNonNull(children.get(name));
-    }
-
-    public String getTitle() {
-        return title;
     }
 }
