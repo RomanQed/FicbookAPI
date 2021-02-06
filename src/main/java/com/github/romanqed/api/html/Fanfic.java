@@ -28,6 +28,9 @@ public class Fanfic extends AbstractHtmlBased {
     private Rating rating;
     private Status status;
     private boolean isTranslate;
+    private String originalAuthor = "";
+    private String originalFanfic = "";
+    private boolean isPremium;
     private Size size;
     private int actualPages;
     private int likes;
@@ -38,13 +41,21 @@ public class Fanfic extends AbstractHtmlBased {
     private String copyright = "";
 
     public Fanfic(Element htmlElement) {
+        isTranslate = htmlElement.selectFirst("span.notice-blue") != null;
+        isPremium = htmlElement.selectFirst("a.notice-yellow") != null;
         Element head = htmlElement.selectFirst("h3");
         Element link = head.selectFirst("a");
         url = Urls.parseAndValidateUrl(link.attr("href"), Fanfic::validateUrl);
         title = link.text();
         direction = Direction.fromName(head.selectFirst("svg").attr("class").split(" ")[0]);
         likes = Checks.requireNonExcept(() -> Integer.parseInt(head.selectFirst("sup.count span.value").text()), 0);
-        authors.put(new User(htmlElement.selectFirst("div.authors-list a")), AuthorRole.AUTHOR);
+        Elements authors = htmlElement.select("span.author a");
+        if (isTranslate) {
+            this.authors.put(new User(authors.first()), AuthorRole.TRANSLATOR);
+            originalAuthor = authors.last().text();
+        } else {
+            this.authors.put(new User(authors.first()), AuthorRole.AUTHOR);
+        }
         Elements hat = htmlElement.select("dl.info dd");
         Elements fandoms = hat.get(0).select("a");
         for (Element fandom : fandoms) {
@@ -96,6 +107,24 @@ public class Fanfic extends AbstractHtmlBased {
 
     public boolean isTranslate() {
         return isTranslate;
+    }
+
+    public String getOriginalAuthor() {
+        if (!isTranslate) {
+            throw new IllegalStateException("Fanfic is not a translation");
+        }
+        return originalAuthor;
+    }
+
+    public String getOriginalFanfic() {
+        if (!isTranslate) {
+            throw new IllegalStateException("Fanfic is not a translation");
+        }
+        return originalFanfic;
+    }
+
+    public boolean isPremium() {
+        return isPremium;
     }
 
     public Status getStatus() {
@@ -170,6 +199,12 @@ public class Fanfic extends AbstractHtmlBased {
         likes = Checks.requireNonExcept(() -> Integer.parseInt(mainInfo.selectFirst("span.badge-like").text()), 0);
         inCollections = Checks.requireNonExcept(() -> ParseUtil.parseMixedNum(page.selectFirst("span.main-info svg.ic_bookmark").parent().text()), 0);
         Element hat = page.selectFirst("section.fanfic-hat");
+        isPremium = hat.selectFirst("div.fanfic-hat-premium-notice") != null;
+        if (isTranslate) {
+            Element info = hat.selectFirst("div.mb-15");
+            originalAuthor = info.selectFirst("a").text();
+            originalFanfic = info.selectFirst("div.urlize").text();
+        }
         Element rewardElements = hat.selectFirst("fanfic-reward-list");
         if (rewardElements != null) {
             JsonElement rewards = JsonParser.parseString(rewardElements.attr(":initial-fic-rewards-list"));

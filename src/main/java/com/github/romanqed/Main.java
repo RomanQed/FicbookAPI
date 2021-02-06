@@ -2,6 +2,8 @@ package com.github.romanqed;
 
 import com.github.romanqed.api.html.Fanfic;
 import com.github.romanqed.api.html.FanficLoader;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -18,7 +20,6 @@ public class Main {
 //                break;
 //            }
 //        }
-        printAllFanficInfo(loader.load(244).checked(e -> e.printStackTrace()));
     }
 
     public static void printAllFanficInfo(Fanfic fanfic) {
@@ -27,6 +28,9 @@ public class Main {
         System.out.println(fanfic.getDirection());
         System.out.println(fanfic.getRating());
         System.out.println(fanfic.isTranslate());
+        System.out.println(fanfic.getOriginalAuthor());
+        System.out.println(fanfic.getOriginalFanfic());
+        System.out.println(fanfic.isPremium());
         System.out.println(fanfic.getStatus());
         System.out.println(fanfic.getLikes());
         System.out.println(fanfic.inCollections());
