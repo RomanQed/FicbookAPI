@@ -186,6 +186,9 @@ public class Fanfic extends AbstractHtmlBased {
     @Override
     protected void fromPage(String rawPage) {
         Document page = Jsoup.parse(rawPage);
+        if (page.selectFirst("div.alert-danger") != null) {
+            throw new IllegalStateException("Broken fanfic");
+        }
         Element mainInfo = page.selectFirst("div.fanfic-main-info");
         title = mainInfo.selectFirst("h1").text();
         Elements fandoms = mainInfo.select("div.mb-10 a");
