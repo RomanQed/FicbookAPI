@@ -10,7 +10,8 @@ public enum AuthorRole {
     AUTHOR("автор"),
     COAUTHOR("соавтор"),
     BETA("бета"),
-    GAMMA("гамма");
+    GAMMA("гамма"),
+    TRANSLATOR("переводчик");
 
     static final Map<String, AuthorRole> children = toMap();
     final List<String> names;

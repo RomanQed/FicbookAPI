@@ -27,6 +27,7 @@ public class Fanfic extends AbstractHtmlBased {
     private Direction direction;
     private Rating rating;
     private Status status;
+    private boolean isTranslate;
     private Size size;
     private int actualPages;
     private int likes;
@@ -91,6 +92,10 @@ public class Fanfic extends AbstractHtmlBased {
 
     public Rating getRating() {
         return rating;
+    }
+
+    public boolean isTranslate() {
+        return isTranslate;
     }
 
     public Status getStatus() {
@@ -158,10 +163,10 @@ public class Fanfic extends AbstractHtmlBased {
         for (Element fandom : fandoms) {
             this.fandoms.add(new Fandom(fandom));
         }
-        Elements badges = mainInfo.select("div.badge-icon-container svg");
-        direction = Direction.fromName(ParseUtil.safetyText(badges.get(0).attr("class")));
+        direction = Direction.fromName(ParseUtil.safetyText(mainInfo.selectFirst("div.direction svg").attr("class")));
         rating = Rating.fromName(ParseUtil.safetyText(mainInfo.selectFirst("strong span").text()));
-        status = Status.fromName(ParseUtil.safetyText(badges.get(1).attr("class")));
+        isTranslate = mainInfo.selectFirst("span.badge-translate") != null;
+        status = Status.fromName(ParseUtil.safetyText(mainInfo.selectFirst("span.badge-secondary svg").attr("class")));
         likes = Checks.requireNonExcept(() -> Integer.parseInt(mainInfo.selectFirst("span.badge-like").text()), 0);
         inCollections = Checks.requireNonExcept(() -> ParseUtil.parseMixedNum(page.selectFirst("span.main-info svg.ic_bookmark").parent().text()), 0);
         Element hat = page.selectFirst("section.fanfic-hat");
@@ -188,18 +193,8 @@ public class Fanfic extends AbstractHtmlBased {
             this.tags.add(new Tag(tag));
         }
         description = hat.selectFirst("div[itemprop=description]").text();
-        Elements checked = hat.select("div.urlize[itemprop!=description]");
-        if (checked.size() == 2) {
-            dedication = checked.first().text();
-            notes = checked.last().text();
-        } else if (checked.size() == 1) {
-            String checkedText = ParseUtil.safetyText(checked.first().parent().text());
-            if (checkedText.startsWith("посвящение")) {
-                dedication = checked.first().text();
-            } else {
-                notes = checked.first().text();
-            }
-        }
+        dedication = Checks.requireNonExcept(() -> hat.selectFirst("div.mb-5:contains(Посвящение)").wholeText(), "");
+        notes = Checks.requireNonExcept(() -> hat.selectFirst("div.mb-5:contains(Примечания)").wholeText(), "");
         copyright = hat.select("div.mb-5 div").last().text();
         Elements chapters = page.select("article li.part");
         if (!chapters.isEmpty()) {
@@ -209,5 +204,10 @@ public class Fanfic extends AbstractHtmlBased {
         } else {
             this.chapters.add(new Chapter(url));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "[Fanfic] " + title + " [Description] " + description + " " + super.toString();
     }
 }
