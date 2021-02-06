@@ -1,13 +1,13 @@
 package com.github.romanqed;
 
+import com.github.romanqed.api.html.UserLoader;
 import kong.unirest.HttpRequest;
 import kong.unirest.Unirest;
 import kong.unirest.UnirestInstance;
 
 public class Main {
     public static void main(String[] args) {
-        UnirestInstance instance = Unirest.spawnInstance();
-        HttpRequest<?> a = instance.get("https://ficbook.net");
-        System.out.println(a.asString().getBody());
+        UserLoader loader = new UserLoader();
+        System.out.println(loader.load(5).silent());
     }
 }

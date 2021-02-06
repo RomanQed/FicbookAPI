@@ -35,7 +35,7 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
         if (taskFabric != null) {
             return taskFabric.createTask(taskBody);
         } else {
-            return new AbstractTask<>() {
+            return new AbstractTask<T>() {
                 @Override
                 public T call() throws Exception {
                     return taskBody.call();
