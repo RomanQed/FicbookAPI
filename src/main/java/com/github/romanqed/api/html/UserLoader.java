@@ -4,16 +4,16 @@ import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
-import okhttp3.OkHttpClient;
+import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
 public class UserLoader extends AbstractHtmlLoader<User> {
-    public UserLoader(OkHttpClient client, TaskFabric taskFabric) {
+    public UserLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public UserLoader(OkHttpClient client) {
+    public UserLoader(UnirestInstance client) {
         this(client, null);
     }
 

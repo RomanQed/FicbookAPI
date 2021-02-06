@@ -4,10 +4,10 @@ import com.github.romanqed.api.AbstractDataLoader;
 import com.github.romanqed.api.interfaces.Linkable;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
-import okhttp3.OkHttpClient;
+import kong.unirest.UnirestInstance;
 
 public abstract class AbstractLinkableLoader<T extends Linkable> extends AbstractDataLoader<T> {
-    public AbstractLinkableLoader(OkHttpClient client, TaskFabric taskFabric) {
+    public AbstractLinkableLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 

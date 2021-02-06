@@ -15,6 +15,7 @@ public enum Direction {
 
     static final Map<String, Direction> children = toMap();
     final String title;
+
     Direction(String title) {
         this.title = title;
     }

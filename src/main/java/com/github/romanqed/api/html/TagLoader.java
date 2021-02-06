@@ -4,16 +4,16 @@ import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
-import okhttp3.OkHttpClient;
+import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
 public class TagLoader extends AbstractHtmlLoader<Tag> {
-    public TagLoader(OkHttpClient client, TaskFabric taskFabric) {
+    public TagLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public TagLoader(OkHttpClient client) {
+    public TagLoader(UnirestInstance client) {
         this(client, null);
     }
 

@@ -3,16 +3,16 @@ package com.github.romanqed.api.html;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
-import okhttp3.OkHttpClient;
+import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
 public class ChapterLoader extends AbstractHtmlLoader<Chapter> {
-    public ChapterLoader(OkHttpClient client, TaskFabric taskFabric) {
+    public ChapterLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public ChapterLoader(OkHttpClient client) {
+    public ChapterLoader(UnirestInstance client) {
         this(client, null);
     }
 

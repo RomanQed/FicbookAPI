@@ -3,18 +3,18 @@ package com.github.romanqed.api.html;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
-import okhttp3.OkHttpClient;
+import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
 public class PairingLoader extends AbstractHtmlLoader<Pairing> {
-    public PairingLoader(OkHttpClient client, TaskFabric taskFabric) {
+    public PairingLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public PairingLoader(OkHttpClient client) {
+    public PairingLoader(UnirestInstance client) {
         this(client, null);
     }
 
