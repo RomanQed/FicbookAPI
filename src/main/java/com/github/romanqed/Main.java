@@ -1,28 +1,22 @@
 package com.github.romanqed;
 
+import com.github.romanqed.api.html.ChapterLoader;
 import com.github.romanqed.api.html.Fanfic;
 import com.github.romanqed.api.html.FanficLoader;
 import com.github.romanqed.concurrent.Task;
+import com.github.romanqed.io.IOUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         FanficLoader loader = new FanficLoader();
-        AtomicBoolean a = new AtomicBoolean();
-        a.set(true);
-        for (int i = 3572; i < 10000; ++i) {
-            System.out.println(loader.load(i).checked(e -> a.set(e instanceof IOException)));
-            if (!a.get()) {
-                System.out.println("PIZDA) " + i);
-                break;
-            }
-        }
-//        Task<Fanfic> task = loader.load(3571);
-//        System.out.println(task.checked(e -> e.printStackTrace()));
+        Fanfic f = loader.load(9493250).silent();
+        printAllFanficInfo(f);
     }
 
     public static void printAllFanficInfo(Fanfic fanfic) {
@@ -31,8 +25,8 @@ public class Main {
         System.out.println(fanfic.getDirection());
         System.out.println(fanfic.getRating());
         System.out.println(fanfic.isTranslate());
-        System.out.println(fanfic.getOriginalAuthor());
-        System.out.println(fanfic.getOriginalFanfic());
+//        System.out.println(fanfic.getOriginalAuthor());
+//        System.out.println(fanfic.getOriginalFanfic());
         System.out.println(fanfic.isPremium());
         System.out.println(fanfic.getStatus());
         System.out.println(fanfic.getLikes());

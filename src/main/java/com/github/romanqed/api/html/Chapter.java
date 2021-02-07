@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.Date;
 
 public class Chapter extends AbstractHtmlBased {
-    private String title;
+    private String title = "";
     private Date date;
     private String body = "";
     private String notes = "";

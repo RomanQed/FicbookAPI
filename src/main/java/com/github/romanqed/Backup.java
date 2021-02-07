@@ -167,10 +167,12 @@ public class Backup {
         System.out.println("Ник юзера: " + nickname);
     }
 
+    // Сделано
     public static boolean checkFandomsPage(Document document) {
         return document.selectFirst("section.content-section div.mb-15") == null;
     }
 
+    // Сделано
     public static void parseFanficPage(Document doc) {
 //        Document doc = Jsoup.connect("https://ficbook.net/readfic/9734952").get();
 //        Document doc = Jsoup.connect("https://ficbook.net/readfic/8989993").get();
@@ -282,6 +284,7 @@ public class Backup {
         });
     }
 
+    // Сделано
     public static void parseFanficView(Element article) {
 //        Document doc = Jsoup.connect("https://ficbook.net/fanfiction/anime_and_manga/sword_art_online").get();
 //        Elements articles = doc.select("article.block");

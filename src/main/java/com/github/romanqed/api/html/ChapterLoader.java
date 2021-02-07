@@ -24,6 +24,10 @@ public class ChapterLoader extends AbstractHtmlLoader<Chapter> {
         return super.load(fanficId + "/" + chapterId);
     }
 
+    public Task<Chapter> load(int fanficId) {
+        return super.load(Integer.toString(fanficId));
+    }
+
     @Override
     protected URL makeUrl(String id) {
         return Urls.attachUrl(Urls.FANFIC, id);
