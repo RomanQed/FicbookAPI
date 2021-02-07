@@ -19,7 +19,7 @@ public class BetaForm {
     private final String avoided;
     private final int testResult;
 
-    protected BetaForm(Elements betaElements) {
+    public BetaForm(Elements betaElements) {
         Elements fandoms = betaElements.first().select("span");
         fandoms.forEach(fandom -> this.fandoms.add(fandom.text()));
         Elements directions = betaElements.select("span.help");

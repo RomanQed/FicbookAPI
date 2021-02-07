@@ -7,7 +7,6 @@ import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -184,8 +183,7 @@ public class Fanfic extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(String rawPage) {
-        Document page = Jsoup.parse(rawPage);
+    protected void fromPage(Document page) {
         Element mainInfo = page.selectFirst("div.fanfic-main-info");
         title = mainInfo.selectFirst("h1").text();
         Elements fandoms = mainInfo.select("div.mb-10 a");

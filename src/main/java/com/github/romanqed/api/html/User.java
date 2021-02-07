@@ -2,7 +2,6 @@ package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -53,8 +52,7 @@ public class User extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(String rawPage) {
-        Document page = Jsoup.parse(rawPage);
+    protected void fromPage(Document page) {
         name = page.selectFirst("div.author-hat h1").text();
         avatar = Urls.parseUrl(page.selectFirst("img[alt=" + name + "]").attr("src"));
         about = Checks.requireNonExcept(() -> page.selectFirst("article.profile-container div.urlize").wholeText(), "");

@@ -3,6 +3,7 @@ package com.github.romanqed.api.html;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
+import org.jsoup.Jsoup;
 
 import java.net.URL;
 
@@ -18,7 +19,7 @@ public abstract class AbstractHtmlLoader<T extends AbstractHtmlBased> extends Ab
         if (ret == null) {
             return null;
         }
-        ret.fromPage(body);
+        ret.fromPage(Jsoup.parse(body));
         return ret;
     }
 

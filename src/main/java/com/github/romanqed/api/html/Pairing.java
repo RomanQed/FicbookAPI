@@ -2,7 +2,6 @@ package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -37,8 +36,7 @@ public class Pairing extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(String rawPage) {
-        Document page = Jsoup.parse(rawPage);
+    protected void fromPage(Document page) {
         characters.clear();
         String rawChars = page.selectFirst("h1").text();
         rawChars = rawChars.substring(rawChars.indexOf('"') + 1, rawChars.lastIndexOf('"'));

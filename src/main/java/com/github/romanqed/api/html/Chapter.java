@@ -3,7 +3,6 @@ package com.github.romanqed.api.html;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -29,7 +28,7 @@ public class Chapter extends AbstractHtmlBased {
         ));
     }
 
-    protected Chapter(URL url) {
+    public Chapter(URL url) {
         this.url = Checks.requireCorrectValue(url, Chapter::validateUrl);
     }
 
@@ -54,8 +53,7 @@ public class Chapter extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(String rawPage) {
-        Document page = Jsoup.parse(rawPage);
+    protected void fromPage(Document page) {
         Element body = page.selectFirst("article.article");
         Element title = body.selectFirst("div.title-area");
         this.title = Checks.requireNonExcept(() -> title.selectFirst("h2").text(), "");
