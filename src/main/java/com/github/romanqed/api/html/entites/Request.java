@@ -1,5 +1,6 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api.html.entites;
 
+import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.states.Direction;
 import com.github.romanqed.api.states.Rating;
 import com.github.romanqed.api.util.Urls;

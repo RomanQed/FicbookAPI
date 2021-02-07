@@ -1,7 +1,7 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.html.Fanfic;
-import com.github.romanqed.api.html.FanficLoader;
+import com.github.romanqed.api.html.entites.Fanfic;
+import com.github.romanqed.api.html.loaders.FanficLoader;
 
 import java.io.IOException;
 

@@ -1,5 +1,6 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api.html.entites;
 
+import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
@@ -14,9 +15,6 @@ public class Fandom extends AbstractHtmlBased {
 
     public Fandom(URL url) {
         this.url = Checks.requireCorrectValue(url, Fandom::validateUrl);
-    }
-
-    public Fandom() {
         title = "";
         pages = -1;
     }
@@ -47,8 +45,7 @@ public class Fandom extends AbstractHtmlBased {
 
         @Override
         public Fandom build(Element node) {
-            Fandom ret = new Fandom();
-            ret.url = Urls.parseAndValidateUrl(node.attr("href"), Fandom::validateUrl);
+            Fandom ret = new Fandom(Urls.parseFicbookUrl(node.attr("href")));
             ret.title = node.text().trim();
             return ret;
         }

@@ -1,5 +1,6 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api.html.entites;
 
+import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
