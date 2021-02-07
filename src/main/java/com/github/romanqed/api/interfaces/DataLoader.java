@@ -1,4 +1,4 @@
-package com.github.romanqed.api;
+package com.github.romanqed.api.interfaces;
 
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;

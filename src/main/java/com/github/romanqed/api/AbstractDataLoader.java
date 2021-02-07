@@ -1,5 +1,6 @@
 package com.github.romanqed.api;
 
+import com.github.romanqed.api.interfaces.DataLoader;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.concurrent.AbstractTask;
 import com.github.romanqed.concurrent.BaseTaskFabric;
