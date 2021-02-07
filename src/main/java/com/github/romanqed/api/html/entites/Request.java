@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.entites;
 
-import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.states.Direction;
 import com.github.romanqed.api.states.Rating;
 import com.github.romanqed.api.util.Urls;
@@ -8,7 +8,7 @@ import com.github.romanqed.api.util.Urls;
 import java.net.URL;
 import java.util.*;
 
-public class Request extends AbstractHtmlBased {
+public class Request extends AbstractLinkable {
     private final Set<Fandom> fandoms = new HashSet<>();
     private final List<Pairing> characters = new ArrayList<>();
     private final Set<Direction> directions = new HashSet<>();

@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.loaders;
 
-import com.github.romanqed.api.html.AbstractHtmlLoader;
+import com.github.romanqed.api.html.AbstractLinkableHtmlLoader;
 import com.github.romanqed.api.html.entites.Pairing;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Urls;
@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class PairingLoader extends AbstractHtmlLoader<Pairing> {
+public class PairingLoader extends AbstractLinkableHtmlLoader<Pairing> {
     public PairingLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

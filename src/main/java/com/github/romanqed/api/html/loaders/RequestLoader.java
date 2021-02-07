@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.loaders;
 
-import com.github.romanqed.api.html.AbstractHtmlLoader;
+import com.github.romanqed.api.html.AbstractLinkableHtmlLoader;
 import com.github.romanqed.api.html.entites.Request;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
@@ -11,7 +11,7 @@ import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
-public class RequestLoader extends AbstractHtmlLoader<Request> {
+public class RequestLoader extends AbstractLinkableHtmlLoader<Request> {
     public RequestLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

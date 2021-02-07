@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.loaders;
 
-import com.github.romanqed.api.html.AbstractHtmlLoader;
+import com.github.romanqed.api.html.AbstractLinkableHtmlLoader;
 import com.github.romanqed.api.html.entites.Tag;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
@@ -11,7 +11,7 @@ import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
-public class TagLoader extends AbstractHtmlLoader<Tag> {
+public class TagLoader extends AbstractLinkableHtmlLoader<Tag> {
     public TagLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

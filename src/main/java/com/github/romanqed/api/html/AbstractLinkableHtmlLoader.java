@@ -1,13 +1,12 @@
 package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.AbstractDataLoader;
 import com.github.romanqed.api.interfaces.Linkable;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
 
-public abstract class AbstractLinkableLoader<T extends Linkable> extends AbstractDataLoader<T> {
-    public AbstractLinkableLoader(UnirestInstance client, TaskFabric taskFabric) {
+public abstract class AbstractLinkableHtmlLoader<T extends Linkable> extends AbstractHtmlLoader<T> {
+    public AbstractLinkableHtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 

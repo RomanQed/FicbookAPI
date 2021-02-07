@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.loaders;
 
-import com.github.romanqed.api.html.AbstractHtmlLoader;
+import com.github.romanqed.api.html.AbstractLinkableHtmlLoader;
 import com.github.romanqed.api.html.entites.Fandom;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
@@ -11,16 +11,16 @@ import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
-public class FandomLoader extends AbstractHtmlLoader<Fandom> {
-    public FandomLoader(UnirestInstance client, TaskFabric taskFabric) {
+public class FandomHtmlLoader extends AbstractLinkableHtmlLoader<Fandom> {
+    public FandomHtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public FandomLoader(UnirestInstance client) {
+    public FandomHtmlLoader(UnirestInstance client) {
         this(client, null);
     }
 
-    public FandomLoader() {
+    public FandomHtmlLoader() {
         this(null, null);
     }
 

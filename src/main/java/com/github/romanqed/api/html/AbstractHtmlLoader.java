@@ -1,5 +1,6 @@
 package com.github.romanqed.api.html;
 
+import com.github.romanqed.api.AbstractDataLoader;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
@@ -7,7 +8,7 @@ import org.jsoup.Jsoup;
 
 import java.net.URL;
 
-public abstract class AbstractHtmlLoader<T extends AbstractHtmlBased> extends AbstractLinkableLoader<T> {
+public abstract class AbstractHtmlLoader<T> extends AbstractDataLoader<T> {
     public AbstractHtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

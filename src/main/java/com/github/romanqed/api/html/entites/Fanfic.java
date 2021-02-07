@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.entites;
 
-import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.json.Reward;
 import com.github.romanqed.api.states.*;
@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Fanfic extends AbstractHtmlBased {
+public class Fanfic extends AbstractLinkable {
     public static final HtmlBuilder<Fanfic> BUILDER = new FanficBuilder();
     private final Set<Fandom> fandoms;
     private final Map<User, AuthorRole> authors;

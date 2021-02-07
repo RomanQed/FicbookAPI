@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.entites;
 
-import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
@@ -9,7 +9,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Tag extends AbstractHtmlBased {
+public class Tag extends AbstractLinkable {
     public static final HtmlBuilder<Tag> BUILDER = new TagBuilder();
     private String title;
     private String description;

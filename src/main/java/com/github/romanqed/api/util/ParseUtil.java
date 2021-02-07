@@ -1,6 +1,5 @@
 package com.github.romanqed.api.util;
 
-import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -42,7 +41,7 @@ public class ParseUtil {
         return parseStringDate(rawDate, jsonDateFormat);
     }
 
-    public static <T extends AbstractHtmlBased> void parseHtmlNodes(HtmlBuilder<T> builder, Elements elements, Collection<T> collection) {
+    public static <T> void parseHtmlNodes(HtmlBuilder<T> builder, Elements elements, Collection<T> collection) {
         if (elements == null) {
             return;
         }

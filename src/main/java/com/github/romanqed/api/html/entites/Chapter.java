@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.entites;
 
-import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
@@ -11,7 +11,7 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 import java.util.Date;
 
-public class Chapter extends AbstractHtmlBased {
+public class Chapter extends AbstractLinkable {
     public static final HtmlBuilder<Chapter> BUILDER = new ChapterBuilder();
     private String title;
     private Date date;

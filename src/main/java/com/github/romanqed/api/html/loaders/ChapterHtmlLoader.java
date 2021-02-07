@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.loaders;
 
-import com.github.romanqed.api.html.AbstractHtmlLoader;
+import com.github.romanqed.api.html.AbstractLinkableHtmlLoader;
 import com.github.romanqed.api.html.entites.Chapter;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Urls;
@@ -10,16 +10,16 @@ import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
-public class ChapterLoader extends AbstractHtmlLoader<Chapter> {
-    public ChapterLoader(UnirestInstance client, TaskFabric taskFabric) {
+public class ChapterHtmlLoader extends AbstractLinkableHtmlLoader<Chapter> {
+    public ChapterHtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public ChapterLoader(UnirestInstance client) {
+    public ChapterHtmlLoader(UnirestInstance client) {
         this(client, null);
     }
 
-    public ChapterLoader() {
+    public ChapterHtmlLoader() {
         this(null, null);
     }
 

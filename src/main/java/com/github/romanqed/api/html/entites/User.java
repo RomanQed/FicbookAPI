@@ -1,6 +1,6 @@
 package com.github.romanqed.api.html.entites;
 
-import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.html.BetaForm;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class User extends AbstractHtmlBased {
+public class User extends AbstractLinkable {
     public static final HtmlBuilder<User> BUILDER = new UserBuilder();
     private String name;
     private URL avatar;
