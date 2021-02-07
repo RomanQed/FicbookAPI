@@ -11,16 +11,16 @@ import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
-public class FandomHtmlLoader extends AbstractLinkableHtmlLoader<Fandom> {
-    public FandomHtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
+public class FandomLoader extends AbstractLinkableHtmlLoader<Fandom> {
+    public FandomLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public FandomHtmlLoader(UnirestInstance client) {
+    public FandomLoader(UnirestInstance client) {
         this(client, null);
     }
 
-    public FandomHtmlLoader() {
+    public FandomLoader() {
         this(null, null);
     }
 

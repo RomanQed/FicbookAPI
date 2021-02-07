@@ -10,16 +10,16 @@ import kong.unirest.UnirestInstance;
 
 import java.net.URL;
 
-public class ChapterHtmlLoader extends AbstractLinkableHtmlLoader<Chapter> {
-    public ChapterHtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
+public class ChapterLoader extends AbstractLinkableHtmlLoader<Chapter> {
+    public ChapterLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }
 
-    public ChapterHtmlLoader(UnirestInstance client) {
+    public ChapterLoader(UnirestInstance client) {
         this(client, null);
     }
 
-    public ChapterHtmlLoader() {
+    public ChapterLoader() {
         this(null, null);
     }
 
