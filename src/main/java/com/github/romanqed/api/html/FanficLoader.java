@@ -32,7 +32,7 @@ public class FanficLoader extends AbstractHtmlLoader<Fanfic> {
     }
 
     @Override
-    protected Class<Fanfic> getElementClass() {
-        return Fanfic.class;
+    protected AbstractHtmlBased.AbstractHtmlBuilder<Fanfic> getBuilder() {
+        return Fanfic.BUILDER;
     }
 }

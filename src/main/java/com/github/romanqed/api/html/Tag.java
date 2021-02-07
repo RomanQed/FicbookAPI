@@ -8,17 +8,14 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 
 public class Tag extends AbstractHtmlBased {
-    private String title = "";
-    private String description = "";
+    public static final AbstractHtmlBuilder<Tag> BUILDER = new TagBuilder();
+    private String title;
+    private String description;
 
     public Tag(URL url) {
         this.url = Checks.requireCorrectValue(url, Tag::validateUrl);
-    }
-
-    public Tag(Element htmlElement) {
-        url = Urls.parseAndValidateUrl(htmlElement.attr("href"), Tag::validateUrl);
-        title = htmlElement.text();
-        description = htmlElement.attr("title").replaceAll("<.{1,2}>", "");
+        title = "";
+        description = "";
     }
 
     public static boolean validateUrl(URL url) {
@@ -38,10 +35,22 @@ public class Tag extends AbstractHtmlBased {
         return "[Tag] " + title + " " + super.toString();
     }
 
-    @Override
-    protected void fromPage(Document page) {
-        String rawTitle = page.selectFirst("h1").text();
-        title = rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»'));
-        description = page.selectFirst("div.well").text();
+    public static class TagBuilder extends AbstractHtmlBuilder<Tag> {
+        @Override
+        public Tag build(URL url, Document page) {
+            Tag ret = new Tag(url);
+            String rawTitle = page.selectFirst("h1").text();
+            ret.title = rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»'));
+            ret.description = page.selectFirst("div.well").text();
+            return ret;
+        }
+
+        @Override
+        public Tag build(Element node) {
+            Tag ret = new Tag(Urls.parseFicbookUrl(node.attr("href")));
+            ret.title = node.text();
+            ret.description = node.attr("title").replaceAll("<.{1,2}>", "");
+            return ret;
+        }
     }
 }

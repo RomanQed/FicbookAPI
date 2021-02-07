@@ -1,6 +1,5 @@
 package com.github.romanqed.api.html;
 
-import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
 import org.jsoup.Jsoup;
@@ -14,14 +13,8 @@ public abstract class AbstractHtmlLoader<T extends AbstractHtmlBased> extends Ab
 
     @Override
     protected T fromResponse(URL url, String body) {
-        Class<T> tClass = getElementClass();
-        T ret = Checks.requireNonExcept(() -> tClass.getDeclaredConstructor(URL.class).newInstance(url), null);
-        if (ret == null) {
-            return null;
-        }
-        ret.fromPage(Jsoup.parse(body));
-        return ret;
+        return getBuilder().build(url, Jsoup.parse(body));
     }
 
-    protected abstract Class<T> getElementClass();
+    protected abstract AbstractHtmlBased.AbstractHtmlBuilder<T> getBuilder();
 }

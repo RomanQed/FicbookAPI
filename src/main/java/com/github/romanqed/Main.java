@@ -18,8 +18,10 @@ public class Main {
         System.out.println(fanfic.getDirection());
         System.out.println(fanfic.getRating());
         System.out.println(fanfic.isTranslate());
-//        System.out.println(fanfic.getOriginalAuthor());
-//        System.out.println(fanfic.getOriginalFanfic());
+        if (fanfic.isTranslate()) {
+            System.out.println(fanfic.getOriginalAuthor());
+            System.out.println(fanfic.getOriginalFanfic());
+        }
         System.out.println(fanfic.isPremium());
         System.out.println(fanfic.getStatus());
         System.out.println(fanfic.getLikes());

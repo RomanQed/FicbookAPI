@@ -1,8 +1,5 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.html.Fandom;
-import com.github.romanqed.api.html.Pairing;
-import com.github.romanqed.api.html.Tag;
 import com.github.romanqed.api.json.Comment;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -181,15 +178,15 @@ public class Backup {
         String title = fanficMainInfo.getElementsByAttributeValue("itemprop", "name").text();
         System.out.println(title);
         // Фэндомы
-        System.out.println("Фэндомы");
-        Elements fandoms = fanficMainInfo.select("div.mb-10 a");
-        fandoms.forEach(fandom -> {
-            try {
-                System.out.println(new Fandom(fandom));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+//        System.out.println("Фэндомы");
+//        Elements fandoms = fanficMainInfo.select("div.mb-10 a");
+//        fandoms.forEach(fandom -> {
+//            try {
+//                System.out.println(new Fandom(fandom));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
         // Жанр
         Element genre = fanficMainInfo.selectFirst("div");
         System.out.println("Жанр: " + genre.attr("title").replaceAll("\\s{2,}", " "));
@@ -222,13 +219,13 @@ public class Backup {
         if (!pairings.isEmpty()) {
             System.out.println("Пейринги: ");
         }
-        pairings.forEach(pairing -> {
-            try {
-                System.out.println(new Pairing(pairing));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+//        pairings.forEach(pairing -> {
+//            try {
+//                System.out.println(new Pairing(pairing));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
         // Размер
         Element size = fanficHat.selectFirst("div.mb-5 div span").parent();
         System.out.println("Размер: ");
@@ -238,13 +235,13 @@ public class Backup {
         // Метки
         Elements tags = fanficHat.select("div.tags a");
         System.out.println("Метки: ");
-        tags.forEach(tag -> {
-            try {
-                System.out.println(new Tag(tag));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+//        tags.forEach(tag -> {
+//            try {
+//                System.out.println(new Tag(tag));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
         // Описание
         Element description = fanficHat.selectFirst("div[itemprop=description]");
         System.out.println("Описание: ");

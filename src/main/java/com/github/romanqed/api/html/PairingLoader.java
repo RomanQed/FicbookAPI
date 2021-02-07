@@ -33,8 +33,8 @@ public class PairingLoader extends AbstractHtmlLoader<Pairing> {
     }
 
     @Override
-    protected Class<Pairing> getElementClass() {
-        return Pairing.class;
+    protected AbstractHtmlBased.AbstractHtmlBuilder<Pairing> getBuilder() {
+        return Pairing.BUILDER;
     }
 
     @Override

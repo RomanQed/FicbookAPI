@@ -10,26 +10,18 @@ import java.net.URL;
 import java.util.Date;
 
 public class Chapter extends AbstractHtmlBased {
-    private String title = "";
+    public static final AbstractHtmlBuilder<Chapter> BUILDER = new ChapterBuilder();
+    private String title;
     private Date date;
-    private String body = "";
-    private String notes = "";
-
-    public Chapter(Element htmlElement) {
-        Element a = htmlElement.selectFirst("a");
-        url = Urls.parseAndValidateUrl(
-                a.attr("href").replaceAll("#.*", ""),
-                Chapter::validateUrl
-        );
-        title = a.text();
-        date = ParseUtil.parseNativeDate(Checks.requireNonExcept(
-                () -> htmlElement.selectFirst("div span").attr("title"),
-                ""
-        ));
-    }
+    private String body;
+    private String notes;
 
     public Chapter(URL url) {
         this.url = Checks.requireCorrectValue(url, Chapter::validateUrl);
+        title = "";
+        date = new Date();
+        body = "";
+        notes = "";
     }
 
     public static boolean validateUrl(URL url) {
@@ -53,17 +45,33 @@ public class Chapter extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(Document page) {
-        Element body = page.selectFirst("article.article");
-        Element title = body.selectFirst("div.title-area");
-        this.title = Checks.requireNonExcept(() -> title.selectFirst("h2").text(), "");
-        this.date = ParseUtil.parseNativeDate(title.selectFirst("div.part-date span").attr("title"));
-        this.body = Checks.requireNonExcept(() -> body.selectFirst("div[id=content]").wholeText(), "");
-        this.notes = Checks.requireNonExcept(() -> body.selectFirst("div.part-comment-bottom div").wholeText(), "");
-    }
-
-    @Override
     public String toString() {
         return "[Chapter] " + title + " " + super.toString();
+    }
+
+    public static class ChapterBuilder extends AbstractHtmlBuilder<Chapter> {
+        @Override
+        public Chapter build(URL url, Document page) {
+            Chapter ret = new Chapter(url);
+            Element body = page.selectFirst("article.article");
+            Element title = body.selectFirst("div.title-area");
+            ret.title = Checks.requireNonExcept(() -> title.selectFirst("h2").text(), "");
+            ret.date = ParseUtil.parseNativeDate(title.selectFirst("div.part-date span").attr("title"));
+            ret.body = Checks.requireNonExcept(() -> body.selectFirst("div[id=content]").wholeText(), "");
+            ret.notes = Checks.requireNonExcept(() -> body.selectFirst("div.part-comment-bottom div").wholeText(), "");
+            return ret;
+        }
+
+        @Override
+        public Chapter build(Element node) {
+            Element a = node.selectFirst("a");
+            Chapter ret = new Chapter(Urls.parseFicbookUrl(a.attr("href").replaceAll("#.*", "")));
+            ret.title = a.text();
+            ret.date = ParseUtil.parseNativeDate(Checks.requireNonExcept(
+                    () -> node.selectFirst("div span").attr("title"),
+                    ""
+            ));
+            return ret;
+        }
     }
 }

@@ -26,8 +26,8 @@ public class UserLoader extends AbstractHtmlLoader<User> {
     }
 
     @Override
-    protected Class<User> getElementClass() {
-        return User.class;
+    protected AbstractHtmlBased.AbstractHtmlBuilder<User> getBuilder() {
+        return User.BUILDER;
     }
 
     @Override

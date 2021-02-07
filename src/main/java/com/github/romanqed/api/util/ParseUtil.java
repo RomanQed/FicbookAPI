@@ -1,7 +1,12 @@
 package com.github.romanqed.api.util;
 
+import com.github.romanqed.api.html.AbstractHtmlBased;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 public class ParseUtil {
@@ -34,5 +39,15 @@ public class ParseUtil {
 
     public static Date parseJsonDate(String rawDate) {
         return parseStringDate(rawDate, jsonDateFormat);
+    }
+
+    public static <T extends AbstractHtmlBased>
+    void parseHtmlNodes(AbstractHtmlBased.AbstractHtmlBuilder<T> builder, Elements elements, Collection<T> collection) {
+        if (elements == null) {
+            return;
+        }
+        for (Element element : elements) {
+            collection.add(builder.build(element));
+        }
     }
 }

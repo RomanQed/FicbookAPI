@@ -32,7 +32,7 @@ public class RequestLoader extends AbstractHtmlLoader<Request> {
     }
 
     @Override
-    protected Class<Request> getElementClass() {
-        return Request.class;
+    protected AbstractHtmlBased.AbstractHtmlBuilder<Request> getBuilder() {
+        return null;
     }
 }

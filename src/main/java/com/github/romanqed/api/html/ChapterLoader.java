@@ -34,7 +34,7 @@ public class ChapterLoader extends AbstractHtmlLoader<Chapter> {
     }
 
     @Override
-    protected Class<Chapter> getElementClass() {
-        return Chapter.class;
+    protected AbstractHtmlBased.AbstractHtmlBuilder<Chapter> getBuilder() {
+        return Chapter.BUILDER;
     }
 }

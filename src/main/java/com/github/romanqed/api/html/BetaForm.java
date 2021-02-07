@@ -26,13 +26,9 @@ public class BetaForm {
         directions.forEach(direction -> this.directions.add(Direction.fromName(ParseUtil.safetyText(direction.text()))));
         Elements allTags = betaElements.select("div.beta_thumb_info div.tags");
         Elements preTags = Checks.requireNonExcept(() -> allTags.get(0).children(), null);
-        if (preTags != null) {
-            preTags.forEach(tag -> preferredTags.add(new Tag(tag)));
-        }
+        ParseUtil.parseHtmlNodes(Tag.BUILDER, preTags, preferredTags);
         Elements aTags = Checks.requireNonExcept(() -> allTags.get(1).children(), null);
-        if (aTags != null) {
-            aTags.forEach(tag -> avoidedTags.add(new Tag(tag)));
-        }
+        ParseUtil.parseHtmlNodes(Tag.BUILDER, aTags, avoidedTags);
         int length = betaElements.size();
         positiveQualities = betaElements.get(length - 6).text();
         negativeQualities = betaElements.get(length - 5).text();

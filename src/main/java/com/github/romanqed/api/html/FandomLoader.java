@@ -26,8 +26,8 @@ public class FandomLoader extends AbstractHtmlLoader<Fandom> {
     }
 
     @Override
-    protected Class<Fandom> getElementClass() {
-        return Fandom.class;
+    protected AbstractHtmlBased.AbstractHtmlBuilder<Fandom> getBuilder() {
+        return Fandom.BUILDER;
     }
 
     @Override

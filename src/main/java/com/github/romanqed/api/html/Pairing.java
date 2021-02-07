@@ -11,16 +11,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class Pairing extends AbstractHtmlBased {
-    private final List<String> characters = new ArrayList<>();
+    public static final AbstractHtmlBuilder<Pairing> BUILDER = new PairingBuilder();
+    private final List<String> characters;
 
     public Pairing(URL url) {
         this.url = Checks.requireCorrectValue(url, Pairing::validateUrl);
-    }
-
-    public Pairing(Element htmlElement) {
-        url = Urls.parseAndValidateUrl(htmlElement.attr("href"), Pairing::validateUrl);
-        characters.clear();
-        Collections.addAll(characters, htmlElement.text().split("/"));
+        characters = new ArrayList<>();
     }
 
     public static boolean validateUrl(URL url) {
@@ -36,18 +32,28 @@ public class Pairing extends AbstractHtmlBased {
     }
 
     @Override
-    protected void fromPage(Document page) {
-        characters.clear();
-        String rawChars = page.selectFirst("h1").text();
-        rawChars = rawChars.substring(rawChars.indexOf('"') + 1, rawChars.lastIndexOf('"'));
-        Collections.addAll(characters, rawChars.split("/"));
-    }
-
-    @Override
     public String toString() {
         StringBuilder ret = new StringBuilder();
         ret.append("[Pairing] ");
         characters.forEach(item -> ret.append("[").append(item).append("]"));
         return ret.toString() + " " + super.toString();
+    }
+
+    public static class PairingBuilder extends AbstractHtmlBuilder<Pairing> {
+        @Override
+        public Pairing build(URL url, Document page) {
+            Pairing ret = new Pairing(url);
+            String rawChars = page.selectFirst("h1").text();
+            rawChars = rawChars.substring(rawChars.indexOf('"') + 1, rawChars.lastIndexOf('"'));
+            Collections.addAll(ret.characters, rawChars.split("/"));
+            return ret;
+        }
+
+        @Override
+        public Pairing build(Element node) {
+            Pairing ret = new Pairing(Urls.parseFicbookUrl(node.attr("href")));
+            Collections.addAll(ret.characters, node.text().split("/"));
+            return ret;
+        }
     }
 }

@@ -26,8 +26,8 @@ public class TagLoader extends AbstractHtmlLoader<Tag> {
     }
 
     @Override
-    protected Class<Tag> getElementClass() {
-        return Tag.class;
+    protected AbstractHtmlBased.AbstractHtmlBuilder<Tag> getBuilder() {
+        return Tag.BUILDER;
     }
 
     @Override
