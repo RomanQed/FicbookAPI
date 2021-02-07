@@ -1,16 +1,9 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.html.ChapterLoader;
 import com.github.romanqed.api.html.Fanfic;
 import com.github.romanqed.api.html.FanficLoader;
-import com.github.romanqed.concurrent.Task;
-import com.github.romanqed.io.IOUtil;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
     public static void main(String[] args) throws IOException {
