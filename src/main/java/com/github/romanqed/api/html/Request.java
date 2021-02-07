@@ -32,6 +32,10 @@ public class Request extends AbstractHtmlBased {
         // TODO
     }
 
+    public static boolean validateUrl(URL url) {
+        return Urls.validateChildUrl(Urls.REQUESTS, url);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -82,10 +86,6 @@ public class Request extends AbstractHtmlBased {
 
     public Date getCreationDate() {
         return creationDate;
-    }
-
-    public static boolean validateUrl(URL url) {
-        return Urls.validateChildUrl(Urls.REQUESTS, url);
     }
 
     @Override
