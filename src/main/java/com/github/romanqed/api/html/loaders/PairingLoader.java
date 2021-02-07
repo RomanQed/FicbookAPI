@@ -1,6 +1,5 @@
 package com.github.romanqed.api.html.loaders;
 
-import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.html.AbstractHtmlLoader;
 import com.github.romanqed.api.html.entites.Pairing;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
