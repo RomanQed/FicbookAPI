@@ -172,7 +172,7 @@ public class Fanfic extends AbstractLinkable {
             ret.isTranslate = mainInfo.selectFirst("span.badge-translate") != null;
             ret.status = Status.fromName(ParseUtil.safetyText(mainInfo.selectFirst("span.badge-secondary svg").attr("class")));
             ret.likes = Checks.requireNonExcept(() -> Integer.parseInt(mainInfo.selectFirst("span.badge-like").text()), 0);
-            ret.inCollections = Checks.requireNonExcept(() -> ParseUtil.parseMixedNum(page.selectFirst("span.main-info svg.ic_bookmark").parent().text()), 0);
+            ret.inCollections = Checks.requireNonExcept(() -> ParseUtil.parseMixedNum(page.selectFirst("span.main-info:has(svg.ic_bookmark)").text()), 0);
             Element hat = page.selectFirst("section.fanfic-hat");
             ret.isPremium = hat.selectFirst("div.fanfic-hat-premium-notice") != null;
             if (ret.isTranslate) {

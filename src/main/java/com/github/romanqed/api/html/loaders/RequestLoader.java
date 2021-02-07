@@ -36,6 +36,6 @@ public class RequestLoader extends AbstractLinkableHtmlLoader<Request> {
 
     @Override
     protected HtmlBuilder<Request> getBuilder() {
-        return null;
+        return Request.BUILDER;
     }
 }

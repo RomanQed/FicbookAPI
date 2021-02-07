@@ -25,6 +25,14 @@ public class ParseUtil {
         return parseMixedNum(rawNum, 10);
     }
 
+    public static Integer checkedMixedNum(String rawNum) {
+        return Checks.requireNonExcept(() -> parseMixedNum(rawNum), 0);
+    }
+
+    public static Integer parseInt(String rawNum) {
+        return Checks.requireNonExcept(() -> Integer.parseInt(rawNum), 0);
+    }
+
     public static Date parseStringDate(String rawDate, DateFormat dateFormat) {
         try {
             return dateFormat.parse(rawDate);

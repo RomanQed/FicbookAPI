@@ -12,8 +12,8 @@ public enum Direction {
     YAOI("слэш", "ic_slash"),
     YURI("фемслэш", "ic_femslash"),
     MIXED("смешанная", "ic_mixed"),
-    OTHER_RELATIONSHIPS("ic_other"),
-    ARTICLE("ic_article");
+    OTHER_RELATIONSHIPS("ic_other", "другиевидыотношений"),
+    ARTICLE("статья", "ic_article");
 
     static final Map<String, Direction> children = toMap();
     final List<String> names;
