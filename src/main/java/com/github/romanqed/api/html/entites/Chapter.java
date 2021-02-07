@@ -1,6 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
@@ -11,7 +12,7 @@ import java.net.URL;
 import java.util.Date;
 
 public class Chapter extends AbstractHtmlBased {
-    public static final AbstractHtmlBuilder<Chapter> BUILDER = new ChapterBuilder();
+    public static final HtmlBuilder<Chapter> BUILDER = new ChapterBuilder();
     private String title;
     private Date date;
     private String body;
@@ -50,7 +51,7 @@ public class Chapter extends AbstractHtmlBased {
         return "[Chapter] " + title + " " + super.toString();
     }
 
-    public static class ChapterBuilder extends AbstractHtmlBuilder<Chapter> {
+    public static class ChapterBuilder implements HtmlBuilder<Chapter> {
         @Override
         public Chapter build(URL url, Document page) {
             Chapter ret = new Chapter(url);

@@ -3,6 +3,7 @@ package com.github.romanqed.api.html.loaders;
 import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.html.AbstractHtmlLoader;
 import com.github.romanqed.api.html.entites.Request;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
@@ -35,7 +36,7 @@ public class RequestLoader extends AbstractHtmlLoader<Request> {
     }
 
     @Override
-    protected AbstractHtmlBased.AbstractHtmlBuilder<Request> getBuilder() {
+    protected HtmlBuilder<Request> getBuilder() {
         return null;
     }
 }

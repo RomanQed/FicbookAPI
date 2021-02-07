@@ -3,6 +3,7 @@ package com.github.romanqed.api.html.loaders;
 import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.html.AbstractHtmlLoader;
 import com.github.romanqed.api.html.entites.Pairing;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
@@ -36,7 +37,7 @@ public class PairingLoader extends AbstractHtmlLoader<Pairing> {
     }
 
     @Override
-    protected AbstractHtmlBased.AbstractHtmlBuilder<Pairing> getBuilder() {
+    protected HtmlBuilder<Pairing> getBuilder() {
         return Pairing.BUILDER;
     }
 

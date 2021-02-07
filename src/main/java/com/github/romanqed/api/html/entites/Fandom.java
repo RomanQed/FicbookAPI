@@ -1,6 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
@@ -9,7 +10,7 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 
 public class Fandom extends AbstractHtmlBased {
-    public static final AbstractHtmlBuilder<Fandom> BUILDER = new FandomBuilder();
+    public static final HtmlBuilder<Fandom> BUILDER = new FandomBuilder();
     private String title;
     private int pages;
 
@@ -32,7 +33,7 @@ public class Fandom extends AbstractHtmlBased {
         return "[Fandom] " + title + " [Pages] " + pages + " " + super.toString();
     }
 
-    public static class FandomBuilder extends AbstractHtmlBuilder<Fandom> {
+    public static class FandomBuilder implements HtmlBuilder<Fandom> {
         @Override
         public Fandom build(URL url, Document page) {
             Fandom ret = new Fandom(url);

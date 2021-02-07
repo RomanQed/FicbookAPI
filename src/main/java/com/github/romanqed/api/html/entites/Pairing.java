@@ -1,6 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
@@ -12,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Pairing extends AbstractHtmlBased {
-    public static final AbstractHtmlBuilder<Pairing> BUILDER = new PairingBuilder();
+    public static final HtmlBuilder<Pairing> BUILDER = new PairingBuilder();
     private final List<String> characters;
 
     public Pairing(URL url) {
@@ -40,7 +41,7 @@ public class Pairing extends AbstractHtmlBased {
         return ret.toString() + " " + super.toString();
     }
 
-    public static class PairingBuilder extends AbstractHtmlBuilder<Pairing> {
+    public static class PairingBuilder implements HtmlBuilder<Pairing> {
         @Override
         public Pairing build(URL url, Document page) {
             Pairing ret = new Pairing(url);

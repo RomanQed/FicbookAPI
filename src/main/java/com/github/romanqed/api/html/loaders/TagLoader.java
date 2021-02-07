@@ -3,6 +3,7 @@ package com.github.romanqed.api.html.loaders;
 import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.html.AbstractHtmlLoader;
 import com.github.romanqed.api.html.entites.Tag;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
@@ -29,7 +30,7 @@ public class TagLoader extends AbstractHtmlLoader<Tag> {
     }
 
     @Override
-    protected AbstractHtmlBased.AbstractHtmlBuilder<Tag> getBuilder() {
+    protected HtmlBuilder<Tag> getBuilder() {
         return Tag.BUILDER;
     }
 

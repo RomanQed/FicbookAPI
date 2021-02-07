@@ -1,5 +1,6 @@
 package com.github.romanqed.api.html;
 
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
 import org.jsoup.Jsoup;
@@ -16,5 +17,5 @@ public abstract class AbstractHtmlLoader<T extends AbstractHtmlBased> extends Ab
         return getBuilder().build(url, Jsoup.parse(body));
     }
 
-    protected abstract AbstractHtmlBased.AbstractHtmlBuilder<T> getBuilder();
+    protected abstract HtmlBuilder<T> getBuilder();
 }

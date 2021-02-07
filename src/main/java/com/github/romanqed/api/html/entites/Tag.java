@@ -1,6 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.html.AbstractHtmlBased;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
@@ -9,7 +10,7 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 
 public class Tag extends AbstractHtmlBased {
-    public static final AbstractHtmlBuilder<Tag> BUILDER = new TagBuilder();
+    public static final HtmlBuilder<Tag> BUILDER = new TagBuilder();
     private String title;
     private String description;
 
@@ -36,7 +37,7 @@ public class Tag extends AbstractHtmlBased {
         return "[Tag] " + title + " " + super.toString();
     }
 
-    public static class TagBuilder extends AbstractHtmlBuilder<Tag> {
+    public static class TagBuilder implements HtmlBuilder<Tag> {
         @Override
         public Tag build(URL url, Document page) {
             Tag ret = new Tag(url);

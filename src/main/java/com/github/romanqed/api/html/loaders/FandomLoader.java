@@ -3,6 +3,7 @@ package com.github.romanqed.api.html.loaders;
 import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.html.AbstractHtmlLoader;
 import com.github.romanqed.api.html.entites.Fandom;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
@@ -29,7 +30,7 @@ public class FandomLoader extends AbstractHtmlLoader<Fandom> {
     }
 
     @Override
-    protected AbstractHtmlBased.AbstractHtmlBuilder<Fandom> getBuilder() {
+    protected HtmlBuilder<Fandom> getBuilder() {
         return Fandom.BUILDER;
     }
 

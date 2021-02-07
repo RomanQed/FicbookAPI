@@ -2,6 +2,7 @@ package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.html.AbstractHtmlBased;
 import com.github.romanqed.api.html.BetaForm;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
@@ -10,7 +11,7 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 
 public class User extends AbstractHtmlBased {
-    public static final AbstractHtmlBuilder<User> BUILDER = new UserBuilder();
+    public static final HtmlBuilder<User> BUILDER = new UserBuilder();
     private String name;
     private URL avatar;
     private String about;
@@ -58,7 +59,7 @@ public class User extends AbstractHtmlBased {
         return "[User] " + name + " [Avatar] " + avatar + " [About] " + about + " " + super.toString();
     }
 
-    public static class UserBuilder extends AbstractHtmlBuilder<User> {
+    public static class UserBuilder implements HtmlBuilder<User> {
         @Override
         public User build(URL url, Document page) {
             User ret = new User(url);
