@@ -1,18 +1,17 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.html.HtmlLoader;
 import com.github.romanqed.api.html.entites.Fanfic;
 import com.github.romanqed.api.html.entites.Request;
-import com.github.romanqed.api.html.entites.User;
-import com.github.romanqed.api.util.Urls;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        HtmlLoader loader = new HtmlLoader();
-        loader.setBuilder(User.BUILDER);
-        User user = (User) loader.load(Urls.attachUrl(Urls.AUTHORS, "2070557")).silent();
+        Document document = Jsoup.connect("https://ficbook.net/requests?p=2").get();
+        Request request = Request.BUILDER.build(document.selectFirst("article.request-thumb"));
+        System.out.println(request);
     }
 
     public static void printAllRequestInfo(Request request) {

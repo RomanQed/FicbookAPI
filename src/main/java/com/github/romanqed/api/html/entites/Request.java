@@ -122,10 +122,12 @@ public class Request extends AbstractLinkable {
             String prefix = "div section div";
             ParseUtil.parseHtmlNodes(Fandom.BUILDER, content.select(prefix + "[class!=tags] a"), ret.fandoms);
             Elements spans = content.select(prefix + ":has(span.help)");
-            spans.get(0).select("span.help").
-                    forEach(e -> ret.directions.add(Direction.fromName(ParseUtil.safetyText(e.text()))));
-            spans.get(1).select("span.help").
-                    forEach(e -> ret.ratings.add(Rating.fromName(ParseUtil.safetyText(e.text()))));
+            spans.get(0).select("span.help").forEach(e -> {
+                ret.directions.add(Direction.fromName(ParseUtil.safetyText(e.text())));
+            });
+            spans.get(1).select("span.help").forEach(e -> {
+                ret.ratings.add(Rating.fromName(ParseUtil.safetyText(e.text())));
+            });
             ParseUtil.parseHtmlNodes(Tag.BUILDER, content.select("a.tag"), ret.tags);
             Element characters = content.selectFirst(prefix + ":contains(Персонажи)");
             if (characters != null) {
@@ -142,8 +144,23 @@ public class Request extends AbstractLinkable {
 
         @Override
         public Request build(Element node) {
-            // TODO
-            return null;
+            Element title = node.selectFirst("a.visit-link");
+            Request ret = new Request(Urls.parseFicbookUrl(title.attr("href")));
+            ret.title = title.text();
+            ret.likes = ParseUtil.parseInt(node.selectFirst("span.request-likes-counter").text());
+            ret.bookmarks = ParseUtil.parseInt(node.selectFirst("span.request-bookmark-counter").text());
+            ret.works = ParseUtil.parseInt(node.selectFirst("span.container-counter").text());
+            ParseUtil.parseHtmlNodes(Fandom.BUILDER, node.select("strong.title a"), ret.fandoms);
+            Elements info = node.select("section.request-description div");
+            info.get(0).select("span.help").forEach(e -> {
+                ret.directions.add(Direction.fromName(ParseUtil.safetyText(e.text())));
+            });
+            info.get(1).select("span.help").forEach(e -> {
+                ret.ratings.add(Rating.fromName(ParseUtil.safetyText(e.text())));
+            });
+            ParseUtil.parseHtmlNodes(Tag.BUILDER, node.select("div.tags a"), ret.tags);
+            ret.description = node.selectFirst("div.post-content").text();
+            return ret;
         }
     }
 }

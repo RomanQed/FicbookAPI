@@ -194,7 +194,9 @@ public class Fanfic extends AbstractLinkable {
             if (rewardElements != null) {
                 JsonElement rewards = JsonParser.parseString(rewardElements.attr(":initial-fic-rewards-list"));
                 if (rewards != null && rewards.isJsonArray()) {
-                    rewards.getAsJsonArray().forEach(reward -> ret.rewards.add(new Reward(reward.getAsJsonObject())));
+                    rewards.getAsJsonArray().forEach(reward -> {
+                        ret.rewards.add(new Reward(reward.getAsJsonObject()));
+                    });
                 }
             }
             Elements authors = hat.select("div.hat-creator-container div.creator-info");
