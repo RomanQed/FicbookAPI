@@ -1,13 +1,16 @@
 package com.github.romanqed.api.util;
 
 import com.github.romanqed.api.interfaces.HtmlBuilder;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class ParseUtil {
     public static final DateFormat jsonDateFormat = new SimpleDateFormat("y-M-d H:m:s.SX");
@@ -15,6 +18,7 @@ public class ParseUtil {
     public static final String FANFIC_QUERY = "article.block";
     public static final String REQUEST_QUERY = "article.request-thumb";
     public static final String COMMENT_QUERY = "article.comment-container comment-like";
+    public static final String BETA_FORM_QUERY = "div.beta_thumb";
 
     public static String safetyText(String rawText) {
         return rawText.toLowerCase().replaceAll("\\s", "");
@@ -59,5 +63,14 @@ public class ParseUtil {
         for (Element element : elements) {
             collection.add(builder.build(element));
         }
+    }
+
+    public static <T> List<T> entitiesFromPage(Document page, HtmlBuilder<T> builder, String query) {
+        List<T> ret = new ArrayList<>();
+        Elements found = page.select(query);
+        for (Element item : found) {
+            ret.add(builder.build(item));
+        }
+        return ret;
     }
 }

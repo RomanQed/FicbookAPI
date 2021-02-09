@@ -18,7 +18,6 @@ public class User extends AbstractLinkable {
     private URL avatar;
     private String about;
     private Date lastOnline;
-    // TODO
     private String bankDetails;
     private int favourites;
     private BetaForm betaForm;
@@ -94,9 +93,9 @@ public class User extends AbstractLinkable {
                     () -> page.selectFirst("section.mb-30 p span").attr("title"),
                     ""
             ));
-            Element rawBetaForm = page.selectFirst("div.beta_thumb");
-            if (rawBetaForm != null) {
-                ret.betaForm = new BetaForm(rawBetaForm.select("div.beta_thumb_info"));
+            Element betaForm = page.selectFirst("div.beta_thumb");
+            if (betaForm != null) {
+                ret.betaForm = BetaForm.BUILDER.build(betaForm);
             }
             return ret;
         }

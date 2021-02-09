@@ -9,7 +9,7 @@ import org.jsoup.Jsoup;
 import java.net.URL;
 
 public class HtmlLoader extends AbstractDataLoader<Object> {
-    private HtmlBuilder<?> builder;
+    private HtmlBuilder<Object> builder;
 
     public HtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
@@ -23,7 +23,7 @@ public class HtmlLoader extends AbstractDataLoader<Object> {
         this(null, null);
     }
 
-    public void setBuilder(HtmlBuilder<?> builder) {
+    public void setBuilder(HtmlBuilder<Object> builder) {
         this.builder = builder;
     }
 
