@@ -9,10 +9,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Backup {
-    public static void parseRawRequestPage(Document document) {
-        parseRequestPage(document.selectFirst("section.request-content"));
-    }
-
+    // Сделано
     public static void parseRequestPage(Element requestContent) {
         // Название заявки
         System.out.println(requestContent.selectFirst("h1.mb-0").text());
@@ -76,6 +73,7 @@ public class Backup {
         requests.forEach(Backup::parseRequestView);
     }
 
+    // TODO Перенести
     public static void parseRequestView(Element request) {
         // Head
         // Лайки

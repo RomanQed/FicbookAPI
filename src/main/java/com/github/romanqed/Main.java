@@ -1,23 +1,18 @@
 package com.github.romanqed;
 
+import com.github.romanqed.api.html.HtmlLoader;
 import com.github.romanqed.api.html.entites.Fanfic;
 import com.github.romanqed.api.html.entites.Request;
-import com.github.romanqed.api.html.loaders.RequestLoader;
+import com.github.romanqed.api.html.entites.User;
+import com.github.romanqed.api.util.Urls;
 
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        AtomicBoolean b = new AtomicBoolean(true);
-        RequestLoader loader = new RequestLoader();
-        for (int i = 1; i < 10000; ++i) {
-            System.out.println(loader.load(i).checked(e -> b.set(e instanceof IOException)));
-            if (!b.get()) {
-                System.out.println("PIZDEC) " + i);
-                break;
-            }
-        }
+        HtmlLoader loader = new HtmlLoader();
+        loader.setBuilder(User.BUILDER);
+        User user = (User) loader.load(Urls.attachUrl(Urls.AUTHORS, "2070557")).silent();
     }
 
     public static void printAllRequestInfo(Request request) {

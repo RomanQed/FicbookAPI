@@ -8,7 +8,5 @@ import java.net.URL;
 public interface DataLoader<T> {
     Task<T> load(URL url);
 
-    Task<T> load(String id);
-
     TaskFabric getTaskFabric();
 }

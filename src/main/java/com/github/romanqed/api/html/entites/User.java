@@ -4,17 +4,22 @@ import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.html.BetaForm;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
+import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
+import java.util.Date;
 
 public class User extends AbstractLinkable {
     public static final HtmlBuilder<User> BUILDER = new UserBuilder();
     private String name;
     private URL avatar;
     private String about;
+    private Date lastOnline;
+    // TODO
+    private String bankDetails;
     private int favourites;
     private BetaForm betaForm;
 
@@ -54,6 +59,14 @@ public class User extends AbstractLinkable {
         return betaForm != null;
     }
 
+    public String getBankDetails() {
+        return bankDetails;
+    }
+
+    public Date getLastOnline() {
+        return lastOnline;
+    }
+
     @Override
     public String toString() {
         return "[User] " + name + " [Avatar] " + avatar + " [About] " + about + " " + super.toString();
@@ -65,11 +78,22 @@ public class User extends AbstractLinkable {
             User ret = new User(url);
             ret.name = page.selectFirst("div.author-hat h1").text();
             ret.avatar = Urls.parseUrl(page.selectFirst("img[alt=" + ret.name + "]").attr("src"));
-            ret.about = Checks.requireNonExcept(() -> page.selectFirst("article.profile-container div.urlize").wholeText(), "");
+            ret.about = Checks.requireNonExcept(
+                    () -> page.selectFirst("article.profile-container div.urlize").wholeText(),
+                    ""
+            );
             ret.favourites = Checks.requireNonExcept(
-                    () -> Integer.parseInt(page.selectFirst("span.add-favourite-author-text a").text().replaceAll("\\D", "")),
+                    () -> ParseUtil.checkedMixedNum(page.selectFirst("span.add-favourite-author-text a").text()),
                     0
             );
+            ret.bankDetails = Checks.requireNonExcept(
+                    () -> page.selectFirst("section.mb-30:contains(Поддержать) div.urlize").text(),
+                    ""
+            );
+            ret.lastOnline = ParseUtil.parseNativeDate(Checks.requireNonExcept(
+                    () -> page.selectFirst("section.mb-30 p span").attr("title"),
+                    ""
+            ));
             Element rawBetaForm = page.selectFirst("div.beta_thumb");
             if (rawBetaForm != null) {
                 ret.betaForm = new BetaForm(rawBetaForm.select("div.beta_thumb_info"));

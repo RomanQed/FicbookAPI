@@ -46,11 +46,6 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
     }
 
     @Override
-    public Task<T> load(String id) {
-        return load(makeUrl(id));
-    }
-
-    @Override
     public TaskFabric getTaskFabric() {
         return taskFabric;
     }
@@ -60,6 +55,4 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
     protected HttpRequest<?> requestBuilder(UnirestInstance client, URL link) {
         return client.get(link.toString());
     }
-
-    protected abstract URL makeUrl(String id);
 }
