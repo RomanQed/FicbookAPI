@@ -59,6 +59,7 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "[Comment] " + comment + " [User] " + userId + " [Date] " + createDate + " [Likes] " + likes + " [Rewards] " + rewards;
+        return "[Comment] " + comment + " [User] " + userId + " [Date] "
+                + createDate + " [Likes] " + likes + " [Rewards] " + rewards;
     }
 }

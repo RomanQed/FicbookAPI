@@ -167,12 +167,22 @@ public class Fanfic extends AbstractLinkable {
             Element mainInfo = page.selectFirst("div.fanfic-main-info");
             ret.title = mainInfo.selectFirst("h1").text();
             ParseUtil.parseHtmlNodes(Fandom.BUILDER, mainInfo.select("div.mb-10 a"), ret.fandoms);
-            ret.direction = Direction.fromName(ParseUtil.safetyText(mainInfo.selectFirst("div.direction svg").attr("class")));
+            ret.direction = Direction.fromName(
+                    ParseUtil.safetyText(mainInfo.selectFirst("div.direction svg").attr("class"))
+            );
             ret.rating = Rating.fromName(ParseUtil.safetyText(mainInfo.selectFirst("strong span").text()));
             ret.isTranslate = mainInfo.selectFirst("span.badge-translate") != null;
-            ret.status = Status.fromName(ParseUtil.safetyText(mainInfo.selectFirst("span.badge-secondary svg").attr("class")));
-            ret.likes = Checks.requireNonExcept(() -> Integer.parseInt(mainInfo.selectFirst("span.badge-like").text()), 0);
-            ret.inCollections = Checks.requireNonExcept(() -> ParseUtil.parseMixedNum(page.selectFirst("span.main-info:has(svg.ic_bookmark)").text()), 0);
+            ret.status = Status.fromName(
+                    ParseUtil.safetyText(mainInfo.selectFirst("span.badge-secondary svg").attr("class"))
+            );
+            ret.likes = Checks.requireNonExcept(
+                    () -> Integer.parseInt(mainInfo.selectFirst("span.badge-like").text()),
+                    0
+            );
+            ret.inCollections = Checks.requireNonExcept(
+                    () -> ParseUtil.parseMixedNum(page.selectFirst("span.main-info:has(svg.ic_bookmark)").text()),
+                    0
+            );
             Element hat = page.selectFirst("section.fanfic-hat");
             ret.isPremium = hat.selectFirst("div.fanfic-hat-premium-notice") != null;
             if (ret.isTranslate) {
@@ -189,7 +199,10 @@ public class Fanfic extends AbstractLinkable {
             }
             Elements authors = hat.select("div.hat-creator-container div.creator-info");
             for (Element author : authors) {
-                ret.authors.put(User.BUILDER.build(author.selectFirst("a")), AuthorRole.fromName(author.selectFirst("i").text()));
+                ret.authors.put(
+                        User.BUILDER.build(author.selectFirst("a")),
+                        AuthorRole.fromName(author.selectFirst("i").text())
+                );
             }
             ParseUtil.parseHtmlNodes(Pairing.BUILDER, hat.select("a.pairing-link"), ret.pairings);
             Element size = hat.selectFirst("div.mb-5 div span");
@@ -197,8 +210,14 @@ public class Fanfic extends AbstractLinkable {
             ret.actualPages = ParseUtil.parseMixedNum(size.parent().text().split(",")[1]);
             ParseUtil.parseHtmlNodes(Tag.BUILDER, hat.select("div.tags a"), ret.tags);
             ret.description = hat.selectFirst("div[itemprop=description]").text();
-            ret.dedication = Checks.requireNonExcept(() -> hat.selectFirst("div.mb-5:contains(Посвящение)").wholeText(), "");
-            ret.notes = Checks.requireNonExcept(() -> hat.selectFirst("div.mb-5:contains(Примечания)").wholeText(), "");
+            ret.dedication = Checks.requireNonExcept(
+                    () -> hat.selectFirst("div.mb-5:contains(Посвящение)").wholeText(),
+                    ""
+            );
+            ret.notes = Checks.requireNonExcept(
+                    () -> hat.selectFirst("div.mb-5:contains(Примечания)").wholeText(),
+                    ""
+            );
             ret.copyright = hat.select("div.mb-5 div").last().text();
             ParseUtil.parseHtmlNodes(Chapter.BUILDER, page.select("article li.part"), ret.chapters);
             if (ret.chapters.isEmpty()) {
@@ -216,7 +235,10 @@ public class Fanfic extends AbstractLinkable {
             ret.isPremium = node.selectFirst("a.notice-yellow") != null;
             ret.title = link.text();
             ret.direction = Direction.fromName(head.selectFirst("svg").attr("class").split(" ")[0]);
-            ret.likes = Checks.requireNonExcept(() -> Integer.parseInt(head.selectFirst("sup.count span.value").text()), 0);
+            ret.likes = Checks.requireNonExcept(
+                    () -> Integer.parseInt(head.selectFirst("sup.count span.value").text()),
+                    0
+            );
             Elements authors = node.select("span.author a");
             if (ret.isTranslate) {
                 ret.authors.put(User.BUILDER.build(authors.first()), AuthorRole.TRANSLATOR);

@@ -122,15 +122,20 @@ public class Request extends AbstractLinkable {
             String prefix = "div section div";
             ParseUtil.parseHtmlNodes(Fandom.BUILDER, content.select(prefix + "[class!=tags] a"), ret.fandoms);
             Elements spans = content.select(prefix + ":has(span.help)");
-            spans.get(0).select("span.help").forEach(e -> ret.directions.add(Direction.fromName(ParseUtil.safetyText(e.text()))));
-            spans.get(1).select("span.help").forEach(e -> ret.ratings.add(Rating.fromName(ParseUtil.safetyText(e.text()))));
+            spans.get(0).select("span.help").
+                    forEach(e -> ret.directions.add(Direction.fromName(ParseUtil.safetyText(e.text()))));
+            spans.get(1).select("span.help").
+                    forEach(e -> ret.ratings.add(Rating.fromName(ParseUtil.safetyText(e.text()))));
             ParseUtil.parseHtmlNodes(Tag.BUILDER, content.select("a.tag"), ret.tags);
             Element characters = content.selectFirst(prefix + ":contains(Персонажи)");
             if (characters != null) {
                 Collections.addAll(ret.characters, characters.text().split(","));
             }
             ret.description = content.selectFirst("div.word-break").wholeText();
-            ret.hiddenDescription = Checks.requireNonExcept(() -> content.selectFirst("div.word-break[style]").wholeText(), "");
+            ret.hiddenDescription = Checks.requireNonExcept(
+                    () -> content.selectFirst("div.word-break[style]").wholeText(),
+                    ""
+            );
             ret.creationDate = ParseUtil.parseNativeDate(content.selectFirst("p span").attr("title"));
             return ret;
         }
