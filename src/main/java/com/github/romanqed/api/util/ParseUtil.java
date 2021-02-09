@@ -12,6 +12,9 @@ import java.util.Date;
 public class ParseUtil {
     public static final DateFormat jsonDateFormat = new SimpleDateFormat("y-M-d H:m:s.SX");
     public static final DateFormat nativeDateFormat = new SimpleDateFormat("d MMMM y, H:m");
+    public static final String FANFIC_QUERY = "article.block";
+    public static final String REQUEST_QUERY = "article.request-thumb";
+    public static final String COMMENT_QUERY = "article.comment-container comment-like";
 
     public static String safetyText(String rawText) {
         return rawText.toLowerCase().replaceAll("\\s", "");

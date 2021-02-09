@@ -12,6 +12,7 @@ public class Main {
         Document document = Jsoup.connect("https://ficbook.net/requests?p=2").get();
         Request request = Request.BUILDER.build(document.selectFirst("article.request-thumb"));
         System.out.println(request);
+        // :comment - атрибут с json для комента
     }
 
     public static void printAllRequestInfo(Request request) {
