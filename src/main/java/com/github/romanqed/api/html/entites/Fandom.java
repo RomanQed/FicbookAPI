@@ -12,12 +12,10 @@ import java.net.URL;
 public class Fandom extends AbstractLinkable {
     public static final HtmlBuilder<Fandom> BUILDER = new FandomBuilder();
     private String title;
-    private int pages;
 
     public Fandom(URL url) {
         this.url = Checks.requireCorrectValue(url, Fandom::validateUrl);
         title = "";
-        pages = -1;
     }
 
     public static boolean validateUrl(URL url) {
@@ -30,7 +28,7 @@ public class Fandom extends AbstractLinkable {
 
     @Override
     public String toString() {
-        return "[Fandom] " + title + " [Pages] " + pages + " " + super.toString();
+        return "[Fandom] " + title + " " + super.toString();
     }
 
     public static class FandomBuilder implements HtmlBuilder<Fandom> {
@@ -39,8 +37,6 @@ public class Fandom extends AbstractLinkable {
             Fandom ret = new Fandom(url);
             String rawTitle = page.selectFirst("h1").text();
             ret.title = rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»'));
-            Element pages = page.select("div.paging-description b").last();
-            ret.pages = Checks.requireNonExcept(() -> Integer.parseInt(pages.text()), 1);
             return ret;
         }
 
