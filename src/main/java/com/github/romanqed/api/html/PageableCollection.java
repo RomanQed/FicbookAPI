@@ -1,7 +1,7 @@
 package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.util.Checks;
-import com.github.romanqed.api.util.ParseUtil;
+import com.github.romanqed.api.util.Queries;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
 
@@ -27,8 +27,8 @@ public class PageableCollection {
         }
         loader.onParse(document -> {
             maxPage = Checks.requireNonExcept(
-                    () -> Integer.parseInt(document.select(ParseUtil.PAGE_COUNT_QUERY).last().text()),
-                    1
+                    () -> Integer.parseInt(document.select(Queries.PAGE_COUNT_QUERY).last().text()),
+                    -1
             );
         });
         return loader.load(url, Collections.singletonMap("p", Integer.toString(page)));

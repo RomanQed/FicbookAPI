@@ -4,6 +4,7 @@ import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
+import com.github.romanqed.api.util.Queries;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -92,7 +93,7 @@ public class User extends AbstractLinkable {
                     () -> page.selectFirst("section.mb-30 p span").attr("title"),
                     ""
             ));
-            Element betaForm = page.selectFirst(ParseUtil.BETA_FORM_QUERY);
+            Element betaForm = page.selectFirst(Queries.BETA_FORM_QUERY);
             if (betaForm != null) {
                 ret.betaForm = BetaForm.BUILDER.build(betaForm);
             }

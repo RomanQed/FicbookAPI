@@ -5,6 +5,7 @@ import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.states.Direction;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
+import com.github.romanqed.api.util.Queries;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -83,7 +84,7 @@ public class BetaForm extends AbstractLinkable {
     public static class BetaFormBuilder implements HtmlPageBuilder<BetaForm> {
         @Override
         public BetaForm build(URL url, Document page) {
-            return build(page.selectFirst(ParseUtil.BETA_FORM_QUERY));
+            return build(page.selectFirst(Queries.BETA_FORM_QUERY));
         }
 
         @Override
