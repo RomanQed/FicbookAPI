@@ -17,7 +17,7 @@ public class ParseUtil {
     public static final DateFormat nativeDateFormat = new SimpleDateFormat("d MMMM y, H:m");
     public static final String FANFIC_QUERY = "article.block";
     public static final String REQUEST_QUERY = "article.request-thumb";
-    public static final String COMMENT_QUERY = "article.comment-container comment-like";
+    public static final String COMMENT_QUERY = "article.comment-container";
     public static final String BETA_FORM_QUERY = "div.beta_thumb";
 
     public static String safetyText(String rawText) {

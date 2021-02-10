@@ -6,6 +6,7 @@ import com.github.romanqed.api.util.ParseUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
@@ -13,10 +14,11 @@ import java.util.Date;
 import java.util.List;
 
 public class Comment {
+    public static final HtmlBuilder<Comment> BUILDER = new CommentBuilder();
     private final int userId;
-    private final String userName;
-    private final Date createDate;
-    private final String comment;
+    private String userName;
+    private Date createDate;
+    private String comment;
     private final int likes;
     private final List<Reward> rewards;
 
@@ -33,6 +35,12 @@ public class Comment {
                 rewards.add(new Reward(rawReward.getAsJsonObject()));
             }
         }
+    }
+
+    public Comment() {
+        userId = -1;
+        likes = 0;
+        rewards = new ArrayList<>();
     }
 
     public int getUserId() {
@@ -68,7 +76,16 @@ public class Comment {
     public static class CommentBuilder implements HtmlBuilder<Comment> {
         @Override
         public Comment build(Element node) {
-            return null;
+            Element comment = node.selectFirst("comment-like");
+            if (comment != null) {
+                return new Comment(JsonParser.parseString(comment.attr(":comment")).getAsJsonObject());
+            }
+            Comment ret = new Comment();
+            Element header = node.selectFirst("header.head");
+            ret.userName = header.selectFirst("span.comment_author").text();
+            ret.createDate = ParseUtil.parseNativeDate(header.selectFirst("time").attr("datetime"));
+            ret.comment = node.selectFirst("div.comment_message").text();
+            return ret;
         }
     }
 }

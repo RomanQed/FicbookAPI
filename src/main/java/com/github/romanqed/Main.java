@@ -1,20 +1,20 @@
 package com.github.romanqed;
 
-import com.github.romanqed.api.html.HtmlLoader;
-import com.github.romanqed.api.html.entites.Fanfic;
-import com.github.romanqed.api.util.Urls;
+import com.github.romanqed.api.json.Comment;
+import com.github.romanqed.api.util.ParseUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        /*Document document = Jsoup.connect("https://ficbook.net/betas").get();
-        System.out.println(ParseUtil.entitiesFromPage(document, BetaForm.BUILDER, ParseUtil.BETA_FORM_QUERY));*/
-
-        // :comment - атрибут с json для комента
-        HtmlLoader loader = new HtmlLoader();
-        loader.setBuilder(Fanfic.BUILDER);
-        Fanfic fanfic = (Fanfic) loader.load(Urls.parseFicbookUrl("readfic/6023919")).silent();
-        System.out.println(fanfic);
+        Document document = Jsoup.connect("https://ficbook.net/readfic/6023919/comments#content").get();
+        List<Comment> commentList = ParseUtil.entitiesFromPage(document, Comment.BUILDER, ParseUtil.COMMENT_QUERY);
+        commentList.forEach(System.out::println);
+//        CollectionLoader loader = new CollectionLoader();
+//        loader.setSelector(ParseUtil.COMMENT_QUERY);
+//        loader.setBuilder(Comment.);
     }
 }
