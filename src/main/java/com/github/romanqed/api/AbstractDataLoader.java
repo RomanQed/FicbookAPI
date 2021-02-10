@@ -6,13 +6,11 @@ import com.github.romanqed.concurrent.AbstractTask;
 import com.github.romanqed.concurrent.BaseTaskFabric;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
-import kong.unirest.HttpRequest;
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-import kong.unirest.UnirestInstance;
+import kong.unirest.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 public abstract class AbstractDataLoader<T> implements DataLoader<T> {
@@ -25,10 +23,10 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
     }
 
     @Override
-    public Task<T> load(URL url) {
+    public Task<T> load(URL url, Map<String, String> fields) {
         Callable<T> taskBody = () -> {
-            HttpResponse<String> response = requestBuilder(client, url).asString();
-            if (response.getStatus() / 100 != 2) {
+            HttpResponse<String> response = requestBuilder(client, url, fields).asString();
+            if (!response.isSuccess()) {
                 throw new IOException("Server returned HTTP response code: " + response.getStatus());
             }
             return fromResponse(url, response.getBody());
@@ -52,7 +50,11 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
 
     protected abstract T fromResponse(URL url, String body);
 
-    protected HttpRequest<?> requestBuilder(UnirestInstance client, URL link) {
-        return client.get(link.toString());
+    protected HttpRequest<?> requestBuilder(UnirestInstance client, URL url, Map<String, String> fields) {
+        GetRequest ret = client.get(url.toString());
+        if (fields != null) {
+            fields.forEach(ret::queryString);
+        }
+        return ret;
     }
 }

@@ -1,20 +1,23 @@
 package com.github.romanqed;
 
+import com.github.romanqed.api.html.CollectionLoader;
+import com.github.romanqed.api.html.PostCollectionLoader;
 import com.github.romanqed.api.json.Comment;
 import com.github.romanqed.api.util.ParseUtil;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import com.github.romanqed.api.util.Urls;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Document document = Jsoup.connect("https://ficbook.net/readfic/6023919/comments#content").get();
-        List<Comment> commentList = ParseUtil.entitiesFromPage(document, Comment.BUILDER, ParseUtil.COMMENT_QUERY);
-        commentList.forEach(System.out::println);
-//        CollectionLoader loader = new CollectionLoader();
-//        loader.setSelector(ParseUtil.COMMENT_QUERY);
-//        loader.setBuilder(Comment.);
+        CollectionLoader loader = new PostCollectionLoader();
+        loader.setSelector(ParseUtil.COMMENT_QUERY);
+        loader.setBuilder(Comment.BUILDER);
+        Map<String, String> a = new ConcurrentHashMap<>();
+        a.put("id", "3965460");
+        a.put("page", "1");
+        System.out.println(loader.load(Urls.parseFicbookUrl("comments/get_fanfic_part_comments"), a).checked(Throwable::printStackTrace).size());
     }
 }
