@@ -1,10 +1,12 @@
 package com.github.romanqed.api.json;
 
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,5 +63,12 @@ public class Comment {
     public String toString() {
         return "[Comment] " + comment + " [User] " + userId + " [Date] "
                 + createDate + " [Likes] " + likes + " [Rewards] " + rewards;
+    }
+
+    public static class CommentBuilder implements HtmlBuilder<Comment> {
+        @Override
+        public Comment build(Element node) {
+            return null;
+        }
     }
 }

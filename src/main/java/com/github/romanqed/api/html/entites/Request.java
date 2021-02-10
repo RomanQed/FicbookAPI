@@ -1,7 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBuilder;
+import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.states.Direction;
 import com.github.romanqed.api.states.Rating;
 import com.github.romanqed.api.util.Checks;
@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.*;
 
 public class Request extends AbstractLinkable {
-    public static final HtmlBuilder<Request> BUILDER = new RequestBuilder();
+    public static final HtmlPageBuilder<Request> BUILDER = new RequestBuilder();
     private final Set<Fandom> fandoms;
     private final List<String> characters;
     private final Set<Direction> directions;
@@ -107,7 +107,7 @@ public class Request extends AbstractLinkable {
         return "[Request] " + title + " [Description] " + description + " " + super.toString();
     }
 
-    public static class RequestBuilder implements HtmlBuilder<Request> {
+    public static class RequestBuilder implements HtmlPageBuilder<Request> {
         @Override
         public Request build(URL url, Document page) {
             Request ret = new Request(url);

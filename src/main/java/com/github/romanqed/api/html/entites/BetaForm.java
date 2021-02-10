@@ -1,7 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBuilder;
+import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.states.Direction;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class BetaForm extends AbstractLinkable {
-    public static final HtmlBuilder<BetaForm> BUILDER = new BetaFormBuilder();
+    public static final HtmlPageBuilder<BetaForm> BUILDER = new BetaFormBuilder();
     private String betaName;
     private final Set<String> fandoms;
     private final Set<Tag> preferredTags;
@@ -80,7 +80,7 @@ public class BetaForm extends AbstractLinkable {
         return "[BetaForm] " + betaName + " [Test result] " + testResult + " " + super.toString();
     }
 
-    public static class BetaFormBuilder implements HtmlBuilder<BetaForm> {
+    public static class BetaFormBuilder implements HtmlPageBuilder<BetaForm> {
         @Override
         public BetaForm build(URL url, Document page) {
             return build(page.selectFirst(ParseUtil.BETA_FORM_QUERY));

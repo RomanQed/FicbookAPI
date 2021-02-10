@@ -1,13 +1,14 @@
 package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.BuildLoader;
+import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
 import org.jsoup.Jsoup;
 
 import java.net.URL;
 
-public class HtmlLoader extends BuildLoader<Object> {
+public class HtmlLoader extends BuildLoader<Object, HtmlPageBuilder<?>> {
     public HtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
         super(client, taskFabric);
     }

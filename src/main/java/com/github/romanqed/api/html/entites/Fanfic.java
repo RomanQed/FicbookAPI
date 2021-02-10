@@ -1,7 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBuilder;
+import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.json.Reward;
 import com.github.romanqed.api.states.*;
 import com.github.romanqed.api.util.Checks;
@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Fanfic extends AbstractLinkable {
-    public static final HtmlBuilder<Fanfic> BUILDER = new FanficBuilder();
+    public static final HtmlPageBuilder<Fanfic> BUILDER = new FanficBuilder();
     private final Set<Fandom> fandoms;
     private final Map<User, AuthorRole> authors;
     private final List<Pairing> pairings;
@@ -160,7 +160,7 @@ public class Fanfic extends AbstractLinkable {
         return "[Fanfic] " + title + " [Description] " + description + " " + super.toString();
     }
 
-    public static class FanficBuilder implements HtmlBuilder<Fanfic> {
+    public static class FanficBuilder implements HtmlPageBuilder<Fanfic> {
         @Override
         public Fanfic build(URL url, Document page) {
             Fanfic ret = new Fanfic(url);

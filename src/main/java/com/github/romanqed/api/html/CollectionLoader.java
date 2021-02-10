@@ -1,6 +1,7 @@
 package com.github.romanqed.api.html;
 
 import com.github.romanqed.api.BuildLoader;
+import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
@@ -9,7 +10,7 @@ import org.jsoup.Jsoup;
 import java.net.URL;
 import java.util.List;
 
-public class CollectionLoader extends BuildLoader<List<?>> {
+public class CollectionLoader extends BuildLoader<List<?>, HtmlBuilder<?>> {
     private String selector;
 
     public CollectionLoader(UnirestInstance client, TaskFabric taskFabric) {

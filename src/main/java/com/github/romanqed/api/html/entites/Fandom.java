@@ -1,7 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBuilder;
+import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 
 public class Fandom extends AbstractLinkable {
-    public static final HtmlBuilder<Fandom> BUILDER = new FandomBuilder();
+    public static final HtmlPageBuilder<Fandom> BUILDER = new FandomBuilder();
     private String title;
 
     public Fandom(URL url) {
@@ -31,7 +31,7 @@ public class Fandom extends AbstractLinkable {
         return "[Fandom] " + title + " " + super.toString();
     }
 
-    public static class FandomBuilder implements HtmlBuilder<Fandom> {
+    public static class FandomBuilder implements HtmlPageBuilder<Fandom> {
         @Override
         public Fandom build(URL url, Document page) {
             Fandom ret = new Fandom(url);

@@ -1,7 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBuilder;
+import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 
 public class Tag extends AbstractLinkable {
-    public static final HtmlBuilder<Tag> BUILDER = new TagBuilder();
+    public static final HtmlPageBuilder<Tag> BUILDER = new TagBuilder();
     private String title;
     private String description;
 
@@ -37,7 +37,7 @@ public class Tag extends AbstractLinkable {
         return "[Tag] " + title + " " + super.toString();
     }
 
-    public static class TagBuilder implements HtmlBuilder<Tag> {
+    public static class TagBuilder implements HtmlPageBuilder<Tag> {
         @Override
         public Tag build(URL url, Document page) {
             Tag ret = new Tag(url);

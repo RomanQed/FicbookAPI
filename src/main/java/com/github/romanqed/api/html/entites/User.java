@@ -1,7 +1,7 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.interfaces.HtmlBuilder;
+import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Date;
 
 public class User extends AbstractLinkable {
-    public static final HtmlBuilder<User> BUILDER = new UserBuilder();
+    public static final HtmlPageBuilder<User> BUILDER = new UserBuilder();
     private String name;
     private URL avatar;
     private String about;
@@ -70,7 +70,7 @@ public class User extends AbstractLinkable {
         return "[User] " + name + " [Avatar] " + avatar + " [About] " + about + " " + super.toString();
     }
 
-    public static class UserBuilder implements HtmlBuilder<User> {
+    public static class UserBuilder implements HtmlPageBuilder<User> {
         @Override
         public User build(URL url, Document page) {
             User ret = new User(url);
