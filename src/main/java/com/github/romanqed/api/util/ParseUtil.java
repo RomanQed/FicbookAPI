@@ -19,6 +19,7 @@ public class ParseUtil {
     public static final String REQUEST_QUERY = "article.request-thumb";
     public static final String COMMENT_QUERY = "article.comment-container";
     public static final String BETA_FORM_QUERY = "div.beta_thumb";
+    public static final String PAGE_COUNT_QUERY = "div.paging-description b";
 
     public static String safetyText(String rawText) {
         return rawText.toLowerCase().replaceAll("\\s", "");
@@ -36,8 +37,12 @@ public class ParseUtil {
         return Checks.requireNonExcept(() -> parseMixedNum(rawNum), 0);
     }
 
+    public static Integer parseInt(String rawNum, int def) {
+        return Checks.requireNonExcept(() -> Integer.parseInt(rawNum), def);
+    }
+
     public static Integer parseInt(String rawNum) {
-        return Checks.requireNonExcept(() -> Integer.parseInt(rawNum), 0);
+        return parseInt(rawNum, 0);
     }
 
     public static Date parseStringDate(String rawDate, DateFormat dateFormat) {
