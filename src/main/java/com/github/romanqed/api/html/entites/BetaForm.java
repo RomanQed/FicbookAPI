@@ -1,8 +1,6 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.html.entites.Tag;
-import com.github.romanqed.api.html.entites.User;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.states.Direction;
 import com.github.romanqed.api.util.Checks;
@@ -18,6 +16,7 @@ import java.util.Set;
 
 public class BetaForm extends AbstractLinkable {
     public static final HtmlBuilder<BetaForm> BUILDER = new BetaFormBuilder();
+    private String betaName;
     private final Set<String> fandoms;
     private final Set<Tag> preferredTags;
     private final Set<Tag> avoidedTags;
@@ -34,6 +33,10 @@ public class BetaForm extends AbstractLinkable {
         preferredTags = new HashSet<>();
         avoidedTags = new HashSet<>();
         directions = new HashSet<>();
+    }
+
+    public String getBetaName() {
+        return betaName;
     }
 
     public Set<String> getFandoms() {
@@ -74,7 +77,7 @@ public class BetaForm extends AbstractLinkable {
 
     @Override
     public String toString() {
-        return "[BetaForm] [Test result] " + testResult + " " + super.toString();
+        return "[BetaForm] " + betaName + " [Test result] " + testResult + " " + super.toString();
     }
 
     public static class BetaFormBuilder implements HtmlBuilder<BetaForm> {
@@ -85,7 +88,9 @@ public class BetaForm extends AbstractLinkable {
 
         @Override
         public BetaForm build(Element node) {
-            BetaForm ret = new BetaForm(Urls.parseFicbookUrl(node.selectFirst("div a.title").attr("href")));
+            Element title = node.selectFirst("div a.title");
+            BetaForm ret = new BetaForm(Urls.parseFicbookUrl(title.attr("href")));
+            ret.betaName = title.text();
             Elements info = node.select("div.beta_thumb_info");
             Elements fandoms = info.first().select("span");
             fandoms.forEach(fandom -> ret.fandoms.add(fandom.text()));

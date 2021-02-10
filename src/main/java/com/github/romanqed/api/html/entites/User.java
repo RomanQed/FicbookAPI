@@ -1,7 +1,6 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
-import com.github.romanqed.api.html.BetaForm;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
@@ -93,7 +92,7 @@ public class User extends AbstractLinkable {
                     () -> page.selectFirst("section.mb-30 p span").attr("title"),
                     ""
             ));
-            Element betaForm = page.selectFirst("div.beta_thumb");
+            Element betaForm = page.selectFirst(ParseUtil.BETA_FORM_QUERY);
             if (betaForm != null) {
                 ret.betaForm = BetaForm.BUILDER.build(betaForm);
             }
