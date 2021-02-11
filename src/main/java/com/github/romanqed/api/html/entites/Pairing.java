@@ -21,6 +21,17 @@ public class Pairing extends AbstractLinkable {
         characters = new ArrayList<>();
     }
 
+    public static Pairing fromCharacters(String... characters) {
+        Checks.requireCorrectValue(characters, arr -> characters.length != 0);
+        StringBuilder builtUrl = new StringBuilder();
+        for (String character : characters) {
+            builtUrl.append("/").append(Urls.encodeUrl(character));
+        }
+        Pairing ret = new Pairing(Urls.attachUrl(Urls.PAIRINGS, builtUrl.toString()));
+        Collections.addAll(ret.characters, characters);
+        return ret;
+    }
+
     public static boolean validateUrl(URL url) {
         return Urls.validateChildUrl(Urls.PAIRINGS, url);
     }

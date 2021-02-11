@@ -1,19 +1,21 @@
-package com.github.romanqed.api.states;
+package com.github.romanqed.api.enums;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public enum Size {
-    DRABBLE("драббл"),
-    MINI("мини"),
-    MIDI("миди"),
-    MAXI("макси");
+    DRABBLE(1, "драббл"),
+    MINI(2, "мини"),
+    MIDI(3, "миди"),
+    MAXI(4, "макси");
 
     static final Map<String, Size> children = toMap();
     final String title;
+    final int id;
 
-    Size(String title) {
+    Size(int id, String title) {
+        this.id = id;
         this.title = title;
     }
 
@@ -31,5 +33,9 @@ public enum Size {
 
     public String getTitle() {
         return title;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -1,6 +1,7 @@
 package com.github.romanqed.api.util;
 
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Predicate;
@@ -42,6 +43,10 @@ public class Urls {
         return parseFicbookUrl(MAIN_PAGE, rawUrl);
     }
 
+    public static URL attachFandomUrl(String rawName) {
+        return attachUrl(Urls.FANDOMS, rawName);
+    }
+
     public static URL attachUrl(URL context, String rawUrl) {
         try {
             String newUrl = context.toString();
@@ -72,6 +77,14 @@ public class Urls {
     public static String encodeUrl(String rawUrl) {
         try {
             return URLEncoder.encode(rawUrl, StandardCharsets.UTF_8.name());
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static String decodeUrl(String encodedUrl) {
+        try {
+            return URLDecoder.decode(encodedUrl, StandardCharsets.UTF_8.name());
         } catch (Exception e) {
             return "";
         }

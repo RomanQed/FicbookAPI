@@ -1,4 +1,4 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api.html.loaders;
 
 import com.github.romanqed.api.BuildLoader;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
@@ -14,24 +14,20 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class CollectionLoader extends BuildLoader<List<?>, HtmlBuilder<?>> {
-    private String selector;
+    private final String selector;
     private Consumer<Document> onParse = null;
 
-    public CollectionLoader(UnirestInstance client, TaskFabric taskFabric) {
-        super(client, taskFabric);
-        this.selector = "";
-    }
-
-    public CollectionLoader(UnirestInstance client) {
-        this(client, null);
-    }
-
-    public CollectionLoader() {
-        this(null, null);
-    }
-
-    public void setSelector(String selector) {
+    public CollectionLoader(UnirestInstance client, TaskFabric taskFabric, HtmlBuilder<?> builder, String selector) {
+        super(client, taskFabric, builder);
         this.selector = selector;
+    }
+
+    public CollectionLoader(UnirestInstance client, HtmlBuilder<?> builder, String selector) {
+        this(client, null, builder, selector);
+    }
+
+    public CollectionLoader(HtmlBuilder<?> builder, String selector) {
+        this(null, null, builder, selector);
     }
 
     public void onParse(Consumer<Document> onParse) {

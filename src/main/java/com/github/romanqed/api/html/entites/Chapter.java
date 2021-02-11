@@ -2,6 +2,7 @@ package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
+import com.github.romanqed.api.interfaces.Numerable;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
@@ -11,8 +12,9 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 import java.util.Date;
 
-public class Chapter extends AbstractLinkable {
+public class Chapter extends AbstractLinkable implements Numerable {
     public static final HtmlPageBuilder<Chapter> BUILDER = new ChapterBuilder();
+    private final int id;
     private String title;
     private Date date;
     private String body;
@@ -20,6 +22,8 @@ public class Chapter extends AbstractLinkable {
 
     public Chapter(URL url) {
         this.url = Checks.requireCorrectValue(url, Chapter::validateUrl);
+        String[] splitUrl = url.toString().split("/");
+        id = ParseUtil.parseMixedNum(splitUrl[splitUrl.length - 1]);
         title = "";
         date = new Date();
         body = "";
@@ -49,6 +53,11 @@ public class Chapter extends AbstractLinkable {
     @Override
     public String toString() {
         return "[Chapter] " + title + " " + super.toString();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public static class ChapterBuilder implements HtmlPageBuilder<Chapter> {

@@ -1,6 +1,8 @@
 package com.github.romanqed.api.html;
 
+import com.github.romanqed.api.html.loaders.CollectionLoader;
 import com.github.romanqed.api.util.Checks;
+import com.github.romanqed.api.util.Pair;
 import com.github.romanqed.api.util.Queries;
 import com.github.romanqed.api.util.Urls;
 import com.github.romanqed.concurrent.Task;
@@ -8,6 +10,7 @@ import com.github.romanqed.concurrent.Task;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class PageableCollection {
     private final CollectionLoader loader;
@@ -15,7 +18,7 @@ public class PageableCollection {
     private int maxPage = -1;
 
     public PageableCollection(CollectionLoader loader, URL url) {
-        this.loader = Checks.requireNonNullElse(loader, new CollectionLoader());
+        this.loader = Checks.requireCorrectValue(loader, Objects::nonNull);
         this.url = Checks.requireNonNullElse(url, Urls.POPULAR);
     }
 
@@ -31,7 +34,7 @@ public class PageableCollection {
                     -1
             );
         });
-        return loader.load(url, Collections.singletonMap("p", Integer.toString(page)));
+        return loader.load(url, Collections.singletonList(new Pair<>("p", Integer.toString(page))));
     }
 
     public int getMaxPage() {

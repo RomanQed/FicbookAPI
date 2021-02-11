@@ -1,9 +1,10 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
+import com.github.romanqed.api.enums.*;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
+import com.github.romanqed.api.interfaces.Numerable;
 import com.github.romanqed.api.json.Reward;
-import com.github.romanqed.api.states.*;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
@@ -17,8 +18,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Fanfic extends AbstractLinkable {
+public class Fanfic extends AbstractLinkable implements Numerable {
     public static final HtmlPageBuilder<Fanfic> BUILDER = new FanficBuilder();
+    private final int id;
     private final Set<Fandom> fandoms;
     private final Map<User, AuthorRole> authors;
     private final List<Pairing> pairings;
@@ -44,6 +46,7 @@ public class Fanfic extends AbstractLinkable {
 
     public Fanfic(URL url) {
         this.url = Checks.requireCorrectValue(url, Fanfic::validateUrl);
+        id = ParseUtil.parseMixedNum(url.toString());
         fandoms = new HashSet<>();
         authors = new ConcurrentHashMap<>();
         pairings = new ArrayList<>();
@@ -158,6 +161,11 @@ public class Fanfic extends AbstractLinkable {
     @Override
     public String toString() {
         return "[Fanfic] " + title + " [Description] " + description + " " + super.toString();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public static class FanficBuilder implements HtmlPageBuilder<Fanfic> {

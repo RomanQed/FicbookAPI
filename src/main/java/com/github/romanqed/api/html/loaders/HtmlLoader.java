@@ -1,4 +1,4 @@
-package com.github.romanqed.api.html;
+package com.github.romanqed.api.html.loaders;
 
 import com.github.romanqed.api.BuildLoader;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
@@ -9,16 +9,16 @@ import org.jsoup.Jsoup;
 import java.net.URL;
 
 public class HtmlLoader extends BuildLoader<Object, HtmlPageBuilder<?>> {
-    public HtmlLoader(UnirestInstance client, TaskFabric taskFabric) {
-        super(client, taskFabric);
+    public HtmlLoader(UnirestInstance client, TaskFabric taskFabric, HtmlPageBuilder<?> builder) {
+        super(client, taskFabric, builder);
     }
 
-    public HtmlLoader(UnirestInstance client) {
-        this(client, null);
+    public HtmlLoader(UnirestInstance client, HtmlPageBuilder<?> builder) {
+        this(client, null, builder);
     }
 
-    public HtmlLoader() {
-        this(null, null);
+    public HtmlLoader(HtmlPageBuilder<?> builder) {
+        this(null, null, builder);
     }
 
     @Override

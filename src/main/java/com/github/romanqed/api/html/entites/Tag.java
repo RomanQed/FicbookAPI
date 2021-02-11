@@ -2,20 +2,24 @@ package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
+import com.github.romanqed.api.interfaces.Numerable;
 import com.github.romanqed.api.util.Checks;
+import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.net.URL;
 
-public class Tag extends AbstractLinkable {
+public class Tag extends AbstractLinkable implements Numerable {
     public static final HtmlPageBuilder<Tag> BUILDER = new TagBuilder();
+    private final int id;
     private String title;
     private String description;
 
     public Tag(URL url) {
         this.url = Checks.requireCorrectValue(url, Tag::validateUrl);
+        id = ParseUtil.parseMixedNum(url.toString());
         title = "";
         description = "";
     }
@@ -35,6 +39,11 @@ public class Tag extends AbstractLinkable {
     @Override
     public String toString() {
         return "[Tag] " + title + " " + super.toString();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public static class TagBuilder implements HtmlPageBuilder<Tag> {

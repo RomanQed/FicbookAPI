@@ -2,6 +2,7 @@ package com.github.romanqed.api;
 
 import com.github.romanqed.api.interfaces.DataLoader;
 import com.github.romanqed.api.util.Checks;
+import com.github.romanqed.api.util.Pair;
 import com.github.romanqed.concurrent.AbstractTask;
 import com.github.romanqed.concurrent.BaseTaskFabric;
 import com.github.romanqed.concurrent.Task;
@@ -10,7 +11,7 @@ import kong.unirest.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 public abstract class AbstractDataLoader<T> implements DataLoader<T> {
@@ -23,7 +24,7 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
     }
 
     @Override
-    public Task<T> load(URL url, Map<String, String> fields) {
+    public Task<T> load(URL url, List<Pair<String, String>> fields) {
         Callable<T> taskBody = () -> {
             HttpResponse<String> response = requestBuilder(client, url, fields).asString();
             if (!response.isSuccess()) {
@@ -50,10 +51,10 @@ public abstract class AbstractDataLoader<T> implements DataLoader<T> {
 
     protected abstract T fromResponse(URL url, String body);
 
-    protected HttpRequest<?> requestBuilder(UnirestInstance client, URL url, Map<String, String> fields) {
+    protected HttpRequest<?> requestBuilder(UnirestInstance client, URL url, List<Pair<String, String>> fields) {
         GetRequest ret = client.get(url.toString());
         if (fields != null) {
-            fields.forEach(ret::queryString);
+            fields.forEach(pair -> ret.queryString(pair.getKey(), pair.getValue()));
         }
         return ret;
     }

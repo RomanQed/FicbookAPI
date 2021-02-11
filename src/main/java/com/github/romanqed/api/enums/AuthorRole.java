@@ -1,4 +1,4 @@
-package com.github.romanqed.api.states;
+package com.github.romanqed.api.enums;
 
 import java.util.Arrays;
 import java.util.List;

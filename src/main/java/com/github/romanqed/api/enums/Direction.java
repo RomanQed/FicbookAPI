@@ -1,4 +1,4 @@
-package com.github.romanqed.api.states;
+package com.github.romanqed.api.enums;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,18 +7,20 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public enum Direction {
-    GEN("джен", "ic_gen"),
-    HETERO("гет", "ic_het"),
-    YAOI("слэш", "ic_slash"),
-    YURI("фемслэш", "ic_femslash"),
-    MIXED("смешанная", "ic_mixed"),
-    OTHER_RELATIONSHIPS("другиевидыотношений", "ic_other"),
-    ARTICLE("статья", "ic_article");
+    GEN(1, "джен", "ic_gen"),
+    HETERO(2, "гет", "ic_het"),
+    YAOI(3, "слэш", "ic_slash"),
+    YURI(4, "фемслэш", "ic_femslash"),
+    ARTICLE(5, "статья", "ic_article"),
+    MIXED(6, "смешанная", "ic_mixed"),
+    OTHER_RELATIONSHIPS(7, "другиевидыотношений", "ic_other");
 
     static final Map<String, Direction> children = toMap();
     final List<String> names;
+    final int id;
 
-    Direction(String... names) {
+    Direction(int id, String... names) {
+        this.id = id;
         this.names = Arrays.asList(names);
     }
 
@@ -30,6 +32,10 @@ public enum Direction {
             }
         }
         return ret;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public static Direction fromName(String name) {

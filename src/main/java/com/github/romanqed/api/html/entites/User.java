@@ -2,6 +2,7 @@ package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
+import com.github.romanqed.api.interfaces.Numerable;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Queries;
@@ -12,8 +13,9 @@ import org.jsoup.nodes.Element;
 import java.net.URL;
 import java.util.Date;
 
-public class User extends AbstractLinkable {
+public class User extends AbstractLinkable implements Numerable {
     public static final HtmlPageBuilder<User> BUILDER = new UserBuilder();
+    private final int id;
     private String name;
     private URL avatar;
     private String about;
@@ -24,6 +26,7 @@ public class User extends AbstractLinkable {
 
     public User(URL url) {
         this.url = Checks.requireCorrectValue(url, User::validateUrl);
+        id = ParseUtil.parseMixedNum(url.toString());
         name = "";
         avatar = Urls.DEFAULT_AVATAR;
         about = "";
@@ -69,6 +72,11 @@ public class User extends AbstractLinkable {
     @Override
     public String toString() {
         return "[User] " + name + " [Avatar] " + avatar + " [About] " + about + " " + super.toString();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public static class UserBuilder implements HtmlPageBuilder<User> {

@@ -1,5 +1,6 @@
 package com.github.romanqed.api.util;
 
+import com.github.romanqed.api.html.entites.Pairing;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,8 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 public class ParseUtil {
-    public static final DateFormat jsonDateFormat = new SimpleDateFormat("y-M-d H:m:s.SX");
-    public static final DateFormat nativeDateFormat = new SimpleDateFormat("d MMMM y, H:m");
+    public static final DateFormat JSON_DATE_FORMAT = new SimpleDateFormat("y-M-d H:m:s.SX");
+    public static final DateFormat NATIVE_DATE_FORMAT = new SimpleDateFormat("d MMMM y, H:m");
+    public static final DateFormat SEARCH_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public static String safetyText(String rawText) {
         return rawText.toLowerCase().replaceAll("\\s", "");
@@ -49,11 +51,11 @@ public class ParseUtil {
     }
 
     public static Date parseNativeDate(String rawDate) {
-        return parseStringDate(rawDate, nativeDateFormat);
+        return parseStringDate(rawDate, NATIVE_DATE_FORMAT);
     }
 
     public static Date parseJsonDate(String rawDate) {
-        return parseStringDate(rawDate, jsonDateFormat);
+        return parseStringDate(rawDate, JSON_DATE_FORMAT);
     }
 
     public static <T> void parseHtmlNodes(HtmlBuilder<T> builder, Elements elements, Collection<T> collection) {
@@ -72,5 +74,15 @@ public class ParseUtil {
             ret.add(builder.build(item));
         }
         return ret;
+    }
+
+    public static String pairingToSearchFormat(Pairing pairing, String delimiter) {
+        StringBuilder ret = new StringBuilder();
+        List<String> characters = pairing.getCharacters();
+        ret.append(Urls.encodeUrl(characters.get(0)));
+        for (int i = 1; i < characters.size(); ++i) {
+            ret.append(delimiter).append(Urls.encodeUrl(characters.get(i)));
+        }
+        return ret.toString();
     }
 }

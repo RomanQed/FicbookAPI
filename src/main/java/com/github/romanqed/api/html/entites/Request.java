@@ -1,9 +1,10 @@
 package com.github.romanqed.api.html.entites;
 
 import com.github.romanqed.api.AbstractLinkable;
+import com.github.romanqed.api.enums.Direction;
+import com.github.romanqed.api.enums.Rating;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
-import com.github.romanqed.api.states.Direction;
-import com.github.romanqed.api.states.Rating;
+import com.github.romanqed.api.interfaces.Numerable;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.ParseUtil;
 import com.github.romanqed.api.util.Urls;
@@ -14,8 +15,9 @@ import org.jsoup.select.Elements;
 import java.net.URL;
 import java.util.*;
 
-public class Request extends AbstractLinkable {
+public class Request extends AbstractLinkable implements Numerable {
     public static final HtmlPageBuilder<Request> BUILDER = new RequestBuilder();
+    private final int id;
     private final Set<Fandom> fandoms;
     private final List<String> characters;
     private final Set<Direction> directions;
@@ -33,6 +35,7 @@ public class Request extends AbstractLinkable {
 
     public Request(URL url) {
         this.url = Checks.requireCorrectValue(url, Request::validateUrl);
+        id = ParseUtil.parseMixedNum(url.toString());
         fandoms = new HashSet<>();
         characters = new ArrayList<>();
         directions = new HashSet<>();
@@ -105,6 +108,11 @@ public class Request extends AbstractLinkable {
     @Override
     public String toString() {
         return "[Request] " + title + " [Description] " + description + " " + super.toString();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public static class RequestBuilder implements HtmlPageBuilder<Request> {
