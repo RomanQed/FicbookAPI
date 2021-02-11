@@ -13,39 +13,69 @@ import com.github.romanqed.api.util.Urls;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class SearchBuilder extends AbstractQueryBuilder {
-    private static final String FANDOMS = "fandom_ids%5B%5D";
-    private static final String EXCLUDE_FANDOMS = "fandom_exclude_ids%5B%5D";
-    private static final String PAIRINGS = "pairings%5B%i%5D%5Bpairing%5D";
-    private static final String EXCLUDE_PAIRINGS = "pairings_exclude%5B%i%5D%5Bpairing%5D";
+    private static final String FANDOMS = "fandom_ids[]";
+    private static final String EXCLUDE_FANDOMS = "fandom_exclude_ids[]";
+    private static final String PAIRINGS = "pairings[%i][pairing]";
+    private static final String EXCLUDE_PAIRINGS = "pairings_exclude[%i][pairing]";
     private static final String PAIRING_DELIMITER = "---";
-    private static final String SIZES = "sizes%5B%5D";
-    private static final String RATINGS = "ratings%5B%5D";
-    private static final String STATUSES = "statuses%5B%5D";
-    private static final String DIRECTIONS = "directions%5B%5D";
-    private static final String TAGS = "tags_include%5B%5D";
-    private static final String EXCLUDE_TAGS = "tags_exclude%5B%5D";
+    private static final String SIZES = "sizes[]";
+    private static final String RATINGS = "ratings[]";
+    private static final String STATUSES = "statuses[]";
+    private static final String DIRECTIONS = "directions[]";
+    private static final String TAGS = "tags_include[]";
+    private static final String EXCLUDE_TAGS = "tags_exclude[]";
 
     private FandomFilter filter;
-    private int lastPairingId = 0;
-    private int lastExcludePairingId = 0;
+    private int pagesMin;
+    private int pagesMax;
+    private int likesMin;
+    private int likesMax;
+    private int fandomGroupId;
+    private int translate;
+    private int lastPairingId;
+    private int lastExcludePairingId;
+    private String title;
+    private boolean dateCreate;
+    private Date dateCreateMin;
+    private Date dateCreateMax;
+    private boolean dateUpdate;
+    private Date dateUpdateMin;
+    private Date dateUpdateMax;
+    private int sort;
+    private int authorId;
 
     public SearchBuilder() {
         queries = new ArrayList<>();
-        queries.add(new Pair<>("find", ""));
+        filter = FandomFilter.ANY;
+        fandomGroupId = 1;
+        lastPairingId = 0;
+        lastExcludePairingId = 0;
+        pagesMin = -1;
+        pagesMax = -1;
+        likesMin = -1;
+        likesMax = -1;
+        translate = 1;
+        title = "";
+        dateCreateMin = new Date();
+        dateCreateMax = new Date();
+        dateUpdateMin = new Date();
+        dateUpdateMax = new Date();
+        sort = 1;
+        authorId = 0;
     }
 
     public SearchBuilder fandomFilter(FandomFilter filter) {
         this.filter = filter;
-        queries.add(new Pair<>("fandom_filter", filter.value));
         return this;
     }
 
     public SearchBuilder fandomGroup(FandomGroup group) {
         if (filter == FandomFilter.GROUP) {
-            queries.add(new Pair<>("fandom_group_id", Integer.toString(group.getId())));
+            fandomGroupId = group.getId();
         }
         return this;
     }
@@ -60,6 +90,10 @@ public class SearchBuilder extends AbstractQueryBuilder {
             }
         }
         return this;
+    }
+
+    public SearchBuilder preferredFandoms(Fandom... fandoms) {
+        return preferredFandoms(false, fandoms);
     }
 
     public SearchBuilder avoidedFandoms(Fandom... fandoms) {
@@ -111,8 +145,9 @@ public class SearchBuilder extends AbstractQueryBuilder {
     }
 
     public SearchBuilder pages(int min, int max) {
-        queries.add(new Pair<>("pages_min", Integer.toString(min)));
-        queries.add(new Pair<>("pages_max", Integer.toString(max)));
+        Checks.requireCorrectValue(min, i -> i < max);
+        pagesMin = min;
+        pagesMax = max;
         return this;
     }
 
@@ -123,15 +158,8 @@ public class SearchBuilder extends AbstractQueryBuilder {
         return this;
     }
 
-    public SearchBuilder isTranslate(Boolean isTranslate) {
-        String key = "transl";
-        if (isTranslate == null) {
-            queries.add(new Pair<>(key, "1"));
-        } else if (isTranslate) {
-            queries.add(new Pair<>(key, "2"));
-        } else {
-            queries.add(new Pair<>(key, "3"));
-        }
+    public SearchBuilder isTranslate(Translate translate) {
+        this.translate = translate.value;
         return this;
     }
 
@@ -171,42 +199,70 @@ public class SearchBuilder extends AbstractQueryBuilder {
     }
 
     public SearchBuilder withAuthor(User user) {
-        queries.add(new Pair<>("author", "1"));
-        queries.add(new Pair<>("author_id", Integer.toString(user.getId())));
+        authorId = user.getId();
         return this;
     }
 
     public SearchBuilder likes(int min, int max) {
         Checks.requireCorrectValue(min, i -> i < max);
-        queries.add(new Pair<>("likes_min", Integer.toString(min)));
-        queries.add(new Pair<>("likes_max", Integer.toString(max)));
+        likesMin = min;
+        likesMax = max;
         return this;
     }
 
     public SearchBuilder createDate(Date older, Date newer) {
         Checks.requireCorrectValue(older, date -> date.before(newer));
-        queries.add(new Pair<>("dateFilterCreate", "1"));
-        queries.add(new Pair<>("date_create_min", ParseUtil.SEARCH_DATE_FORMAT.format(older)));
-        queries.add(new Pair<>("date_create_max", ParseUtil.SEARCH_DATE_FORMAT.format(newer)));
+        dateCreate = true;
+        dateCreateMin = older;
+        dateCreateMax = newer;
         return this;
     }
 
     public SearchBuilder lastUpdateDate(Date older, Date newer) {
         Checks.requireCorrectValue(older, date -> date.before(newer));
-        queries.add(new Pair<>("dateFilterUpdate", "1"));
-        queries.add(new Pair<>("date_update_min", ParseUtil.SEARCH_DATE_FORMAT.format(older)));
-        queries.add(new Pair<>("date_update_max", ParseUtil.SEARCH_DATE_FORMAT.format(newer)));
+        dateUpdate = true;
+        dateUpdateMin = older;
+        dateUpdateMax = newer;
         return this;
     }
 
     public SearchBuilder withWordsInTitle(String words) {
-        queries.add(new Pair<>("title", Urls.encodeUrl(words)));
+        this.title = Urls.encodeUrl(words);
         return this;
     }
 
     public SearchBuilder sortBy(Sort sort) {
-        queries.add(new Pair<>("sort", Integer.toString(sort.value)));
+        this.sort = sort.value;
         return this;
+    }
+
+    @Override
+    public List<Pair<String, String>> build() {
+        queries.add(new Pair<>("fandom_filter", filter.value));
+        queries.add(new Pair<>("fandom_group_id", Integer.toString(fandomGroupId)));
+        queries.add(new Pair<>("pages_min", pagesMin == -1 ? "" : Integer.toString(pagesMin)));
+        queries.add(new Pair<>("pages_max", pagesMin == -1 ? "" : Integer.toString(pagesMax)));
+        queries.add(new Pair<>("transl", Integer.toString(translate)));
+        queries.add(new Pair<>("likes_min", likesMin == -1 ? "" : Integer.toString(likesMin)));
+        queries.add(new Pair<>("likes_max", likesMax == -1 ? "" : Integer.toString(likesMax)));
+        if (dateCreate) {
+            queries.add(new Pair<>("dateFilterCreate", "1"));
+        }
+        if (dateUpdate) {
+            queries.add(new Pair<>("dateFilterUpdate", "1"));
+        }
+        queries.add(new Pair<>("date_create_min", ParseUtil.SEARCH_DATE_FORMAT.format(dateCreateMin)));
+        queries.add(new Pair<>("date_create_max", ParseUtil.SEARCH_DATE_FORMAT.format(dateCreateMax)));
+        queries.add(new Pair<>("date_update_min", ParseUtil.SEARCH_DATE_FORMAT.format(dateUpdateMin)));
+        queries.add(new Pair<>("date_update_max", ParseUtil.SEARCH_DATE_FORMAT.format(dateUpdateMax)));
+        queries.add(new Pair<>("title", title));
+        queries.add(new Pair<>("sort", Integer.toString(sort)));
+        if (authorId != 0) {
+            queries.add(new Pair<>("author", "1"));
+            queries.add(new Pair<>("author_id", Integer.toString(authorId)));
+        }
+        queries.add(new Pair<>("find", "Найти!"));
+        return super.build();
     }
 
     public enum Sort {
@@ -232,6 +288,18 @@ public class SearchBuilder extends AbstractQueryBuilder {
         final String value;
 
         FandomFilter(String value) {
+            this.value = value;
+        }
+    }
+
+    public enum Translate {
+        ANY(1),
+        TRANSLATION(2),
+        ORIGINAL(3);
+
+        final int value;
+
+        Translate(int value) {
             this.value = value;
         }
     }
