@@ -85,4 +85,9 @@ public class ParseUtil {
         }
         return ret.toString();
     }
+
+    public static String sliceLast(String rawUrl, String delimiter) {
+        String[] splitStr = rawUrl.split(delimiter);
+        return splitStr[splitStr.length - 1];
+    }
 }

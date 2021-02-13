@@ -113,4 +113,8 @@ public class Urls {
     public static boolean validateUrl(URL url, String regexp) {
         return url.toString().matches(regexp);
     }
+
+    public static String sliceUrlLastPath(URL url) {
+        return ParseUtil.sliceLast(url.toString(), "/");
+    }
 }
