@@ -2,10 +2,10 @@ package com.github.romanqed.api.html.query;
 
 import com.github.romanqed.api.AbstractQueryBuilder;
 import com.github.romanqed.api.enums.*;
-import com.github.romanqed.api.html.entites.Fandom;
-import com.github.romanqed.api.html.entites.Pairing;
-import com.github.romanqed.api.html.entites.Tag;
-import com.github.romanqed.api.html.entites.User;
+import com.github.romanqed.api.html.entities.Fandom;
+import com.github.romanqed.api.html.entities.Pairing;
+import com.github.romanqed.api.html.entities.Tag;
+import com.github.romanqed.api.html.entities.User;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Pair;
 import com.github.romanqed.api.util.ParseUtil;
@@ -86,7 +86,7 @@ public class SearchBuilder extends AbstractQueryBuilder {
                 queries.add(new Pair<>("deny_other", "1"));
             }
             for (Fandom fandom : fandoms) {
-                queries.add(new Pair<>(FANDOMS, Integer.toString(fandom.getId())));
+                queries.add(new Pair<>(FANDOMS, fandom.getId()));
             }
         }
         return this;
@@ -99,7 +99,7 @@ public class SearchBuilder extends AbstractQueryBuilder {
     public SearchBuilder avoidedFandoms(Fandom... fandoms) {
         if (filter != FandomFilter.ORIGINALS) {
             for (Fandom fandom : fandoms) {
-                queries.add(new Pair<>(EXCLUDE_FANDOMS, Integer.toString(fandom.getId())));
+                queries.add(new Pair<>(EXCLUDE_FANDOMS, fandom.getId()));
             }
         }
         return this;
@@ -186,20 +186,20 @@ public class SearchBuilder extends AbstractQueryBuilder {
 
     public SearchBuilder preferredTags(Tag... tags) {
         for (Tag tag : tags) {
-            queries.add(new Pair<>(TAGS, Integer.toString(tag.getId())));
+            queries.add(new Pair<>(TAGS, tag.getId()));
         }
         return this;
     }
 
     public SearchBuilder avoidedTags(Tag... tags) {
         for (Tag tag : tags) {
-            queries.add(new Pair<>(EXCLUDE_TAGS, Integer.toString(tag.getId())));
+            queries.add(new Pair<>(EXCLUDE_TAGS, tag.getId()));
         }
         return this;
     }
 
     public SearchBuilder withAuthor(User user) {
-        authorId = user.getId();
+        authorId = ParseUtil.parseInt(user.getId());
         return this;
     }
 

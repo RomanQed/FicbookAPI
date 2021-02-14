@@ -1,6 +1,6 @@
 package com.github.romanqed.api.util;
 
-import com.github.romanqed.api.html.entites.Pairing;
+import com.github.romanqed.api.html.entities.Pairing;
 import com.github.romanqed.api.interfaces.HtmlBuilder;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -89,5 +89,9 @@ public class ParseUtil {
     public static String sliceLast(String rawUrl, String delimiter) {
         String[] splitStr = rawUrl.split(delimiter);
         return splitStr[splitStr.length - 1];
+    }
+
+    public static String sliceLastPath(String path) {
+        return sliceLast(path, "/");
     }
 }

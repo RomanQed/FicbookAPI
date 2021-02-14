@@ -19,9 +19,20 @@ public class Checks {
         }
     }
 
+    public static String requireNonNullString(String string) {
+        return requireNonNullElse(string, "");
+    }
+
     public static <T> T requireCorrectValue(T value, Predicate<T> predicate) {
         if (!predicate.test(value)) {
             throw new IllegalArgumentException("Incorrect " + value.getClass().getCanonicalName() + " value " + value);
+        }
+        return value;
+    }
+
+    public static <T> T requireCorrectValueElse(T value, Predicate<T> predicate, T def) {
+        if (!predicate.test(value)) {
+            return def;
         }
         return value;
     }

@@ -19,6 +19,7 @@ public class Urls {
     public static final URL COLLECTIONS = parseFicbookUrl("collections");
     public static final URL FIND = parseFicbookUrl("find");
     public static final URL PAIRINGS = parseFicbookUrl("pairings");
+    public static final URL STATIC_CONTEXT = parseUrl("https://static.ficbook.net");
     public static final URL DEFAULT_AVATAR = parseUrl("https://static.ficbook.net/ficbook/design/default_avatar.png");
 
     public static final String CHAPTER_REGEXP = Pattern.quote(FANFIC.toString()) + "/\\d*/\\d*";
