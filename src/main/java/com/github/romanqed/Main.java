@@ -1,13 +1,11 @@
 package com.github.romanqed;
 
 import com.github.romanqed.api.html.entities.Fanfic;
-import com.github.romanqed.api.loaders.HtmlLoader;
-import com.github.romanqed.api.util.Urls;
+
+import java.net.MalformedURLException;
 
 public class Main {
     public static void main(String[] args) {
-        HtmlLoader loader = new HtmlLoader();
-        printAllFanficInfo(loader.asyncLoad(Urls.attachUrl(Urls.FANFIC, "1"), Fanfic.BUILDER).silent());
     }
 
     public static void printAllFanficInfo(Fanfic fanfic) {

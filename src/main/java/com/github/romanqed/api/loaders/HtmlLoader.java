@@ -2,7 +2,7 @@ package com.github.romanqed.api.loaders;
 
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.interfaces.Loadable;
-import com.github.romanqed.api.interfaces.lambdas.AnswerProcessor;
+import com.github.romanqed.api.interfaces.lambdas.ResponseProcessor;
 import com.github.romanqed.concurrent.Task;
 import com.github.romanqed.concurrent.TaskFabric;
 import kong.unirest.UnirestInstance;
@@ -24,7 +24,7 @@ public class HtmlLoader extends AsyncLoader {
     }
 
     public <T extends Loadable> Task<T> asyncLoad(URL url, HtmlPageBuilder<T> builder) {
-        AnswerProcessor<T> processor = (u, b) -> builder.build(url, Jsoup.parse(b));
+        ResponseProcessor<T> processor = (u, b) -> builder.build(url, Jsoup.parse(b));
         return asyncLoad(url, null, processor);
     }
 

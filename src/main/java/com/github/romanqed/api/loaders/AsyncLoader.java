@@ -1,6 +1,6 @@
 package com.github.romanqed.api.loaders;
 
-import com.github.romanqed.api.interfaces.lambdas.AnswerProcessor;
+import com.github.romanqed.api.interfaces.lambdas.ResponseProcessor;
 import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Pair;
 import com.github.romanqed.concurrent.BaseTaskFabric;
@@ -20,7 +20,7 @@ public class AsyncLoader extends AbstractLoader {
         this.fabric = Checks.requireNonNullElse(fabric, new BaseTaskFabric());
     }
 
-    public <T> Task<T> asyncLoad(URL url, List<Pair<String, String>> fields, AnswerProcessor<T> processor) {
+    public <T> Task<T> asyncLoad(URL url, List<Pair<String, String>> fields, ResponseProcessor<T> processor) {
         Callable<T> taskBody = () -> processor.handle(url, load(url, fields));
         return fabric.createTask(taskBody);
     }
