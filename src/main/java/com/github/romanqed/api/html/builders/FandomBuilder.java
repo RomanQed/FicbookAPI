@@ -12,7 +12,7 @@ import java.net.URL;
 public class FandomBuilder implements HtmlPageBuilder<Fandom> {
     @Override
     public Fandom build(URL url, Document page) {
-        Fandom ret = new Fandom(Urls.sliceUrlLastPath(url));
+        Fandom ret = new Fandom(Urls.slicePath(Urls.FANDOMS, url));
         Element title = page.selectFirst("h1");
         String rawTitle = title.text();
         ret.setTitle(rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»')));
@@ -22,7 +22,7 @@ public class FandomBuilder implements HtmlPageBuilder<Fandom> {
 
     @Override
     public Fandom build(Element node) {
-        Fandom ret = new Fandom(ParseUtil.sliceLastPath(node.attr("href")));
+        Fandom ret = new Fandom(node.attr("href").replace("/fanfiction/", ""));
         ret.setTitle(node.text().trim());
         return ret;
     }

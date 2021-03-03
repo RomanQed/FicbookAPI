@@ -32,14 +32,8 @@ public class FanficBuilder implements HtmlPageBuilder<Fanfic> {
         ret.setStatus(Status.fromName(
                 ParseUtil.safetyText(mainInfo.selectFirst("span.badge-secondary svg").attr("class"))
         ));
-        ret.setLikes(Checks.requireNonExcept(
-                () -> Integer.parseInt(mainInfo.selectFirst("span.badge-like").text()),
-                0
-        ));
-        ret.setInCollections(Checks.requireNonExcept(
-                () -> ParseUtil.parseMixedNum(page.selectFirst("span.main-info:has(svg.ic_bookmark)").text()),
-                0
-        ));
+        ret.setLikes(ParseUtil.safetyNumber(mainInfo.selectFirst("span.badge-like").text()));
+        ret.setInCollections(ParseUtil.safetyNumber(page.selectFirst("span.main-info:has(svg.ic_bookmark)").text()));
         Element hat = page.selectFirst("section.fanfic-hat");
         ret.setPremium(hat.selectFirst("div.fanfic-hat-premium-notice") != null);
         if (ret.isTranslate()) {
@@ -52,9 +46,7 @@ public class FanficBuilder implements HtmlPageBuilder<Fanfic> {
         if (rewardElements != null) {
             JsonElement rewards = JsonParser.parseString(rewardElements.attr(":initial-fic-rewards-list"));
             if (rewards != null && rewards.isJsonArray()) {
-                rewards.getAsJsonArray().forEach(reward -> {
-                    retRewards.add(new Reward(reward.getAsJsonObject()));
-                });
+                rewards.getAsJsonArray().forEach(reward -> retRewards.add(new Reward(reward.getAsJsonObject())));
             }
         }
         Elements authors = hat.select("div.hat-creator-container div.creator-info");
@@ -90,39 +82,37 @@ public class FanficBuilder implements HtmlPageBuilder<Fanfic> {
 
     @Override
     public Fanfic build(Element node) {
-        Element head = node.selectFirst("h3");
-        Element link = head.selectFirst("a");
-        Fanfic ret = new Fanfic(ParseUtil.sliceLastPath(link.attr("href")));
-        ret.setTranslate(node.selectFirst("span.notice-blue") != null);
-        ret.setPremium(node.selectFirst("a.notice-yellow") != null);
-        ret.setTitle(link.text());
-        ret.setDirection(Direction.fromName(head.selectFirst("svg").attr("class").split(" ")[0]));
-        ret.setLikes(Checks.requireNonExcept(
-                () -> Integer.parseInt(head.selectFirst("sup.count span.value").text()),
-                0
-        ));
+        Element title = node.selectFirst("a.fanfic-inline-title");
+        Fanfic ret = new Fanfic(ParseUtil.sliceLastPath(title.attr("href").split("\\?")[0]));
+        ret.setTitle(title.text());
+        ret.setPremium(node.attr("class").contains("fanfic-inline-hot"));
+        String direction = node.selectFirst("div.direction svg").attr("class");
+        ret.setDirection(Direction.fromName(ParseUtil.safetyText(direction)));
+        ret.setTranslate(node.selectFirst("span.badge-translate") != null);
+        String rating = node.selectFirst("strong span").text();
+        ret.setRating(Rating.fromName(ParseUtil.safetyText(rating)));
+        String status = node.selectFirst("span.badge-secondary svg").attr("class");
+        ret.setStatus(Status.fromName(ParseUtil.safetyText(status)));
+        ret.setLikes(ParseUtil.safetyNumber(node.selectFirst("span.badge-like").text()));
         Elements authors = node.select("span.author a");
-        Map<User, AuthorRole> retAuthors = ret.getAuthors();
+        Map<User, AuthorRole> authorsMap = ret.getAuthors();
         if (ret.isTranslate()) {
-            retAuthors.put(User.BUILDER.build(authors.first()), AuthorRole.TRANSLATOR);
+            authorsMap.put(User.BUILDER.build(authors.first()), AuthorRole.TRANSLATOR);
             ret.setOriginalAuthor(authors.last().text());
         } else {
-            retAuthors.put(User.BUILDER.build(authors.first()), AuthorRole.AUTHOR);
+            authorsMap.put(User.BUILDER.build(authors.first()), AuthorRole.AUTHOR);
         }
-        Elements hat = node.select("dl.info dd");
-        ParseUtil.parseHtmlNodes(Fandom.BUILDER, hat.get(0).select("a"), ret.getFandoms());
-        ParseUtil.parseHtmlNodes(Pairing.BUILDER, hat.select("a.pairing-link"), ret.getPairings());
-        Elements rs = hat.select("strong[title]");
-        ret.setRating(Rating.fromName(ParseUtil.safetyText(rs.first().text())));
-        Element size = rs.last();
+        String prefix = "dl.fanfic-inline-info";
+        Element fandoms = node.select(prefix).get(1);
+        ParseUtil.parseHtmlNodes(Fandom.BUILDER, fandoms.select("a"), ret.getFandoms());
+        Elements pairings = node.select(prefix + " a.pairing-link");
+        ParseUtil.parseHtmlNodes(Pairing.BUILDER, pairings, ret.getPairings());
+        Element size = node.selectFirst(prefix + " span.size-title");
         ret.setSize(Size.fromName(ParseUtil.safetyText(size.text())));
-        ret.setActualPages(Checks.requireNonExcept(
-                () -> ParseUtil.parseMixedNum(size.parent().text().split(",")[1]),
-                0
-        ));
-        ret.setStatus(Status.fromName(ParseUtil.safetyText(hat.select("span[style]").first().text())));
-        ParseUtil.parseHtmlNodes(Tag.BUILDER, hat.select("a.tag"), ret.getTags());
-        ret.setDescription(node.selectFirst("div.fanfic-description").text());
+        ret.setActualPages(ParseUtil.safetyNumber(size.parent().text().split(",")[1]));
+        Elements tags = node.select(prefix + " a.tag");
+        ParseUtil.parseHtmlNodes(Tag.BUILDER, tags, ret.getTags());
+        ret.setDescription(node.selectFirst("div.fanfic-description").wholeText());
         return ret;
     }
 }

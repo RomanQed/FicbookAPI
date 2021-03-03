@@ -118,4 +118,12 @@ public class Urls {
     public static String sliceUrlLastPath(URL url) {
         return ParseUtil.sliceLast(url.toString(), "/");
     }
+
+    public static String slicePath(URL parent, String child) {
+        return child.replace(parent.toString(), "");
+    }
+
+    public static String slicePath(URL parent, URL child) {
+        return slicePath(parent, child.toString());
+    }
 }

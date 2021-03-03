@@ -30,6 +30,14 @@ public class ParseUtil {
         return parseMixedNum(rawNum, 10);
     }
 
+    public static Integer safetyNumber(String rawNum) {
+        try {
+            return parseMixedNum(rawNum, 10);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
     public static Integer checkedMixedNum(String rawNum) {
         return Checks.requireNonExcept(() -> parseMixedNum(rawNum), 0);
     }
