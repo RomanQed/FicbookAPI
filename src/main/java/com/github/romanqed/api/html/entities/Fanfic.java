@@ -37,6 +37,7 @@ public class Fanfic extends AbstractIdentifiable implements Loadable {
     private String dedication;
     private String notes;
     private String copyright;
+    private URL cover;
 
     public Fanfic(String id) {
         super(id);
@@ -147,6 +148,10 @@ public class Fanfic extends AbstractIdentifiable implements Loadable {
         return chapters;
     }
 
+    public URL getCover() {
+        return cover;
+    }
+
     public void setTitle(String title) {
         this.title = Checks.requireNonNullString(title);
     }
@@ -209,6 +214,10 @@ public class Fanfic extends AbstractIdentifiable implements Loadable {
 
     public void setCopyright(String copyright) {
         this.copyright = Checks.requireNonNullString(copyright);
+    }
+
+    public void setCover(URL cover) {
+        this.cover = cover;
     }
 
     @Override

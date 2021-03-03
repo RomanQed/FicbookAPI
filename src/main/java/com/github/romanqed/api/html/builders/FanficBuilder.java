@@ -77,6 +77,10 @@ public class FanficBuilder implements HtmlPageBuilder<Fanfic> {
         if (retChapters.isEmpty()) {
             retChapters.add(new Chapter(Urls.sliceUrlLastPath(url)));
         }
+        Element cover = hat.selectFirst("fanfic-cover");
+        if (cover != null) {
+            ret.setCover(Urls.parseUrl(cover.attr("src-original")));
+        }
         return ret;
     }
 
@@ -113,6 +117,10 @@ public class FanficBuilder implements HtmlPageBuilder<Fanfic> {
         Elements tags = node.select(prefix + " a.tag");
         ParseUtil.parseHtmlNodes(Tag.BUILDER, tags, ret.getTags());
         ret.setDescription(node.selectFirst("div.fanfic-description").wholeText());
+        Element cover = node.selectFirst("picture.fanfic-hat-cover-picture img");
+        if (cover != null) {
+            ret.setCover(Urls.parseUrl(cover.attr("src")));
+        }
         return ret;
     }
 }
