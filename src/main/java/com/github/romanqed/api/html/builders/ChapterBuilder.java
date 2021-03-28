@@ -16,13 +16,13 @@ public class ChapterBuilder implements HtmlPageBuilder<Chapter> {
         Chapter ret = new Chapter(Urls.sliceUrlLastPath(url));
         Element body = page.selectFirst("article.article");
         Element title = body.selectFirst("div.title-area");
-        ret.setTitle(Checks.requireNonExcept(() -> title.selectFirst("h2").text(), ""));
-        ret.setDate(ParseUtil.parseNativeDate(title.selectFirst("div.part-date span").attr("title")));
-        ret.setBody(Checks.requireNonExcept(() -> body.selectFirst("div[id=content]").wholeText(), ""));
-        ret.setNotes(Checks.requireNonExcept(
+        ret.title = Checks.requireNonExcept(() -> title.selectFirst("h2").text(), "");
+        ret.date = ParseUtil.parseNativeDate(title.selectFirst("div.part-date span").attr("title"));
+        ret.body = Checks.requireNonExcept(() -> body.selectFirst("div[id=content]").wholeText(), "");
+        ret.notes = Checks.requireNonExcept(
                 () -> body.selectFirst("div.part-comment-bottom div").wholeText(),
                 ""
-        ));
+        );
         return ret;
     }
 
@@ -32,11 +32,11 @@ public class ChapterBuilder implements HtmlPageBuilder<Chapter> {
         Chapter ret = new Chapter(
                 ParseUtil.sliceLastPath(a.attr("href").replaceAll("#.*", ""))
         );
-        ret.setTitle(a.text());
-        ret.setDate(ParseUtil.parseNativeDate(Checks.requireNonExcept(
+        ret.title = a.text();
+        ret.date = ParseUtil.parseNativeDate(Checks.requireNonExcept(
                 () -> node.selectFirst("div span").attr("title"),
                 ""
-        )));
+        ));
         return ret;
     }
 }

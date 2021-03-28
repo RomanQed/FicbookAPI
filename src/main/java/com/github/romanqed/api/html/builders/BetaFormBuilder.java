@@ -12,7 +12,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.net.URL;
-import java.util.Set;
 
 public class BetaFormBuilder implements HtmlPageBuilder<BetaForm> {
     @Override
@@ -24,28 +23,26 @@ public class BetaFormBuilder implements HtmlPageBuilder<BetaForm> {
     public BetaForm build(Element node) {
         Element title = node.selectFirst("div a.title");
         BetaForm ret = new BetaForm(ParseUtil.sliceLastPath(title.attr("href")));
-        ret.setBetaName(title.text());
+        ret.betaName = title.text();
         Elements info = node.select("div.beta_thumb_info");
         Elements fandoms = info.first().select("span");
-        Set<String> retFandoms = ret.getFandoms();
-        fandoms.forEach(fandom -> retFandoms.add(fandom.text()));
+        fandoms.forEach(fandom -> ret.fandoms.add(fandom.text()));
         Elements directions = info.select("span.help");
-        Set<Direction> retDirections = ret.getDirections();
-        directions.forEach(direction -> retDirections.add(Direction.fromName(ParseUtil.safetyText(direction.text()))));
+        directions.forEach(direction -> ret.directions.add(Direction.fromName(ParseUtil.safetyText(direction.text()))));
         Elements allTags = info.select("div.beta_thumb_info div.tags");
         Elements preTags = Checks.requireNonExcept(() -> allTags.get(0).children(), null);
-        ParseUtil.parseHtmlNodes(Tag.BUILDER, preTags, ret.getPreferredTags());
+        ParseUtil.parseHtmlNodes(Tag.BUILDER, preTags, ret.preferredTags);
         Elements aTags = Checks.requireNonExcept(() -> allTags.get(1).children(), null);
-        ParseUtil.parseHtmlNodes(Tag.BUILDER, aTags, ret.getAvoidedTags());
+        ParseUtil.parseHtmlNodes(Tag.BUILDER, aTags, ret.avoidedTags);
         int length = info.size();
-        ret.setPositiveQualities(info.get(length - 6).text());
-        ret.setNegativeQualities(info.get(length - 5).text());
-        ret.setPreferences(info.get(length - 4).text());
-        ret.setAvoided(info.get(length - 3).text());
-        ret.setTestResult(Checks.requireNonExcept(
+        ret.positiveQualities = info.get(length - 6).text();
+        ret.negativeQualities = info.get(length - 5).text();
+        ret.preferences = info.get(length - 4).text();
+        ret.avoided = info.get(length - 3).text();
+        ret.testResult = Checks.requireNonExcept(
                 () -> ParseUtil.parseMixedNum(info.get(length - 2).text()),
                 0
-        ));
+        );
         return ret;
     }
 }

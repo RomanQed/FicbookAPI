@@ -15,15 +15,15 @@ public class FandomBuilder implements HtmlPageBuilder<Fandom> {
         Fandom ret = new Fandom(Urls.slicePath(Urls.FANDOMS, url));
         Element title = page.selectFirst("h1");
         String rawTitle = title.text();
-        ret.setTitle(rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»')));
-        ret.setFictionId(ParseUtil.parseMixedNum(title.selectFirst("a").attr("href")));
+        ret.title = rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»'));
+        ret.fictionId = ParseUtil.parseMixedNum(title.selectFirst("a").attr("href"));
         return ret;
     }
 
     @Override
     public Fandom build(Element node) {
         Fandom ret = new Fandom(node.attr("href").replace("/fanfiction/", ""));
-        ret.setTitle(node.text().trim());
+        ret.title = node.text().trim();
         return ret;
     }
 }

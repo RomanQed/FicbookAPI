@@ -14,16 +14,16 @@ public class TagBuilder implements HtmlPageBuilder<Tag> {
     public Tag build(URL url, Document page) {
         Tag ret = new Tag(Urls.sliceUrlLastPath(url));
         String rawTitle = page.selectFirst("h1").text();
-        ret.setTitle(rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»')));
-        ret.setDescription(page.selectFirst("div.well").text());
+        ret.title = rawTitle.substring(rawTitle.indexOf('«') + 1, rawTitle.indexOf('»'));
+        ret.description = page.selectFirst("div.well").text();
         return ret;
     }
 
     @Override
     public Tag build(Element node) {
         Tag ret = new Tag(ParseUtil.sliceLastPath(node.attr("href")));
-        ret.setTitle(node.text());
-        ret.setDescription(node.attr("title").replaceAll("<.{1,2}>", ""));
+        ret.title = node.text();
+        ret.description = node.attr("title").replaceAll("<.{1,2}>", "");
         return ret;
     }
 }

@@ -16,27 +16,27 @@ public class UserBuilder implements HtmlPageBuilder<User> {
     @Override
     public User build(URL url, Document page) {
         User ret = new User(Urls.sliceUrlLastPath(url));
-        ret.setName(page.selectFirst("div.author-hat h1").text());
-        ret.setAvatarUrl(Urls.parseUrl(page.selectFirst("img[alt=" + ret.getName() + "]").attr("src")));
-        ret.setAbout(Checks.requireNonExcept(
+        ret.name = page.selectFirst("div.author-hat h1").text();
+        ret.avatar = Urls.parseUrl(page.selectFirst("img[alt=" + ret.name + "]").attr("src"));
+        ret.about = Checks.requireNonExcept(
                 () -> page.selectFirst("article.profile-container div.urlize").wholeText(),
                 ""
-        ));
-        ret.setFavourites(Checks.requireNonExcept(
+        );
+        ret.favourites = Checks.requireNonExcept(
                 () -> ParseUtil.checkedMixedNum(page.selectFirst("span.add-favourite-author-text a").text()),
                 0
-        ));
-        ret.setBankDetails(Checks.requireNonExcept(
+        );
+        ret.bankDetails = Checks.requireNonExcept(
                 () -> page.selectFirst("section.mb-30:contains(Поддержать) div.urlize").text(),
                 ""
-        ));
-        ret.setLastOnline(ParseUtil.parseNativeDate(Checks.requireNonExcept(
+        );
+        ret.lastOnline = ParseUtil.parseNativeDate(Checks.requireNonExcept(
                 () -> page.selectFirst("section.mb-30 p span").attr("title"),
                 ""
-        )));
+        ));
         Element betaForm = page.selectFirst(Queries.BETA_FORM_QUERY);
         if (betaForm != null) {
-            ret.setBetaForm(BetaForm.BUILDER.build(betaForm));
+            ret.betaForm = BetaForm.BUILDER.build(betaForm);
         }
         return ret;
     }
@@ -44,7 +44,7 @@ public class UserBuilder implements HtmlPageBuilder<User> {
     @Override
     public User build(Element node) {
         User ret = new User(ParseUtil.sliceLastPath(node.attr("href")));
-        ret.setName(node.text());
+        ret.name = node.text();
         return ret;
     }
 }

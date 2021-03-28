@@ -9,7 +9,7 @@ import java.net.URL;
 public class Main {
     public static void main(String[] args) throws MalformedURLException {
         HtmlLoader loader = new HtmlLoader();
-        Fanfic ret = loader.asyncLoad(new URL("https://ficbook.net/readfic/10015087"), Fanfic.BUILDER).silent();
-        System.out.println(ret.getCover());
+        Fanfic fanfic = loader.asyncLoad(new URL("https://ficbook.net/readfic/10334361"), Fanfic.BUILDER).silent();
+        System.out.println(fanfic.tags);
     }
 }

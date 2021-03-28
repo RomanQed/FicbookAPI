@@ -86,10 +86,9 @@ public class ParseUtil {
 
     public static String pairingToSearchFormat(Pairing pairing, String delimiter) {
         StringBuilder ret = new StringBuilder();
-        List<String> characters = pairing.getCharacters();
-        ret.append(characters.get(0));
-        for (int i = 1; i < characters.size(); ++i) {
-            ret.append(delimiter).append(characters.get(i));
+        ret.append(pairing.characters.get(0));
+        for (int i = 1; i < pairing.characters.size(); ++i) {
+            ret.append(delimiter).append(pairing.characters.get(i));
         }
         return ret.toString();
     }

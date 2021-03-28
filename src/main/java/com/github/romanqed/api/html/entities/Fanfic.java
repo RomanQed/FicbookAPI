@@ -6,7 +6,6 @@ import com.github.romanqed.api.html.builders.FanficBuilder;
 import com.github.romanqed.api.interfaces.HtmlPageBuilder;
 import com.github.romanqed.api.interfaces.Loadable;
 import com.github.romanqed.api.json.Reward;
-import com.github.romanqed.api.util.Checks;
 import com.github.romanqed.api.util.Urls;
 
 import java.net.URL;
@@ -15,29 +14,29 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Fanfic extends AbstractIdentifiable implements Loadable {
     public static final HtmlPageBuilder<Fanfic> BUILDER = new FanficBuilder();
-    private final Set<Fandom> fandoms;
-    private final Map<User, AuthorRole> authors;
-    private final List<Pairing> pairings;
-    private final Set<Tag> tags;
-    private final List<Reward> rewards;
-    private final List<Chapter> chapters;
-    private String title;
-    private Direction direction;
-    private Rating rating;
-    private Status status;
-    private boolean isTranslate;
-    private String originalAuthor;
-    private String originalFanfic;
-    private boolean isPremium;
-    private Size size;
-    private int actualPages;
-    private int likes;
-    private int inCollections;
-    private String description;
-    private String dedication;
-    private String notes;
-    private String copyright;
-    private URL cover;
+    public final Set<Fandom> fandoms;
+    public final Map<User, AuthorRole> authors;
+    public final List<Pairing> pairings;
+    public final Set<Tag> tags;
+    public final List<Reward> rewards;
+    public final List<Chapter> chapters;
+    public String title;
+    public Direction direction;
+    public Rating rating;
+    public Status status;
+    public boolean isTranslate;
+    public String originalAuthor;
+    public String originalFanfic;
+    public boolean isPremium;
+    public Size size;
+    public int actualPages;
+    public int likes;
+    public int inCollections;
+    public String description;
+    public String dedication;
+    public String notes;
+    public String copyright;
+    public URL cover;
 
     public Fanfic(String id) {
         super(id);
@@ -52,172 +51,6 @@ public class Fanfic extends AbstractIdentifiable implements Loadable {
         dedication = "";
         notes = "";
         copyright = "";
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Set<Fandom> getFandoms() {
-        return fandoms;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public Rating getRating() {
-        return rating;
-    }
-
-    public boolean isTranslate() {
-        return isTranslate;
-    }
-
-    public String getOriginalAuthor() {
-        if (!isTranslate) {
-            throw new IllegalStateException("Fanfic is not a translation");
-        }
-        return originalAuthor;
-    }
-
-    public String getOriginalFanfic() {
-        if (!isTranslate) {
-            throw new IllegalStateException("Fanfic is not a translation");
-        }
-        return originalFanfic;
-    }
-
-    public boolean isPremium() {
-        return isPremium;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public int inCollections() {
-        return inCollections;
-    }
-
-    public Map<User, AuthorRole> getAuthors() {
-        return authors;
-    }
-
-    public List<Pairing> getPairings() {
-        return pairings;
-    }
-
-    public Size getSize() {
-        return size;
-    }
-
-    public int getActualPages() {
-        return actualPages;
-    }
-
-    public Set<Tag> getTags() {
-        return tags;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDedication() {
-        return dedication;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public String getCopyright() {
-        return copyright;
-    }
-
-    public List<Reward> getRewards() {
-        return rewards;
-    }
-
-    public List<Chapter> getChapters() {
-        return chapters;
-    }
-
-    public URL getCover() {
-        return cover;
-    }
-
-    public void setTitle(String title) {
-        this.title = Checks.requireNonNullString(title);
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    public void setRating(Rating rating) {
-        this.rating = rating;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public void setTranslate(boolean translate) {
-        isTranslate = translate;
-    }
-
-    public void setOriginalAuthor(String originalAuthor) {
-        this.originalAuthor = Checks.requireNonNullString(originalAuthor);
-    }
-
-    public void setOriginalFanfic(String originalFanfic) {
-        this.originalFanfic = Checks.requireNonNullString(originalFanfic);
-    }
-
-    public void setPremium(boolean premium) {
-        isPremium = premium;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    public void setActualPages(int actualPages) {
-        this.actualPages = Math.max(0, actualPages);
-    }
-
-    public void setLikes(int likes) {
-        this.likes = Math.max(0, likes);
-    }
-
-    public void setInCollections(int inCollections) {
-        this.inCollections = Math.max(0, inCollections);
-    }
-
-    public void setDescription(String description) {
-        this.description = Checks.requireNonNullString(description);
-    }
-
-    public void setDedication(String dedication) {
-        this.dedication = Checks.requireNonNullString(dedication);
-    }
-
-    public void setNotes(String notes) {
-        this.notes = Checks.requireNonNullString(notes);
-    }
-
-    public void setCopyright(String copyright) {
-        this.copyright = Checks.requireNonNullString(copyright);
-    }
-
-    public void setCover(URL cover) {
-        this.cover = cover;
     }
 
     @Override

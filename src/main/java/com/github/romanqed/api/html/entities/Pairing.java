@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Pairing {
     public static final HtmlBuilder<Pairing> BUILDER = new PairingBuilder();
-    private final List<String> characters = new ArrayList<>();
+    public final List<String> characters = new ArrayList<>();
 
     public Pairing(String... characters) {
         Checks.requireCorrectValue(characters, arr -> characters.length != 0);
@@ -19,10 +19,6 @@ public class Pairing {
 
     public Pairing(String rawCharacters) {
         this(rawCharacters.split("/"));
-    }
-
-    public List<String> getCharacters() {
-        return characters;
     }
 
     public boolean isSingle() {
