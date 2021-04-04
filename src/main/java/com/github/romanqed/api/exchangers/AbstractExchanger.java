@@ -3,6 +3,7 @@ package com.github.romanqed.api.exchangers;
 import com.github.romanqed.api.loaders.AbstractLoader;
 import com.github.romanqed.api.util.Pair;
 import kong.unirest.HttpRequest;
+import kong.unirest.MultipartBody;
 import kong.unirest.UnirestInstance;
 
 import java.net.URL;
@@ -15,7 +16,10 @@ public abstract class AbstractExchanger extends AbstractLoader {
 
     @Override
     protected HttpRequest<?> requestBuilder(UnirestInstance client, URL url, List<Pair<String, String>> fields) {
-        // TODO
-        return null;
+        MultipartBody ret = client.post(url.toString()).multiPartContent();
+        if (fields != null) {
+            fields.forEach(pair -> ret.field(pair.getKey(), pair.getValue()));
+        }
+        return ret;
     }
 }
